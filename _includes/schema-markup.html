@@ -1,0 +1,167 @@
+<!-- Schema.org JSON-LD разметка -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "{{ site.company.name }}",
+  "image": "{{ '/assets/images/logo.png' | absolute_url }}",
+  "@id": "{{ site.url }}",
+  "url": "{{ site.url }}",
+  "telephone": "{{ site.company.phone }}",
+  "email": "{{ site.company.email }}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "ул. Примерная, д.1",
+    "addressLocality": "Москва",
+    "addressCountry": "RU"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 55.751244,
+    "longitude": 37.618423
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "opens": "08:00",
+    "closes": "18:00"
+  },
+  "priceRange": "₽₽",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "127"
+  },
+  "sameAs": [
+    "{{ site.url }}"
+  ]
+}
+</script>
+
+{% if page.layout == 'post' %}
+<!-- BlogPosting Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ page.title }}",
+  "description": "{{ page.description }}",
+  "image": "{{ page.image | default: '/assets/images/default-post.jpg' | absolute_url }}",
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.date | date_to_xmlschema }}",
+  "author": {
+    "@type": "Organization",
+    "name": "{{ site.company.name }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ site.company.name }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ '/assets/images/logo.png' | absolute_url }}"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ page.url | absolute_url }}"
+  },
+  "keywords": "{{ page.keywords | default: page.tags | join: ', ' }}"
+}
+</script>
+{% endif %}
+
+{% if page.url contains '/services/' %}
+<!-- Service Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "{{ page.title }}",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "{{ site.company.name }}",
+    "telephone": "{{ site.company.phone }}",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Москва",
+      "addressCountry": "RU"
+    }
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Москва"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Услуги лазерной резки",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "{{ page.title }}"
+        }
+      }
+    ]
+  }
+}
+</script>
+{% endif %}
+
+<!-- BreadcrumbList Schema -->
+{% if page.url != '/' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "{{ site.url }}"
+    }
+    {% if page.url contains '/blog/' and page.layout == 'post' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Блог",
+      "item": "{{ site.url }}/blog/"
+    }
+    ,{
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ page.title }}",
+      "item": "{{ page.url | absolute_url }}"
+    }
+    {% elsif page.url contains '/services/' and page.url != '/services/' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Услуги",
+      "item": "{{ site.url }}/services/"
+    }
+    ,{
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ page.title }}",
+      "item": "{{ page.url | absolute_url }}"
+    }
+    {% else %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ page.title }}",
+      "item": "{{ page.url | absolute_url }}"
+    }
+    {% endif %}
+  ]
+}
+</script>
+{% endif %}
