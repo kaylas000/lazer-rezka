@@ -1,0 +1,99 @@
+---
+layout: default
+title: "Калькулятор стоимости лазерной резки"
+description: "Онлайн-калькулятор для расчёта стоимости лазерной резки. Выберите материал, толщину и получите ориентировочную цену."
+permalink: /calculator/
+---
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Калькулятор стоимости</h1>
+    <p class="lead">Рассчитайте ориентировочную стоимость лазерной резки</p>
+  </div>
+</section>
+
+<section class="calculator-section">
+  <div class="container">
+    <div class="calculator-wrapper">
+      <div class="calculator-form">
+        <div class="form-group">
+          <label for="material">Материал</label>
+          <select id="material" class="calc-input">
+            <option value="steel">Сталь Ст3</option>
+            <option value="stainless">Нержавейка AISI 304</option>
+            <option value="aluminum">Алюминий АД31</option>
+            <option value="copper">Медь</option>
+            <option value="brass">Латунь</option>
+            <option value="acrylic">Акрил</option>
+            <option value="plywood">Фанера</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="thickness">Толщина: <span id="thicknessValue">3</span> мм</label>
+          <input type="range" id="thickness" min="1" max="20" value="3" class="calc-slider">
+          <div class="range-labels">
+            <span>1 мм</span>
+            <span>20 мм</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="length">Длина реза (погонные метры)</label>
+          <input type="number" id="length" min="0.1" step="0.1" value="10" class="calc-input">
+        </div>
+        
+        <div class="form-group">
+          <label for="quantity">Количество деталей</label>
+          <input type="number" id="quantity" min="1" value="1" class="calc-input">
+        </div>
+        
+        <div class="form-group">
+          <label>Тип заказа</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="orderType" value="standard" checked>
+              <span>Стандарт (1-3 дня)</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="orderType" value="urgent">
+              <span>Срочно (+30%)</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="orderType" value="series">
+              <span>Серия 50+ (-15%)</span>
+            </label>
+          </div>
+        </div>
+        
+        <button id="calculateBtn" class="btn btn-primary btn-block">Рассчитать</button>
+      </div>
+      
+      <div class="calculator-result" id="result">
+        <div class="result-placeholder">
+          <div class="result-icon">🧮</div>
+          <p>Заполните параметры и нажмите "Рассчитать"</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="calculator-note">
+      <p><strong>Обратите внимание:</strong> Калькулятор даёт ориентировочный расчёт. Точная стоимость определяется после анализа чертежа и зависит от сложности контура, количества отверстий и других факторов.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Нужен точный расчёт?</h2>
+      <p>Отправьте чертёж, и мы рассчитаем стоимость в течение 1 часа</p>
+      <div class="cta-buttons">
+        <a href="/contacts/" class="btn btn-primary">Отправить чертёж</a>
+        <a href="tel:{{ site.company.phone }}" class="btn btn-secondary">Позвонить</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ '/assets/js/calculator.js' | relative_url }}"></script>

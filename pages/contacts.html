@@ -1,0 +1,93 @@
+---
+layout: default
+title: "Контакты — Цех лазерной резки"
+description: "Свяжитесь с нами: телефон, email, адрес. Работаем Пн-Пт 8:00-18:00. Москва."
+permalink: /contacts/
+---
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Контакты</h1>
+    <p class="lead">Свяжитесь с нами удобным способом</p>
+  </div>
+</section>
+
+<section class="contacts-content">
+  <div class="container">
+    <div class="contacts-grid">
+      <div class="contact-info">
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <h3>Телефон</h3>
+          <a href="tel:{{ site.company.phone }}" class="contact-link">{{ site.company.phone }}</a>
+          <p>Звоните в рабочее время</p>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">✉️</div>
+          <h3>Email</h3>
+          <a href="mailto:{{ site.company.email }}" class="contact-link">{{ site.company.email }}</a>
+          <p>Ответим в течение 1 часа</p>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">🕐</div>
+          <h3>Режим работы</h3>
+          <p class="contact-link">{{ site.company.hours }}</p>
+          <p>Суббота, воскресенье — выходной</p>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">📍</div>
+          <h3>Адрес</h3>
+          <p class="contact-link">{{ site.company.address }}</p>
+          <p>Самовывоз по предварительной договорённости</p>
+        </div>
+      </div>
+      
+      <div class="contact-form-wrapper">
+        <h2>Отправить заявку</h2>
+        <p>Заполните форму, и мы свяжемся с вами в течение 1 часа</p>
+        
+        <form class="form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+          <input type="hidden" name="subject" value="Новая заявка с сайта">
+          
+          <div class="form-group">
+            <label for="name">Имя *</label>
+            <input type="text" id="name" name="name" required minlength="2">
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Телефон *</label>
+            <input type="tel" id="phone" name="phone" required pattern="[+]?[0-9]{10,15}">
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email">
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Сообщение</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="file">Прикрепить чертёж (DXF, DWG, PDF)</label>
+            <input type="file" id="file" name="attachment" accept=".dxf,.dwg,.pdf,.svg">
+          </div>
+          
+          <div class="form-group">
+            <label class="checkbox">
+              <input type="checkbox" name="consent" required>
+              <span>Согласен на обработку персональных данных *</span>
+            </label>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block">Отправить заявку</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
