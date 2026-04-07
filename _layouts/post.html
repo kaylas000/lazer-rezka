@@ -1,0 +1,93 @@
+---
+layout: default
+---
+
+<article class="blog-post">
+  <div class="container">
+    <div class="post-header">
+      <div class="breadcrumbs">
+        <a href="/">Главная</a> → 
+        <a href="/blog/">Блог</a> → 
+        <span>{{ page.title }}</span>
+      </div>
+      
+      <h1>{{ page.title }}</h1>
+      
+      <div class="post-meta">
+        <span class="meta-item">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm1 12H7V7h2v5zm0-6H7V4h2v2z"/>
+          </svg>
+          {{ page.date | date: "%d.%m.%Y" }}
+        </span>
+        <span class="meta-item">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2z"/>
+          </svg>
+          {{ page.category | capitalize }}
+        </span>
+        {% if page.reading_time %}
+        <span class="meta-item">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zM7 4h2v5l3 2-1 1-4-3V4z"/>
+          </svg>
+          {{ page.reading_time }} мин чтения
+        </span>
+        {% endif %}
+      </div>
+    </div>
+    
+    <div class="post-content">
+      {{ content }}
+    </div>
+    
+    <div class="post-footer">
+      <div class="post-tags">
+        {% if page.tags %}
+        <strong>Теги:</strong>
+        {% for tag in page.tags %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+        {% endif %}
+      </div>
+      
+      <div class="post-share">
+        <strong>Поделиться:</strong>
+        <a href="https://vk.com/share.php?url={{ page.url | absolute_url }}" target="_blank" class="share-btn">VK</a>
+        <a href="https://t.me/share/url?url={{ page.url | absolute_url }}&text={{ page.title }}" target="_blank" class="share-btn">Telegram</a>
+        <button class="share-btn" onclick="navigator.clipboard.writeText('{{ page.url | absolute_url }}')">Копировать</button>
+      </div>
+    </div>
+  </div>
+</article>
+
+<section class="related-posts">
+  <div class="container">
+    <h2>Похожие статьи</h2>
+    <div class="blog-grid">
+      {% assign related = site.posts | where: "category", page.category | limit: 3 %}
+      {% for post in related %}
+      {% if post.url != page.url %}
+      <article class="blog-card">
+        <div class="blog-image">
+          {% if post.image %}
+          <img src="{{ post.image }}" alt="{{ post.title }}">
+          {% else %}
+          <div class="blog-placeholder">📝</div>
+          {% endif %}
+        </div>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span class="blog-category">{{ post.category | capitalize }}</span>
+            <span class="blog-date">{{ post.date | date: "%d.%m.%Y" }}</span>
+          </div>
+          <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+          <p>{{ post.description | truncate: 120 }}</p>
+          <a href="{{ post.url }}" class="blog-link">Читать далее →</a>
+        </div>
+      </article>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>

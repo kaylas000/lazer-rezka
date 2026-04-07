@@ -1,0 +1,105 @@
+---
+layout: default
+title: "Блог о лазерной резке"
+description: "Статьи, советы и руководства по лазерной резке металла и неметаллов. Технические материалы и практические рекомендации."
+permalink: /blog/
+---
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Блог</h1>
+    <p class="lead">Полезные статьи о лазерной резке и обработке материалов</p>
+  </div>
+</section>
+
+<section class="blog-section">
+  <div class="container">
+    <div class="blog-filters">
+      <button class="filter-btn active" data-filter="all">Все статьи</button>
+      <button class="filter-btn" data-filter="technical">Технические</button>
+      <button class="filter-btn" data-filter="materials">Материалы</button>
+      <button class="filter-btn" data-filter="tips">Советы</button>
+    </div>
+    
+    {% if site.posts.size > 0 %}
+    <div class="blog-grid">
+      {% for post in site.posts limit: 12 %}
+      <article class="blog-card" data-category="{{ post.category }}">
+        <div class="blog-image">
+          {% if post.image %}
+          <img src="{{ post.image }}" alt="{{ post.title }}">
+          {% else %}
+          <div class="blog-placeholder">📝</div>
+          {% endif %}
+        </div>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span class="blog-category">{{ post.category | capitalize }}</span>
+            <span class="blog-date">{{ post.date | date: "%d.%m.%Y" }}</span>
+          </div>
+          <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+          <p>{{ post.description | truncate: 120 }}</p>
+          <a href="{{ post.url }}" class="blog-link">Читать далее →</a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="blog-empty">
+      <div class="empty-icon">📚</div>
+      <h3>Скоро здесь появятся статьи</h3>
+      <p>Мы готовим для вас полезные материалы о лазерной резке</p>
+      
+      <div class="blog-preview">
+        <h4>Планируемые темы:</h4>
+        <ul>
+          <li>Выбор толщины металла для лазерной резки</li>
+          <li>Подготовка DXF файлов: полное руководство</li>
+          <li>Лазерная vs плазменная резка: сравнение</li>
+          <li>Допуски и погрешности при лазерной резке</li>
+          <li>Резка нержавеющей стали AISI 304 и 316</li>
+          <li>Как правильно составить ТЗ для резки</li>
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Есть вопросы?</h2>
+      <p>Наш AI-консультант ответит на любые вопросы о лазерной резке</p>
+      <div class="cta-buttons">
+        <button class="btn btn-primary" onclick="document.getElementById('chatToggle').click()">Задать вопрос</button>
+        <a href="/contacts/" class="btn btn-secondary">Связаться с нами</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// Фильтрация блога
+const blogFilterBtns = document.querySelectorAll('.blog-filters .filter-btn');
+const blogCards = document.querySelectorAll('.blog-card');
+
+blogFilterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filter = btn.dataset.filter;
+    
+    blogFilterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    blogCards.forEach(card => {
+      if (filter === 'all' || card.dataset.category === filter) {
+        card.style.display = 'block';
+        setTimeout(() => card.style.opacity = '1', 10);
+      } else {
+        card.style.opacity = '0';
+        setTimeout(() => card.style.display = 'none', 300);
+      }
+    });
+  });
+});
+</script>
