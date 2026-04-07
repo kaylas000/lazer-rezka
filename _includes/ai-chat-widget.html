@@ -1,0 +1,42 @@
+<div class="ai-chat-widget" id="aiChat">
+  <button class="chat-toggle" id="chatToggle" aria-label="Открыть чат">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <span class="status-dot"></span>
+  </button>
+  
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-title">
+        <h3>AI-консультант</h3>
+        <span class="status">● Онлайн</span>
+      </div>
+      <div class="chat-controls">
+        <button class="chat-minimize" id="chatMinimize" aria-label="Свернуть">−</button>
+        <button class="chat-close" id="chatClose" aria-label="Закрыть">×</button>
+      </div>
+    </div>
+    
+    <div class="chat-body" id="chatBody">
+      <div class="chat-welcome">
+        <p>Здравствуйте! Я помогу подобрать услугу и рассчитать стоимость. 👋</p>
+        
+        <div class="quick-buttons" id="quickButtons">
+          <button class="quick-btn" data-message="Сколько стоит лазерная резка?">💰 Узнать цену</button>
+          <button class="quick-btn" data-message="Какие материалы вы режете?">📋 Материалы</button>
+          <button class="quick-btn" data-message="Как оформить заказ?">📦 Оформить заказ</button>
+          <button class="quick-btn" data-message="Каковы сроки изготовления?">⏱️ Сроки</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chat-footer">
+      <form class="chat-form" id="chatForm">
+        <input type="text" id="chatInput" placeholder="Введите сообщение..." maxlength="500" autocomplete="off">
+        <button type="submit" aria-label="Отправить">➤</button>
+      </form>
+      <div class="chat-info">Работает на AI</div>
+    </div>
+  </div>
+</div>

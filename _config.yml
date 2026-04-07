@@ -1,0 +1,53 @@
+# Конфигурация Jekyll для сайта цеха лазерной резки
+
+title: "Цех лазерной резки"
+description: "Профессиональная лазерная резка металла и неметаллов в Москве. Точность ±0.1мм, сроки от 1 дня."
+baseurl: ""
+url: "https://lasercut.ru"
+
+# Настройки Jekyll
+markdown: kramdown
+highlighter: rouge
+permalink: /blog/:year/:month/:slug/
+timezone: Europe/Moscow
+
+# Плагины
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Исключения
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .github
+  - README.md
+
+# Настройки пагинации
+paginate: 12
+paginate_path: "/blog/page:num/"
+
+# Данные компании
+company:
+  name: "Цех лазерной резки"
+  phone: "+7 (XXX) XXX-XX-XX"
+  email: "info@lasercut.ru"
+  address: "Москва, ул. Примерная, д.1"
+  hours: "Пн-Пт 8:00-18:00"
+  
+# SEO
+lang: ru
+author: "Цех лазерной резки"
+
+# Настройки производительности
+sass:
+  style: compressed
+  
+# Коллекции
+collections:
+  services:
+    output: true
+    permalink: /services/:name/

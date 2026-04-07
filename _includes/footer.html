@@ -1,0 +1,42 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>{{ site.company.name }}</h3>
+        <p>Профессиональная лазерная резка металла и неметаллов</p>
+      </div>
+      
+      <div class="footer-col">
+        <h4>Услуги</h4>
+        <ul>
+          <li><a href="/services/metal/">Резка металла</a></li>
+          <li><a href="/services/nonmetal/">Резка неметаллов</a></li>
+          <li><a href="/services/engraving/">Гравировка</a></li>
+          <li><a href="/services/bending/">Гибка металла</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-col">
+        <h4>Информация</h4>
+        <ul>
+          <li><a href="/materials/">Материалы</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li><a href="/blog/">Блог</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="tel:{{ site.company.phone }}">{{ site.company.phone }}</a></li>
+          <li><a href="mailto:{{ site.company.email }}">{{ site.company.email }}</a></li>
+          <li>{{ site.company.hours }}</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; {{ 'now' | date: "%Y" }} {{ site.company.name }}. Все права защищены.</p>
+    </div>
+  </div>
+</footer>
