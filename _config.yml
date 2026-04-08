@@ -11,6 +11,9 @@ highlighter: rouge
 permalink: /blog/:year/:month/:slug/
 timezone: Europe/Moscow
 
+# Убрать .html из URL
+permalink: pretty
+
 # Плагины
 plugins:
   - jekyll-feed
