@@ -2797,8 +2797,7 @@ a, button, .card, .service-card, .advantage, .step {
 
 /* Review Form Page */
 .review-form-section {
-  padding: 60px 0;
-  background: var(--bg-light);
+  padding: 80px 0;
 }
 
 .review-form-intro {
@@ -2813,10 +2812,10 @@ a, button, .card, .service-card, .advantage, .step {
 .review-form {
   max-width: 700px;
   margin: 0 auto;
-  background: white;
+  background: var(--bg-surface);
   padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-default);
 }
 
 .rating-input {
@@ -2833,21 +2832,26 @@ a, button, .card, .service-card, .advantage, .step {
 
 .rating-input label {
   cursor: pointer;
-  color: #ddd;
+  color: var(--border-default);
   transition: color 0.2s;
 }
 
 .rating-input label:hover,
 .rating-input label:hover ~ label,
 .rating-input input[type="radio"]:checked ~ label {
-  color: #ffc107;
+  color: #FFB800;
 }
 
 .existing-reviews {
-  padding: 60px 0;
+  padding: 80px 0;
+  background: var(--bg-surface);
 }
 
 @media (max-width: 768px) {
+  .review-form-section {
+    padding: 48px 0;
+  }
+  
   .review-form {
     padding: 24px;
   }
