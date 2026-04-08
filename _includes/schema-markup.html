@@ -11,14 +11,15 @@
   "email": "{{ site.company.email }}",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "ул. Примерная, д.1",
-    "addressLocality": "Москва",
+    "streetAddress": "ул. Новая, д.7",
+    "addressLocality": "Нахабино",
+    "addressRegion": "Московская область",
     "addressCountry": "RU"
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": 55.751244,
-    "longitude": 37.618423
+    "latitude": 55.8397,
+    "longitude": 37.1742
   },
   "openingHoursSpecification": {
     "@type": "OpeningHoursSpecification",
@@ -165,3 +166,136 @@
 }
 </script>
 {% endif %}
+
+
+<!-- Organization Schema с полным E-E-A-T -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "{{ site.company.name }}",
+  "url": "{{ site.url }}",
+  "logo": "{{ '/assets/images/icon-512.png' | absolute_url }}",
+  "description": "Профессиональная лазерная резка металла и неметаллов в Москве. Точность ±0.1мм, сроки от 1 дня.",
+  "foundingDate": "2020",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "ул. Новая, д.7",
+    "addressLocality": "Нахабино",
+    "addressRegion": "Московская область",
+    "addressCountry": "RU"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Москва"
+    },
+    {
+      "@type": "State",
+      "name": "Московская область"
+    }
+  ],
+  "knowsAbout": [
+    "лазерная резка металла",
+    "лазерная резка стали",
+    "лазерная резка нержавейки",
+    "лазерная резка алюминия",
+    "гибка металла",
+    "порошковая покраска",
+    "пескоструйная обработка",
+    "сварочные работы"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Услуги металлообработки",
+    "itemListElement": [
+      {
+        "@type": "OfferCatalog",
+        "name": "Лазерная резка металла",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Лазерная резка стали",
+              "description": "Резка стали толщиной 1-20мм с точностью ±0.1мм"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Лазерная резка нержавейки",
+              "description": "Резка нержавеющей стали AISI 304 толщиной 1-12мм"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+</script>
+
+{% if page.layout == 'post' %}
+<!-- Article Schema с E-E-A-T и SpeakableSpecification -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ page.title }}",
+  "description": "{{ page.description | default: page.excerpt | strip_html | truncate: 160 }}",
+  "image": "{{ page.image | default: '/assets/images/icon-512.png' | absolute_url }}",
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.date | date_to_xmlschema }}",
+  "author": {
+    "@type": "Organization",
+    "name": "{{ site.company.name }}",
+    "url": "{{ site.url }}",
+    "knowsAbout": ["лазерная резка", "металлообработка", "производство"],
+    "hasCredential": "4+ года опыта в лазерной резке металла"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ site.company.name }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ '/assets/images/icon-512.png' | absolute_url }}"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ page.url | absolute_url }}"
+  },
+  "about": {
+    "@type": "Thing",
+    "name": "{{ page.tags | first | default: 'лазерная резка' }}"
+  },
+  "keywords": "{{ page.keywords | default: page.tags | join: ', ' }}",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".post-content p:first-of-type", ".post-content h2"]
+  },
+  "inLanguage": "ru-RU",
+  "isAccessibleForFree": true
+}
+</script>
+{% endif %}
+
+<!-- WebSite Schema для поиска -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ site.company.name }}",
+  "url": "{{ site.url }}",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ site.url }}/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  },
+  "inLanguage": "ru-RU"
+}
+</script>

@@ -1,0 +1,33 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="256" height="256" fill="#0B0B0F" rx="48"/>
+  
+  <!-- Laser beam effect (left) -->
+  <line x1="30" y1="128" x2="85" y2="128" stroke="#FF6B2B" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+  
+  <!-- Main laser line (diagonal) -->
+  <line x1="85" y1="80" x2="200" y2="195" stroke="#FF6B2B" stroke-width="8" stroke-linecap="round"/>
+  
+  <!-- Secondary laser line (counter) -->
+  <line x1="85" y1="195" x2="200" y2="80" stroke="#FF6B2B" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+  
+  <!-- Laser dot/impact -->
+  <circle cx="210" cy="60" r="12" fill="#FF6B2B"/>
+  <circle cx="210" cy="60" r="8" fill="#FFD700" opacity="0.8"/>
+  <circle cx="210" cy="60" r="4" fill="#FFFFFF"/>
+  
+  <!-- Glow effect around logo -->
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Decorative elements (metal cutting marks) -->
+  <path d="M 50 100 L 60 110 M 50 120 L 60 110" stroke="#FF6B2B" stroke-width="2" opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 220 170 L 230 180 M 220 190 L 230 180" stroke="#FF6B2B" stroke-width="2" opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

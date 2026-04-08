@@ -33,9 +33,9 @@ paginate_path: "/blog/page:num/"
 # Данные компании
 company:
   name: "Цех лазерной резки"
-  phone: "+7 (XXX) XXX-XX-XX"
+  phone: "+7 (985) 456-37-64"
   email: "info@lasercut.ru"
-  address: "Москва, ул. Примерная, д.1"
+  address: "Нахабино ул. Новая 7"
   hours: "Пн-Пт 8:00-18:00"
   
 # SEO

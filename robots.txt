@@ -1,22 +1,110 @@
-User-agent: *
+# ===== ПОИСКОВЫЕ РОБОТЫ =====
+User-agent: Googlebot
 Allow: /
 
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# ===== OPENAI / ChatGPT =====
 User-agent: GPTBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+# ===== ANTHROPIC / CLAUDE =====
+User-agent: anthropic-ai
+Allow: /
+
 User-agent: Claude-Web
 Allow: /
 
+User-agent: ClaudeBot
+Allow: /
+
+# ===== PERPLEXITY =====
 User-agent: PerplexityBot
 Allow: /
 
-User-agent: anthropic-ai
+User-agent: Perplexity-User
+Allow: /
+
+# ===== GOOGLE AI =====
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: Google-CloudVertexBot
+Allow: /
+
+# ===== META AI =====
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Meta-ExternalFetcher
 Allow: /
 
 User-agent: meta-externalagent
 Allow: /
 
+# ===== APPLE =====
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ===== xAI / GROK =====
+User-agent: xAI-Bot
+Allow: /
+
+# ===== COHERE =====
+User-agent: cohere-ai
+Allow: /
+
+# ===== AMAZON / ALEXA =====
+User-agent: Amazonbot
+Allow: /
+
+# ===== YOU.COM =====
+User-agent: YouBot
+Allow: /
+
+# ===== COMMON CRAWL (обучение LLM) =====
+User-agent: CCBot
+Allow: /
+
+# ===== DIFFBOT =====
+User-agent: Diffbot
+Allow: /
+
+# ===== BYTEDANCE =====
+User-agent: Bytespider
+Allow: /
+
+# ===== YANDEX =====
+User-agent: YandexBot
+Allow: /
+
+User-agent: YandexGPT
+Allow: /
+
+# ===== ВСЕ ОСТАЛЬНЫЕ =====
+User-agent: *
+Allow: /
+
+Crawl-delay: 1
+
 Sitemap: https://lasercut.ru/sitemap.xml
+Sitemap: https://lasercut.ru/ai-sitemap.json

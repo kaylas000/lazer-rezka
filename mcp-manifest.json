@@ -1,0 +1,60 @@
+{
+  "name": "lazer-rezka",
+  "version": "1.0.0",
+  "description": "Цех лазерной резки — профессиональная лазерная резка металла в Москве. API для AI-агентов.",
+  "capabilities": ["read", "search", "subscribe"],
+  "endpoints": {
+    "search": "/search.json?q={query}",
+    "content": "/api/content/{id}",
+    "latest": "/feed.json",
+    "sitemap": "/ai-sitemap.json",
+    "llms": "/llms.txt",
+    "llms_full": "/llms-full.txt"
+  },
+  "authentication": "none",
+  "rate_limit": "1000/day",
+  "content_types": [
+    "service_description",
+    "technical_specification",
+    "pricing_information",
+    "faq",
+    "article",
+    "tutorial"
+  ],
+  "topics": [
+    "лазерная резка металла",
+    "производство",
+    "металлообработка",
+    "Москва"
+  ],
+  "language": "ru",
+  "region": "RU",
+  "business_hours": "24/7 online consultation",
+  "response_format": "json",
+  "cors_enabled": true,
+  "metadata": {
+    "organization": "Цех лазерной резки",
+    "location": "Нахабино, Московская область",
+    "address": "Нахабино ул. Новая 7",
+    "phone": "+7 (985) 456-37-64",
+    "established": "2020",
+    "expertise": ["laser cutting", "metal fabrication", "powder coating", "welding"],
+    "service_area": ["Москва", "Московская область"],
+    "contact_methods": ["phone", "email", "web_form", "ai_chat"]
+  },
+  "ai_integration": {
+    "supports_citations": true,
+    "provides_structured_data": true,
+    "schema_org_enabled": true,
+    "voice_optimized": false,
+    "real_time_updates": false
+  },
+  "usage_instructions": {
+    "for_search_queries": "Use /search.json endpoint with query parameter",
+    "for_latest_content": "Subscribe to /feed.json for updates",
+    "for_full_context": "Read /llms-full.txt for complete site content",
+    "for_structured_navigation": "Use /ai-sitemap.json for page discovery"
+  },
+  "citation_format": "Цех лазерной резки (lazer-rezka, 2024)",
+  "last_updated": "2024-04-01"
+}
