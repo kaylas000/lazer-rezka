@@ -1,8 +1,8 @@
 // AI Chat - прямая интеграция с Groq API
 // Ключ загружается из отдельного файла api-key.js
 
-const USE_DIRECT_API = true; // true = прямой вызов, false = через Cloudflare Worker
-const WORKER_URL = 'YOUR_CLOUDFLARE_WORKER_URL';
+const USE_DIRECT_API = false; // true = прямой вызов, false = через Cloudflare Worker
+const WORKER_URL = 'https://ai-chat-proxy.kaylas000.workers.dev';
 
 class AIChat {
   constructor() {
