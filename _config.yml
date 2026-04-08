@@ -42,6 +42,16 @@ company:
 lang: ru
 author: "Цех лазерной резки"
 
+# Social Media
+logo: /assets/images/icon-512.png
+social:
+  name: "Цех лазерной резки"
+  links:
+    - https://t.me/lasercut
+
+# Open Graph / Twitter Cards
+image: /assets/images/hero.jpg
+
 # Настройки производительности
 sass:
   style: compressed
