@@ -3288,34 +3288,34 @@ a, button, .card, .service-card, .advantage, .step {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 0;
-  gap: 24px;
+  padding: 32px 0;
+  gap: 32px;
 }
 
 .price-banner-text {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
 }
 
 .price-banner-icon {
-  font-size: 2.5rem;
-  filter: drop-shadow(0 0 10px rgba(255, 107, 43, 0.3));
+  font-size: 3.5rem;
+  filter: drop-shadow(0 0 15px rgba(255, 107, 43, 0.4));
 }
 
 .price-banner-text > div {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .price-banner-text strong {
-  font-size: 1.125rem;
+  font-size: 1.375rem;
   color: var(--text-primary);
 }
 
 .price-banner-text span {
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: var(--text-muted);
 }
 
@@ -3324,18 +3324,24 @@ a, button, .card, .service-card, .advantage, .step {
   align-items: center;
   white-space: nowrap;
   flex-shrink: 0;
+  padding: 16px 36px;
+  font-size: 1.0625rem;
 }
 
 @media (max-width: 768px) {
   .price-banner-content {
     flex-direction: column;
     text-align: center;
-    padding: 20px 0;
+    padding: 24px 0;
   }
   
   .price-banner-text {
     flex-direction: column;
     text-align: center;
+  }
+  
+  .price-banner-icon {
+    font-size: 3rem;
   }
   
   .price-banner .btn {
