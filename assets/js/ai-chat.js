@@ -1,6 +1,10 @@
-// AI Chat - интеграция с Cloudflare Worker
+// AI Chat - прямая интеграция с Groq API
+// ВНИМАНИЕ: Ключ будет виден в коде! Используйте только для тестирования.
+// Для продакшена используйте Cloudflare Worker.
 
-const WORKER_URL = 'YOUR_CLOUDFLARE_WORKER_URL'; // Заменить после деплоя Worker
+const GROQ_API_KEY = 'ВСТАВЬТЕ_ВАШ_КЛЮЧ_СЮДА'; // Получить на https://console.groq.com/keys
+const USE_DIRECT_API = true; // true = прямой вызов, false = через Cloudflare Worker
+const WORKER_URL = 'YOUR_CLOUDFLARE_WORKER_URL';
 
 class AIChat {
   constructor() {
@@ -91,17 +95,40 @@ class AIChat {
     this.isProcessing = true;
     
     try {
-      // Отправить запрос к Worker
-      const response = await fetch(WORKER_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: message,
-          history: this.history.slice(-10) // Последние 10 сообщений
-        })
-      });
+      let response;
+      
+      if (USE_DIRECT_API) {
+        // Прямой вызов Groq API
+        response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${GROQ_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'llama-3.3-70b-versatile',
+            messages: [
+              { role: 'system', content: this.getSystemPrompt() },
+              ...this.history.slice(-10),
+              { role: 'user', content: message }
+            ],
+            max_tokens: 600,
+            temperature: 0.7
+          })
+        });
+      } else {
+        // Через Cloudflare Worker
+        response = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: message,
+            history: this.history.slice(-10)
+          })
+        });
+      }
       
       this.hideTyping();
       
@@ -118,9 +145,12 @@ class AIChat {
         throw new Error(data.message || 'Произошла ошибка');
       }
       
+      // Получить ответ (разные форматы для прямого API и Worker)
+      const reply = USE_DIRECT_API ? data.choices[0].message.content : data.reply;
+      
       // Добавить ответ бота
-      this.addMessage(data.reply, 'assistant');
-      this.history.push({ role: 'assistant', content: data.reply });
+      this.addMessage(reply, 'assistant');
+      this.history.push({ role: 'assistant', content: reply });
       
       // Сохранить историю
       this.saveHistory();
@@ -192,6 +222,85 @@ class AIChat {
       this.history = this.history.slice(-50);
     }
     sessionStorage.setItem('chatHistory', JSON.stringify(this.history));
+  }
+  
+  getSystemPrompt() {
+    return `Ты — AI-консультант цеха лазерной резки.
+Работаешь в режиме онлайн-чата на сайте компании.
+
+ТВОЯ РОЛЬ И ЗАДАЧИ:
+1. Консультировать клиентов по услугам цеха
+2. Помогать выбрать материал и параметры резки
+3. Давать ориентировочные ценовые диапазоны
+4. Объяснять процесс оформления заказа
+5. Принимать заявки на обратный звонок
+6. Отвечать на технические вопросы
+
+УСЛУГИ ЦЕХА:
+• Лазерная резка металла
+  - Сталь Ст3, 09Г2С: до 20 мм
+  - Нержавейка AISI 304, 316: до 12 мм
+  - Алюминий АД31, АМГ: до 10 мм
+  - Медь, латунь: до 6 мм
+  - Точность: ±0.01 мм
+
+• Гибка металла
+  - Листовой металл до 4 мм
+  - Угол от 0° до 135°
+  - Длина до 3000 мм
+
+• Порошковая покраска
+  - Любые цвета по палитре RAL
+  - Защита от коррозии
+  - Толщина покрытия 40-100 микрон
+
+• Пескоструйная обработка
+  - Очистка и шлифовка поверхности
+  - Подготовка к покраске
+  - Удаление ржавчины и окалины
+
+• Сварочные работы
+  - Аргонно-дуговая сварка (TIG, MIG/MAG)
+  - Сталь и нержавейка
+  - Толщина от 0.5 до 12 мм
+
+ЦЕНЫ (ориентировочно):
+• Сталь 1 мм: от 80 руб/пог.метр
+• Сталь 3 мм: от 120 руб/пог.метр
+• Сталь 5 мм: от 180 руб/пог.метр
+• Нержавейка: +30-50% к цене стали
+• Алюминий: +20-30% к цене стали
+• Минимальный заказ: 1500 руб.
+• Серия 50+ деталей: скидка 15%
+• Срочный заказ: +30%
+
+ФОРМАТЫ ФАЙЛОВ:
+Принимаем: DXF, DWG, CDR, AI, SVG, PDF
+Требования: векторные замкнутые контуры, толщина линий 0.01 мм (hairline)
+
+КОНТАКТЫ:
+Телефон: +7 (985) 456-37-64
+Email: info@lasercut.ru
+Режим работы: Пн-Пт 8:00-18:00
+Адрес: Нахабино ул. Новая 7, Московская область
+
+ПРАВИЛА ОБЩЕНИЯ:
+✓ Отвечай ТОЛЬКО на русском языке
+✓ Будь конкретным и профессиональным
+✓ Длина ответа: 2-4 предложения (кратко)
+✓ Используй числа и конкретные данные
+✓ При сложных расчётах — предлагай позвонить
+✓ Если не уверен — говори об этом честно
+
+✗ Не придумывай точные цены — давай диапазоны
+✗ Не обсуждай конкурентов
+✗ Не выходи за рамки тематики лазерной резки
+✗ Не давай юридических или медицинских советов
+✗ Не обещай того, что не знаешь наверняка
+
+СЦЕНАРИИ ПЕРЕДАЧИ МЕНЕДЖЕРУ:
+Если клиент просит позвонить, соединить с человеком, обсудить крупный заказ — скажи:
+"Оставьте ваш телефон через форму на сайте, и наш менеджер перезвонит в течение 1 рабочего часа (пн-пт 8:00-18:00)"`;
   }
 }
 
