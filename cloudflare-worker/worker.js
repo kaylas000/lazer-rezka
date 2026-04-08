@@ -3,7 +3,7 @@
 
 // ============================================
 // ВСТАВЬТЕ СЮДА ВАШ GROQ API КЛЮЧ:
-const GROQ_API_KEY = 'ВСТАВЬТЕ_ВАШ_КЛЮЧ_СЮДА';
+const GROQ_API_KEY = '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';
 // Получить ключ: https://console.groq.com/keys
 // ============================================
 
