@@ -206,13 +206,13 @@ section {
 }
 
 .btn-secondary {
-  background: rgba(255, 107, 43, 0.2);
+  background: var(--bg-primary);
   color: var(--text-primary);
   border: 2px solid var(--accent-orange);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 107, 43, 0.3);
+  background: var(--bg-surface);
   border-color: var(--accent-light);
   transform: translateY(-3px);
   box-shadow: 0 4px 20px rgba(255, 107, 43, 0.3);
