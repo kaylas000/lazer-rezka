@@ -3275,3 +3275,71 @@ a, button, .card, .service-card, .advantage, .step {
     grid-template-columns: 1fr;
   }
 }
+
+/* Price Banner */
+.price-banner {
+  padding: 0;
+  background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-elevated) 100%);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.price-banner-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  gap: 24px;
+}
+
+.price-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.price-banner-icon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 10px rgba(255, 107, 43, 0.3));
+}
+
+.price-banner-text > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.price-banner-text strong {
+  font-size: 1.125rem;
+  color: var(--text-primary);
+}
+
+.price-banner-text span {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.price-banner .btn {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .price-banner-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  .price-banner-text {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .price-banner .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
