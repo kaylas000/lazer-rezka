@@ -136,10 +136,16 @@ class AIChat {
       this.hideTyping();
       
       if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('API Error:', response.status, errorData);
+        
         if (response.status === 429) {
           throw new Error('Слишком много запросов. Пожалуйста, позвоните нам: +7 (985) 456-37-64');
         }
-        throw new Error('Ошибка сервера');
+        if (response.status === 401) {
+          throw new Error('Неверный API ключ. Позвоните нам: +7 (985) 456-37-64');
+        }
+        throw new Error('Ошибка связи с сервером. Позвоните: +7 (985) 456-37-64');
       }
       
       const data = await response.json();
@@ -163,7 +169,17 @@ class AIChat {
       console.error('Chat error:', error);
       
       // Показать сообщение об ошибке
-      const errorMessage = error.message || 'Сейчас я временно недоступен. Позвоните нам: +7 (985) 456-37-64';
+      let errorMessage = error.message;
+      
+      // CORS ошибка
+      if (error.message.includes('Failed to fetch') || error.message.includes('CORS')) {
+        errorMessage = 'Извините, сейчас я временно недоступен. Позвоните нам: +7 (985) 456-37-64 или напишите на info@lasercut.ru';
+      }
+      
+      if (!errorMessage) {
+        errorMessage = 'Сейчас я временно недоступен. Позвоните нам: +7 (985) 456-37-64';
+      }
+      
       this.addMessage(errorMessage, 'assistant', true);
     } finally {
       this.isProcessing = false;
