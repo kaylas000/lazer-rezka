@@ -4,9 +4,27 @@
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('.nav-menu');
 
-if (navToggle) {
-  navToggle.addEventListener('click', () => {
+if (navToggle && navMenu) {
+  navToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
     navMenu.classList.toggle('active');
+    navToggle.classList.toggle('active');
+  });
+  
+  // Закрыть меню при клике на ссылку
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('active');
+      navToggle.classList.remove('active');
+    });
+  });
+  
+  // Закрыть меню при клике вне его
+  document.addEventListener('click', (e) => {
+    if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+      navMenu.classList.remove('active');
+      navToggle.classList.remove('active');
+    }
   });
 }
 
