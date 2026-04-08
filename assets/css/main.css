@@ -2794,3 +2794,65 @@ a, button, .card, .service-card, .advantage, .step {
     padding: 24px;
   }
 }
+
+/* Review Form Page */
+.review-form-section {
+  padding: 60px 0;
+  background: var(--bg-light);
+}
+
+.review-form-intro {
+  max-width: 700px;
+  margin: 0 auto 40px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.review-form {
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.rating-input {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 8px;
+  font-size: 2rem;
+}
+
+.rating-input input[type="radio"] {
+  display: none;
+}
+
+.rating-input label {
+  cursor: pointer;
+  color: #ddd;
+  transition: color 0.2s;
+}
+
+.rating-input label:hover,
+.rating-input label:hover ~ label,
+.rating-input input[type="radio"]:checked ~ label {
+  color: #ffc107;
+}
+
+.existing-reviews {
+  padding: 60px 0;
+}
+
+@media (max-width: 768px) {
+  .review-form {
+    padding: 24px;
+  }
+  
+  .rating-input {
+    font-size: 1.5rem;
+  }
+}

@@ -1,8 +1,88 @@
-<!-- Reviews Section -->
-<section class="reviews">
+---
+layout: default
+title: "Оставить отзыв — Цех лазерной резки"
+description: "Поделитесь своим опытом работы с нами. Ваше мнение важно для нас и поможет другим клиентам."
+permalink: /reviews/
+---
+
+<section class="page-hero">
   <div class="container">
-    <h2 class="section-title">Отзывы клиентов</h2>
-    <p class="section-subtitle">Более 500 выполненных заказов за 4 года работы</p>
+    <h1>Оставить отзыв</h1>
+    <p class="lead">Поделитесь своим опытом работы с нами</p>
+  </div>
+</section>
+
+<section class="review-form-section">
+  <div class="container">
+    <div class="review-form-intro">
+      <p>Ваше мнение очень важно для нас! Расскажите о своём опыте работы с нашим цехом — это поможет нам стать лучше и поможет другим клиентам сделать правильный выбор.</p>
+    </div>
+
+    <form class="form review-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+      <input type="hidden" name="subject" value="Новый отзыв с сайта">
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Ваше имя *</label>
+          <input type="text" id="name" name="name" required minlength="2" placeholder="Иван Иванов">
+        </div>
+        
+        <div class="form-group">
+          <label for="company">Компания</label>
+          <input type="text" id="company" name="company" placeholder="ООО «Название»">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" required placeholder="ivan@example.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Телефон</label>
+          <input type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="rating">Оценка *</label>
+        <div class="rating-input">
+          <input type="radio" id="star5" name="rating" value="5" required>
+          <label for="star5" title="5 звёзд">★</label>
+          <input type="radio" id="star4" name="rating" value="4">
+          <label for="star4" title="4 звезды">★</label>
+          <input type="radio" id="star3" name="rating" value="3">
+          <label for="star3" title="3 звезды">★</label>
+          <input type="radio" id="star2" name="rating" value="2">
+          <label for="star2" title="2 звезды">★</label>
+          <input type="radio" id="star1" name="rating" value="1">
+          <label for="star1" title="1 звезда">★</label>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="review">Ваш отзыв *</label>
+        <textarea id="review" name="review" rows="6" required minlength="50" placeholder="Расскажите о своём опыте работы с нами: что понравилось, что можно улучшить..."></textarea>
+        <small>Минимум 50 символов</small>
+      </div>
+      
+      <div class="form-group">
+        <label class="checkbox">
+          <input type="checkbox" name="consent" required>
+          <span>Согласен на обработку персональных данных и публикацию отзыва на сайте *</span>
+        </label>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Отправить отзыв</button>
+    </form>
+  </div>
+</section>
+
+<section class="existing-reviews">
+  <div class="container">
+    <h2 class="section-title">Отзывы наших клиентов</h2>
     
     <div class="reviews-grid">
       <div class="review-card">
@@ -106,10 +186,6 @@
         </div>
         <div class="review-date">5 февраля 2024</div>
       </div>
-    </div>
-
-    <div class="reviews-cta">
-      <a href="/reviews/" class="btn btn-secondary">Оставить отзыв</a>
     </div>
   </div>
 </section>
