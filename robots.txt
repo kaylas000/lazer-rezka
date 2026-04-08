@@ -107,5 +107,5 @@ Disallow: /assets/js/api-key.js
 
 Crawl-delay: 1
 
-Sitemap: https://lasercut.ru/sitemap.xml
-Sitemap: https://lasercut.ru/ai-sitemap.json
+Sitemap: https://ceh-lazer-rezka.ru/sitemap.xml
+Sitemap: https://ceh-lazer-rezka.ru/ai-sitemap.json

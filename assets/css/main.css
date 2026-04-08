@@ -2643,3 +2643,47 @@ a, button, .card, .service-card, .advantage, .step {
     min-height: 300px;
   }
 }
+
+
+/* Breadcrumbs */
+.breadcrumbs {
+  padding: 16px 0;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.breadcrumbs li {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbs li:not(:last-child)::after {
+  content: '›';
+  margin-left: 8px;
+  color: var(--text-muted);
+}
+
+.breadcrumbs a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumbs a:hover {
+  color: var(--accent-orange);
+}
+
+.breadcrumbs li[aria-current="page"] {
+  color: var(--text-primary);
+  font-weight: 500;
+}
