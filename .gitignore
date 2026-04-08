@@ -12,8 +12,6 @@ node_modules/
 *~
 
 # AI Configuration (содержит API ключи)
-assets/js/ai-config.js
-ai-config.js
 *.env
 .env.local
 .env.production
