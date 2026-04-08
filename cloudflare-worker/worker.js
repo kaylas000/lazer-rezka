@@ -2,9 +2,9 @@
 // Проксирует запросы к Groq API с rate limiting и безопасностью
 
 // ============================================
-// ВСТАВЬТЕ СЮДА ВАШ GROQ API КЛЮЧ:
-const GROQ_API_KEY = 'ВСТАВЬТЕ_ВАШ_КЛЮЧ_СЮДА';
-// Получить ключ: https://console.groq.com/keys
+// API КЛЮЧ НАСТРАИВАЕТСЯ В CLOUDFLARE!
+// НЕ ВСТАВЛЯЙТЕ КЛЮЧ В ЭТОТ ФАЙЛ!
+// Инструкция: см. API_KEY_SETUP.md
 // ============================================
 
 const SYSTEM_PROMPT = `Ты — AI-консультант цеха лазерной резки.
@@ -154,7 +154,7 @@ export default {
       const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${GROQ_API_KEY}`,
+          'Authorization': `Bearer ${env.GROQ_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
