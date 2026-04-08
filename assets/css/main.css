@@ -225,6 +225,9 @@ section {
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, rgba(255, 107, 43, 0.03) 0%, transparent 50%);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .hero::before {
