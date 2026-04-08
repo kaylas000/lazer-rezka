@@ -96,16 +96,11 @@ class AIChat {
       let response;
       
       if (USE_DIRECT_API) {
-        // Проверка наличия ключа
-        if (typeof API_CONFIG === 'undefined' || !API_CONFIG.GROQ_API_KEY || API_CONFIG.GROQ_API_KEY === 'ВСТАВЬТЕ_ВАШ_КЛЮЧ_СЮДА') {
-          throw new Error('API ключ не настроен. Создайте файл assets/js/api-key.js из шаблона api-key.template.js');
-        }
-        
         // Прямой вызов Groq API
         response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${API_CONFIG.GROQ_API_KEY}`,
+            'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
