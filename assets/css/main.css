@@ -3328,6 +3328,10 @@ a, button, .card, .service-card, .advantage, .step {
   font-size: 1.0625rem;
 }
 
+.price-banner-content > a:last-child {
+  margin-left: 16px;
+}
+
 @media (max-width: 768px) {
   .price-banner-content {
     flex-direction: column;
