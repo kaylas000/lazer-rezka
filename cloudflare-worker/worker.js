@@ -144,28 +144,26 @@ export default {
         { role: 'user', content: message }
       ];
 
-      // Call OpenAI API
-      const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+      // Call Groq API
+      const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${env.OPENAI_API_KEY}`,
+          'Authorization': `Bearer ${env.GROQ_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'gpt-4o-mini',
+          model: 'llama-3.3-70b-versatile',
           messages: messages,
           max_tokens: 600,
-          temperature: 0.7,
-          presence_penalty: 0.6,
-          frequency_penalty: 0.3
+          temperature: 0.7
         })
       });
 
-      if (!openaiResponse.ok) {
-        throw new Error('OpenAI API error');
+      if (!groqResponse.ok) {
+        throw new Error('Groq API error');
       }
 
-      const data = await openaiResponse.json();
+      const data = await groqResponse.json();
       const reply = data.choices[0].message.content;
 
       // Update rate limit counter
