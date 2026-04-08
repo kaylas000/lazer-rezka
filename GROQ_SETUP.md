@@ -1,4 +1,4 @@
-# Настройка AI-консультанта с Groq API
+# Настройка AI-консультанта с Groq API (2026)
 
 ## 🚀 Groq — быстрая и бесплатная альтернатива OpenAI
 
@@ -9,7 +9,7 @@
 
 ---
 
-## 📋 Пошаговая инструкция
+## 📋 Пошаговая инструкция (обновлено 2026)
 
 ### ШАГ 1: Получи Groq API ключ
 
@@ -18,79 +18,89 @@
 3. Слева выбери **API Keys**
 4. Нажми **Create API Key**
 5. Скопируй ключ (начинается с `gsk_...`)
+6. **Сохрани ключ** — он больше не покажется!
 
 ---
 
-### ШАГ 2: Создай Cloudflare Worker
+### ШАГ 2: Создай Cloudflare Worker (интерфейс 2026)
 
 1. Иди на https://dash.cloudflare.com/
 2. Зарегистрируйся (бесплатно)
-3. Слева выбери **Workers & Pages**
-4. Нажми **Create Application**
+3. На главной странице найди **Workers & Pages** (в левом меню)
+4. Нажми **Create** (большая синяя кнопка)
 5. Выбери **Create Worker**
-6. Назови его: `ai-chat-lazer`
-7. Нажми **Deploy**
+6. Введи имя: `ai-chat-lazer` (или любое другое)
+7. Нажми **Deploy** (не редактируй код пока)
 
 ---
 
 ### ШАГ 3: Вставь код Worker
 
-1. После создания нажми **Edit Code**
-2. Удали весь код в редакторе
-3. Открой файл `/cloudflare-worker/worker.js` в этом проекте
-4. Скопируй **ВЕСЬ** код из него
-5. Вставь в редактор Cloudflare
-6. Нажми **Save and Deploy**
+1. После создания ты окажешься на странице Worker
+2. Нажми **Quick Edit** (справа вверху)
+3. Откроется редактор кода
+4. **Удали весь код** который там есть
+5. Открой файл `/cloudflare-worker/worker.js` в этом проекте
+6. Скопируй **ВЕСЬ** код из него (Ctrl+A, Ctrl+C)
+7. Вставь в редактор Cloudflare (Ctrl+V)
+8. Нажми **Save and Deploy** (справа вверху)
+9. Закрой редактор (крестик)
 
 ---
 
-### ШАГ 4: Добавь Groq API ключ ⚠️ ВАЖНО!
+### ШАГ 4: Добавь Groq API ключ ⚠️ САМОЕ ВАЖНОЕ!
 
-1. Вернись на страницу Worker (нажми стрелку назад)
-2. Вкладка **Settings**
-3. Раздел **Variables and Secrets**
-4. Нажми **Add variable**
-5. Заполни:
+**Интерфейс 2026:**
+
+1. Ты на странице своего Worker
+2. Вверху найди вкладки: **Metrics**, **Settings**, **Triggers**
+3. Кликни на **Settings**
+4. Прокрути вниз до раздела **Environment Variables**
+5. Нажми **Add variable**
+6. Заполни форму:
    ```
    Variable name: GROQ_API_KEY
-   Value: gsk_... (твой ключ из Groq)
-   ✅ Encrypt (поставь галочку!)
+   Value: gsk_ваш_ключ_из_groq
+   Type: Secret (выбери из выпадающего списка)
    ```
-6. Нажми **Save**
+7. Нажми **Save**
+8. Нажми **Deploy** (подтверди изменения)
+
+**Важно:** Тип должен быть **Secret**, а не Text!
 
 ---
 
 ### ШАГ 5: Скопируй URL Worker
 
-1. Вернись на главную страницу Worker
-2. Скопируй URL, например:
+1. Вернись на главную страницу Worker (нажми на имя Worker вверху)
+2. Найди раздел **Preview** или **Routes**
+3. Скопируй URL, он выглядит так:
    ```
-   https://ai-chat-lazer.your-name.workers.dev
+   https://ai-chat-lazer.ваше-имя.workers.dev
    ```
+4. Сохрани этот URL — он понадобится
 
 ---
 
 ### ШАГ 6: Вставь URL в сайт
 
-Открой файл `assets/js/ai-chat.js`
-
-Найди строку (в самом начале):
-```javascript
-const WORKER_URL = 'YOUR_CLOUDFLARE_WORKER_URL';
-```
-
-Замени на твой URL:
-```javascript
-const WORKER_URL = 'https://ai-chat-lazer.your-name.workers.dev';
-```
-
-Сохрани файл.
+1. Открой файл `assets/js/ai-chat.js` в редакторе
+2. В самом начале файла (строка 3) найди:
+   ```javascript
+   const WORKER_URL = 'YOUR_CLOUDFLARE_WORKER_URL';
+   ```
+3. Замени на твой URL:
+   ```javascript
+   const WORKER_URL = 'https://ai-chat-lazer.ваше-имя.workers.dev';
+   ```
+4. Сохрани файл
 
 ---
 
 ### ШАГ 7: Запуш на GitHub
 
 ```bash
+cd /workspaces/lazer-rezka
 git add assets/js/ai-chat.js
 git commit -m "Подключен Groq API Worker"
 git push origin main
@@ -102,67 +112,111 @@ git push origin main
 
 ## ✅ Проверка работы
 
-1. Открой свой сайт
-2. Кликни на кнопку чата (справа внизу)
+1. Открой свой сайт (обнови страницу Ctrl+F5)
+2. Кликни на кнопку чата (справа внизу, оранжевая)
 3. Напиши: "Привет"
-4. Должен прийти ответ от AI
+4. Должен прийти ответ от AI через 1-2 секунды
 
 ---
 
 ## 🐛 Если не работает
 
-### Проблема: "Ошибка сервера"
+### Проблема: "Ошибка сервера" или "Временно недоступен"
 
 **Решение:**
 1. Открой консоль браузера (F12)
 2. Вкладка **Console**
-3. Посмотри ошибку
+3. Посмотри ошибку (красный текст)
 4. Проверь:
-   - ✅ GROQ_API_KEY добавлен в Cloudflare Worker
-   - ✅ WORKER_URL правильный в ai-chat.js
-   - ✅ Ключ Groq валидный (не истёк)
+   - ✅ `GROQ_API_KEY` добавлен в Cloudflare Worker (Settings → Environment Variables)
+   - ✅ Тип переменной: **Secret** (не Text)
+   - ✅ `WORKER_URL` правильный в `ai-chat.js`
+   - ✅ Ключ Groq валидный (зайди на console.groq.com и проверь)
+   - ✅ Worker задеплоен (нажми Deploy после добавления переменной)
 
-### Проблема: "CORS error"
+### Проблема: "Failed to fetch" или "CORS error"
 
 **Решение:**
-В Cloudflare Worker проверь что есть:
-```javascript
-'Access-Control-Allow-Origin': '*'
-```
+1. Открой Cloudflare Worker → Quick Edit
+2. Проверь что в коде есть:
+   ```javascript
+   'Access-Control-Allow-Origin': '*'
+   ```
+3. Если нет — добавь в `corsHeaders`
+4. Save and Deploy
 
 ### Проблема: "429 Too Many Requests"
 
 **Решение:**
 Groq бесплатный план: 30 запросов/минуту.
-Если превысил — подожди минуту.
+Если превысил — подожди 1 минуту.
+
+### Проблема: Чат не открывается
+
+**Решение:**
+1. Проверь что файл `ai-chat.js` загружается (F12 → Network)
+2. Проверь что нет ошибок JavaScript (F12 → Console)
+3. Очисти кеш браузера (Ctrl+Shift+Delete)
 
 ---
 
-## 💰 Лимиты Groq (бесплатный план)
+## 💰 Лимиты Groq (бесплатный план 2026)
 
 - **30 запросов в минуту**
 - **14,400 запросов в день**
 - **Модель:** llama-3.3-70b-versatile
 - **Скорость:** ~500 токенов/сек (очень быстро!)
+- **Стоимость:** $0 (бесплатно)
 
 Этого хватит на **сотни клиентов в день**.
 
 ---
 
-## 🎯 Итого что нужно:
+## 🎯 Чеклист настройки
 
-1. ✅ Groq API ключ из https://console.groq.com/
-2. ✅ Cloudflare Worker с кодом из `/cloudflare-worker/worker.js`
-3. ✅ Переменная `GROQ_API_KEY` в настройках Worker
-4. ✅ URL Worker в `assets/js/ai-chat.js`
+- [ ] Получил Groq API ключ (gsk_...)
+- [ ] Создал Cloudflare Worker
+- [ ] Вставил код из `/cloudflare-worker/worker.js`
+- [ ] Добавил переменную `GROQ_API_KEY` (тип: Secret)
+- [ ] Нажал Deploy после добавления переменной
+- [ ] Скопировал URL Worker
+- [ ] Вставил URL в `assets/js/ai-chat.js`
+- [ ] Запушил на GitHub
+- [ ] Подождал 2-3 минуты
+- [ ] Проверил работу чата на сайте
 
 ---
 
-## 📞 Поддержка
+## 📞 Дополнительная помощь
 
-Если что-то не работает:
-1. Проверь консоль браузера (F12)
-2. Проверь логи Cloudflare Worker (вкладка Logs)
-3. Проверь что ключ Groq активен
+**Если всё равно не работает:**
 
-**Groq документация:** https://console.groq.com/docs/quickstart
+1. **Проверь логи Worker:**
+   - Cloudflare Dashboard → твой Worker
+   - Вкладка **Logs** (если доступна)
+   - Посмотри ошибки
+
+2. **Проверь Groq ключ:**
+   - Зайди на https://console.groq.com/
+   - API Keys → проверь что ключ активен
+   - Попробуй создать новый ключ
+
+3. **Проверь баланс Groq:**
+   - Бесплатный план не требует карты
+   - Но проверь что не превышен лимит
+
+**Документация:**
+- Groq: https://console.groq.com/docs/quickstart
+- Cloudflare Workers: https://developers.cloudflare.com/workers/
+
+---
+
+## 🎉 Готово!
+
+Теперь у тебя работает AI-консультант 24/7 который:
+- Отвечает на вопросы о лазерной резке
+- Помогает с выбором материалов
+- Рассчитывает примерную стоимость
+- Принимает заявки
+- Работает бесплатно (Groq)
+- Очень быстрый (1-2 секунды ответ)
