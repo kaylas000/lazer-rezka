@@ -211,6 +211,7 @@ section {
   }
   
   .nav-toggle {
+    display: flex;
     order: 2;
     z-index: 1001;
   }
