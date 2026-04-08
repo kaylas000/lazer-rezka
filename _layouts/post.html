@@ -71,7 +71,7 @@ layout: default
       <article class="blog-card">
         <div class="blog-image">
           {% if post.image %}
-          <img src="{{ post.image }}" alt="{{ post.title }}">
+          <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
           {% else %}
           <div class="blog-placeholder">📝</div>
           {% endif %}
