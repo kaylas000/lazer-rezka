@@ -206,14 +206,16 @@ section {
 }
 
 .btn-secondary {
-  background: transparent;
+  background: rgba(255, 107, 43, 0.2);
   color: var(--text-primary);
-  border: 2px solid var(--border-accent);
+  border: 2px solid var(--accent-orange);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 107, 43, 0.1);
-  border-color: var(--accent-orange);
+  background: rgba(255, 107, 43, 0.3);
+  border-color: var(--accent-light);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 20px rgba(255, 107, 43, 0.3);
 }
 
 /* Hero */
@@ -262,24 +264,29 @@ section {
   line-height: 1.15;
   letter-spacing: -0.02em;
   color: white;
-  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
   text-shadow: 
-    -1px -1px 0 rgba(0, 0, 0, 0.3),
-    1px -1px 0 rgba(0, 0, 0, 0.3),
-    -1px 1px 0 rgba(0, 0, 0, 0.3),
-    1px 1px 0 rgba(0, 0, 0, 0.3),
-    0px 0px 40px rgba(255, 107, 43, 0.3);
+    -2px -2px 0 rgba(0, 0, 0, 0.5),
+    2px -2px 0 rgba(0, 0, 0, 0.5),
+    -2px 2px 0 rgba(0, 0, 0, 0.5),
+    2px 2px 0 rgba(0, 0, 0, 0.5),
+    -1px -1px 0 rgba(0, 0, 0, 0.5),
+    1px -1px 0 rgba(0, 0, 0, 0.5),
+    -1px 1px 0 rgba(0, 0, 0, 0.5),
+    1px 1px 0 rgba(0, 0, 0, 0.5);
 }
 
 .hero-subtitle {
   font-size: clamp(1.125rem, 2vw, 1.375rem);
   color: white;
-  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.2);
   text-shadow: 
-    -1px -1px 0 rgba(0, 0, 0, 0.2),
-    1px -1px 0 rgba(0, 0, 0, 0.2),
-    -1px 1px 0 rgba(0, 0, 0, 0.2),
-    1px 1px 0 rgba(0, 0, 0, 0.2);
+    -2px -2px 0 rgba(0, 0, 0, 0.4),
+    2px -2px 0 rgba(0, 0, 0, 0.4),
+    -2px 2px 0 rgba(0, 0, 0, 0.4),
+    2px 2px 0 rgba(0, 0, 0, 0.4),
+    -1px -1px 0 rgba(0, 0, 0, 0.4),
+    1px -1px 0 rgba(0, 0, 0, 0.4),
+    -1px 1px 0 rgba(0, 0, 0, 0.4),
+    1px 1px 0 rgba(0, 0, 0, 0.4);
   margin-bottom: 36px;
   line-height: 1.6;
   max-width: 700px;
