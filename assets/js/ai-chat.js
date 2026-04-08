@@ -107,7 +107,7 @@ class AIChat {
       
       if (!response.ok) {
         if (response.status === 429) {
-          throw new Error('Слишком много запросов. Пожалуйста, позвоните нам: +7 (XXX) XXX-XX-XX');
+          throw new Error('Слишком много запросов. Пожалуйста, позвоните нам: +7 (985) 456-37-64');
         }
         throw new Error('Ошибка сервера');
       }
@@ -130,7 +130,7 @@ class AIChat {
       console.error('Chat error:', error);
       
       // Показать сообщение об ошибке
-      const errorMessage = error.message || 'Сейчас я временно недоступен. Позвоните нам: +7 (XXX) XXX-XX-XX';
+      const errorMessage = error.message || 'Сейчас я временно недоступен. Позвоните нам: +7 (985) 456-37-64';
       this.addMessage(errorMessage, 'assistant', true);
     } finally {
       this.isProcessing = false;
