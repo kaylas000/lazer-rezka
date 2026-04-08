@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Бот-писатель: генерирует статьи для блога через OpenAI GPT-4o
+Бот-писатель: генерирует статьи для блога через Groq API
 """
 
 import os
 import sys
 import json
 import yaml
+import requests
 from datetime import datetime
-from openai import OpenAI
 
 # Темы для статей
 TOPICS = [
@@ -78,9 +78,7 @@ def select_topic():
     return available[0]
 
 def generate_article(topic, api_key):
-    """Сгенерировать статью через OpenAI"""
-    client = OpenAI(api_key=api_key)
-    
+    """Сгенерировать статью через Groq API"""
     prompt = f"""Напиши SEO-оптимизированную статью для блога цеха лазерной резки на тему: "{topic}"
 
 Требования:
@@ -95,22 +93,27 @@ def generate_article(topic, api_key):
 
 Начни сразу с введения, без заголовка статьи."""
 
-    response = client.chat.completions.create(
-        model="gpt-4o",
-        messages=[
-            {"role": "system", "content": "Ты - эксперт по лазерной резке металла, пишешь статьи для блога цеха."},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=3000,
-        temperature=0.7
+    response = requests.post(
+        'https://api.groq.com/openai/v1/chat/completions',
+        headers={
+            'Authorization': f'Bearer {api_key}',
+            'Content-Type': 'application/json'
+        },
+        json={
+            'model': 'llama-3.3-70b-versatile',
+            'messages': [
+                {'role': 'system', 'content': 'Ты - эксперт по лазерной резке металла, пишешь статьи для блога цеха.'},
+                {'role': 'user', 'content': prompt}
+            ],
+            'max_tokens': 4000,
+            'temperature': 0.7
+        }
     )
     
-    return response.choices[0].message.content
+    return response.json()['choices'][0]['message']['content']
 
 def generate_metadata(topic, content, api_key):
     """Сгенерировать мета-данные для статьи"""
-    client = OpenAI(api_key=api_key)
-    
     prompt = f"""Для статьи на тему "{topic}" создай SEO-метаданные в формате JSON:
 
 {{
@@ -132,17 +135,24 @@ def generate_metadata(topic, content, api_key):
 
 Верни ТОЛЬКО JSON, без дополнительного текста."""
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "Ты - SEO-специалист."},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=300,
-        temperature=0.5
+    response = requests.post(
+        'https://api.groq.com/openai/v1/chat/completions',
+        headers={
+            'Authorization': f'Bearer {api_key}',
+            'Content-Type': 'application/json'
+        },
+        json={
+            'model': 'llama-3.3-70b-versatile',
+            'messages': [
+                {'role': 'system', 'content': 'Ты - SEO-специалист.'},
+                {'role': 'user', 'content': prompt}
+            ],
+            'max_tokens': 500,
+            'temperature': 0.5
+        }
     )
     
-    result = response.choices[0].message.content.strip()
+    result = response.json()['choices'][0]['message']['content'].strip()
     # Удалить markdown code blocks если есть
     if result.startswith('```'):
         result = result.split('\n', 1)[1]
@@ -185,9 +195,9 @@ def create_post_file(topic, content, metadata):
     return filepath
 
 def main():
-    api_key = os.environ.get('OPENAI_API_KEY')
+    api_key = os.environ.get('GROQ_API_KEY')
     if not api_key:
-        print("❌ OPENAI_API_KEY не установлен")
+        print("❌ GROQ_API_KEY не установлен")
         sys.exit(1)
     
     # Выбрать тему
