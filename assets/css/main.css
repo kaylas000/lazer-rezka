@@ -915,14 +915,6 @@ input:focus, textarea:focus, select:focus {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .nav-menu {
-    display: none;
-  }
-  
-  .nav-toggle {
-    display: flex;
-  }
-  
   .hero {
     min-height: 100vh;
     padding: 80px 0 60px;
