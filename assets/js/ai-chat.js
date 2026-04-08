@@ -44,6 +44,15 @@ class AIChat {
       }
     });
     
+    // Категории
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    categoryButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const category = e.target.dataset.category;
+        this.showCategoryQuestions(category);
+      });
+    });
+    
     // Автооткрытие через 30 секунд (один раз)
     if (!sessionStorage.getItem('chatOpened')) {
       setTimeout(() => {
@@ -236,6 +245,67 @@ class AIChat {
       this.history = this.history.slice(-50);
     }
     sessionStorage.setItem('chatHistory', JSON.stringify(this.history));
+  }
+  
+  showCategoryQuestions(category) {
+    const questions = {
+      prices: [
+        'Сколько стоит резка стали 3 мм?',
+        'Какая минимальная стоимость заказа?',
+        'Есть ли скидки на большой объём?',
+        'Сколько стоит срочный заказ?'
+      ],
+      materials: [
+        'Какие металлы вы режете?',
+        'Режете ли вы нержавейку?',
+        'Какую максимальную толщину можете резать?',
+        'Работаете ли с акрилом и фанерой?'
+      ],
+      technical: [
+        'Какая точность резки?',
+        'Какие форматы файлов принимаете?',
+        'Как подготовить чертёж для резки?',
+        'Какой размер листа можете обработать?'
+      ],
+      order: [
+        'Как оформить заказ?',
+        'Каковы сроки изготовления?',
+        'Есть ли доставка?',
+        'Нужна ли предоплата?'
+      ]
+    };
+    
+    const categoryQuestions = questions[category];
+    if (!categoryQuestions) return;
+    
+    const categoriesDiv = document.querySelector('.chat-categories');
+    if (categoriesDiv) categoriesDiv.style.display = 'none';
+    
+    const questionsDiv = document.createElement('div');
+    questionsDiv.className = 'quick-buttons category-questions';
+    questionsDiv.innerHTML = categoryQuestions.map(q => 
+      `<button class="quick-btn" data-message="${q}">${q}</button>`
+    ).join('');
+    
+    const backBtn = document.createElement('button');
+    backBtn.className = 'quick-btn back-btn';
+    backBtn.textContent = '← Назад к категориям';
+    backBtn.onclick = () => {
+      questionsDiv.remove();
+      if (categoriesDiv) categoriesDiv.style.display = 'block';
+    };
+    questionsDiv.appendChild(backBtn);
+    
+    questionsDiv.addEventListener('click', (e) => {
+      if (e.target.classList.contains('quick-btn') && !e.target.classList.contains('back-btn')) {
+        const message = e.target.dataset.message;
+        this.sendMessage(message);
+        questionsDiv.remove();
+      }
+    });
+    
+    this.chatBody.appendChild(questionsDiv);
+    this.scrollToBottom();
   }
   
   getSystemPrompt() {

@@ -3353,3 +3353,90 @@ a, button, .card, .service-card, .advantage, .step {
     justify-content: center;
   }
 }
+
+/* Chat Categories */
+.chat-categories {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.categories-title {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.category-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.category-btn {
+  padding: 12px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.category-btn:hover {
+  background: var(--bg-primary);
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+  transform: translateY(-2px);
+}
+
+.category-questions {
+  margin: 16px 0;
+  padding: 16px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+}
+
+.back-btn {
+  background: var(--bg-surface) !important;
+  border-color: var(--accent-orange) !important;
+  color: var(--accent-orange) !important;
+  margin-top: 8px;
+}
+
+.back-btn:hover {
+  background: var(--accent-orange) !important;
+  color: white !important;
+}
+
+/* Quick buttons improvements */
+.quick-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.quick-btn {
+  padding: 12px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.quick-btn:hover {
+  background: var(--bg-primary);
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+  transform: translateX(4px);
+}
