@@ -1,0 +1,3 @@
+# Защита API ключа от индексации
+User-agent: *
+Disallow: /assets/js/api-key.js

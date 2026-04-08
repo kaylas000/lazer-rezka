@@ -1,8 +1,6 @@
 // AI Chat - прямая интеграция с Groq API
-// ВНИМАНИЕ: Ключ будет виден в коде! Используйте только для тестирования.
-// Для продакшена используйте Cloudflare Worker.
+// Ключ загружается из отдельного файла api-key.js
 
-const GROQ_API_KEY = 'ВСТАВЬТЕ_ВАШ_КЛЮЧ_СЮДА'; // Получить на https://console.groq.com/keys
 const USE_DIRECT_API = true; // true = прямой вызов, false = через Cloudflare Worker
 const WORKER_URL = 'YOUR_CLOUDFLARE_WORKER_URL';
 
@@ -98,11 +96,16 @@ class AIChat {
       let response;
       
       if (USE_DIRECT_API) {
+        // Проверка наличия ключа
+        if (typeof API_CONFIG === 'undefined' || !API_CONFIG.GROQ_API_KEY || API_CONFIG.GROQ_API_KEY === 'ВСТАВЬТЕ_ВАШ_КЛЮЧ_СЮДА') {
+          throw new Error('API ключ не настроен. Создайте файл assets/js/api-key.js из шаблона api-key.template.js');
+        }
+        
         // Прямой вызов Groq API
         response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${GROQ_API_KEY}`,
+            'Authorization': `Bearer ${API_CONFIG.GROQ_API_KEY}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({

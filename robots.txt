@@ -103,6 +103,7 @@ Allow: /
 # ===== ВСЕ ОСТАЛЬНЫЕ =====
 User-agent: *
 Allow: /
+Disallow: /assets/js/api-key.js
 
 Crawl-delay: 1
 
