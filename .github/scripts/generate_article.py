@@ -46,29 +46,32 @@ def get_existing_topics():
     """Получить список уже использованных тем"""
     posts_dir = '_posts'
     if not os.path.exists(posts_dir):
-        return []
+        return [], []
     
-    existing = []
+    existing_titles = []
+    existing_slugs = []
     for filename in os.listdir(posts_dir):
         if filename.endswith('.md'):
             with open(os.path.join(posts_dir, filename), 'r', encoding='utf-8') as f:
                 content = f.read()
-                # Извлечь title из front matter
+                # Извлечь title и slug из front matter
                 if '---' in content:
                     parts = content.split('---')
                     if len(parts) >= 3:
                         try:
                             front_matter = yaml.safe_load(parts[1])
                             if 'title' in front_matter:
-                                existing.append(front_matter['title'])
+                                existing_titles.append(front_matter['title'])
+                            if 'slug' in front_matter:
+                                existing_slugs.append(front_matter['slug'])
                         except:
                             pass
-    return existing
+    return existing_titles, existing_slugs
 
 def select_topic():
     """Выбрать тему для новой статьи"""
-    existing = get_existing_topics()
-    available = [t for t in TOPICS if t not in existing]
+    existing_titles, existing_slugs = get_existing_topics()
+    available = [t for t in TOPICS if t not in existing_titles]
     
     if not available:
         print("Все темы уже использованы!")
