@@ -52,7 +52,7 @@ jobs:
           echo "article_url=https://lasercut.ru/blog/${DATE}/${SLUG}/" >> $GITHUB_OUTPUT
       
       - name: Send Telegram notification
-        if: success()
+        if: success() && env.TELEGRAM_BOT_TOKEN != ''
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -63,7 +63,7 @@ jobs:
             "success"
       
       - name: Notify on failure
-        if: failure()
+        if: failure() && env.TELEGRAM_BOT_TOKEN != ''
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
