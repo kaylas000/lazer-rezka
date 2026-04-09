@@ -105,7 +105,7 @@ def generate_article(topic, api_key):
                 {'role': 'system', 'content': 'Ты - эксперт по лазерной резке металла, пишешь статьи для блога цеха.'},
                 {'role': 'user', 'content': prompt}
             ],
-            'max_tokens': 4000,
+            'max_tokens': 6000,
             'temperature': 0.7
         }
     )

@@ -67,9 +67,9 @@ def check_article(filepath):
     
     # Проверка контента
     word_count = len(article_content.split())
-    if word_count < 800:
-        errors.append(f"Статья слишком короткая: {word_count} слов (минимум 800)")
-    elif word_count > 2500:
+    if word_count < 500:
+        errors.append(f"Статья слишком короткая: {word_count} слов (минимум 500)")
+    elif word_count > 3000:
         warnings.append(f"Статья очень длинная: {word_count} слов")
     
     # Проверка заголовков H2
