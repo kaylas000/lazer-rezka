@@ -169,6 +169,11 @@ def create_post_file(topic, content, metadata):
     filename = f"{date.strftime('%Y-%m-%d')}-{metadata['slug']}.md"
     filepath = os.path.join('_posts', filename)
     
+    # Проверить что файл не существует
+    if os.path.exists(filepath):
+        print(f"⚠️  Файл {filepath} уже существует!")
+        return None
+    
     # Создать директорию если не существует
     os.makedirs('_posts', exist_ok=True)
     
@@ -217,6 +222,12 @@ def main():
     # Сгенерировать метаданные
     print("⏳ Генерация метаданных...")
     metadata = generate_metadata(topic, content, api_key)
+    
+    # Проверить что slug уникален
+    existing_titles, existing_slugs = get_existing_topics()
+    if metadata['slug'] in existing_slugs:
+        print(f"⚠️  Slug {metadata['slug']} уже существует! Пропускаем генерацию.")
+        sys.exit(0)
     
     # Создать файл
     filepath = create_post_file(topic, content, metadata)
