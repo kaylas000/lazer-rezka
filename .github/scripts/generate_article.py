@@ -219,9 +219,12 @@ def main():
     filepath = create_post_file(topic, content, metadata)
     
     # Вывести информацию для GitHub Actions
-    print(f"::set-output name=filepath::{filepath}")
-    print(f"::set-output name=title::{metadata['title']}")
-    print(f"::set-output name=slug::{metadata['slug']}")
+    github_output = os.environ.get('GITHUB_OUTPUT')
+    if github_output:
+        with open(github_output, 'a') as f:
+            f.write(f"filepath={filepath}\n")
+            f.write(f"title={metadata['title']}\n")
+            f.write(f"slug={metadata['slug']}\n")
 
 if __name__ == '__main__':
     main()
