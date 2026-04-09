@@ -46,16 +46,21 @@ permalink: /contacts/
       </div>
       
       <div class="contact-form-wrapper">
+        <div id="success-message" class="alert alert-success" style="display: none; padding: 16px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; margin-bottom: 24px; color: #155724;">
+          ✅ <strong>Спасибо!</strong> Ваша заявка отправлена. Мы свяжемся с вами в течение 1 часа.
+        </div>
+        
         <h2>Отправить заявку</h2>
         <p>Заполните форму, и мы свяжемся с вами в течение 1 часа</p>
         
         <!-- Яндекс.Карты -->
         <div class="yandex-map" style="margin-bottom: 32px;">
-          <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Axxxxxxxxxxxxxxxxxxxxxxxxxx&amp;source=constructor" width="100%" height="400" frameborder="0" style="border-radius: 12px;"></iframe>
+          <iframe src="https://yandex.ru/map-widget/v1/?ll=37.1742%2C55.8397&z=16&pt=37.1742%2C55.8397~pm2rdm" width="100%" height="400" frameborder="0" style="border-radius: 12px;"></iframe>
         </div>
         
-        <form class="form" action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+        <form class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <input type="hidden" name="_subject" value="Новая заявка с сайта">
+          <input type="hidden" name="_next" value="https://ceh-lazer-rezka.ru/contacts/?success=true">
           <input type="hidden" name="subject" value="Новая заявка с сайта">
           
           <div class="form-group">
@@ -96,3 +101,14 @@ permalink: /contacts/
     </div>
   </div>
 </section>
+
+<script>
+// Показать сообщение об успешной отправке
+if (window.location.search.includes('success=true')) {
+  document.getElementById('success-message').style.display = 'block';
+  // Прокрутить к сообщению
+  document.getElementById('success-message').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // Убрать параметр из URL
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+</script>
