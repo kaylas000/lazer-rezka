@@ -10,79 +10,74 @@ import yaml
 import requests
 from datetime import datetime
 
-# Темы для статей
+# Темы для статей с фиксированными slug
 TOPICS = [
     # Технические
-    "Выбор толщины металла для лазерной резки",
-    "Лазерная резка vs плазменная: полное сравнение",
-    "Подготовка DXF файлов для лазерной резки",
-    "Допуски и погрешности при лазерной резке",
-    "Тепловое воздействие лазера на металл",
-    "Волоконный vs CO2 лазер: в чём разница",
-    "Скорость лазерной резки: от чего зависит",
-    "Качество торца реза: что влияет и как оценить",
+    {"title": "Выбор толщины металла для лазерной резки", "slug": "vybor-tolshchiny-metalla"},
+    {"title": "Лазерная резка vs плазменная: полное сравнение", "slug": "lazer-vs-plazma"},
+    {"title": "Подготовка DXF файлов для лазерной резки", "slug": "podgotovka-dxf"},
+    {"title": "Допуски и погрешности при лазерной резке", "slug": "dopuski-pogreshnosti"},
+    {"title": "Тепловое воздействие лазера на металл", "slug": "teplovoe-vozdejstvie"},
+    {"title": "Волоконный vs CO2 лазер: в чём разница", "slug": "volokonnyj-vs-co2"},
+    {"title": "Скорость лазерной резки: от чего зависит", "slug": "skorost-rezki"},
+    {"title": "Качество торца реза: что влияет и как оценить", "slug": "kachestvo-tortsa"},
     
     # Материалы
-    "Лазерная резка нержавеющей стали AISI 304",
-    "Алюминий для лазерной резки: марки и свойства",
-    "Резка оцинкованной стали: особенности",
-    "Лазерная резка меди и латуни",
-    "Лазерная резка акрила: прозрачный и цветной",
-    "Фанера для лазерной резки: выбор и подготовка",
+    {"title": "Лазерная резка нержавеющей стали AISI 304", "slug": "rezka-nerzhavejki"},
+    {"title": "Алюминий для лазерной резки: марки и свойства", "slug": "rezka-alyuminiya"},
+    {"title": "Резка оцинкованной стали: особенности", "slug": "rezka-ocinkovki"},
+    {"title": "Лазерная резка меди и латуни", "slug": "rezka-medi-latuni"},
+    {"title": "Лазерная резка акрила: прозрачный и цветной", "slug": "rezka-akrila"},
+    {"title": "Фанера для лазерной резки: выбор и подготовка", "slug": "rezka-fanery"},
     
     # Советы
-    "Как оформить заказ на лазерную резку",
-    "Чек-лист проверки чертежа перед отправкой",
-    "Как снизить стоимость заказа лазерной резки",
-    "Типичные ошибки при заказе лазерной резки",
+    {"title": "Как оформить заказ на лазерную резку", "slug": "kak-oformit-zakaz"},
+    {"title": "Чек-лист проверки чертежа перед отправкой", "slug": "chek-list-chertezha"},
+    {"title": "Как снизить стоимость заказа лазерной резки", "slug": "kak-snizit-stoimost"},
+    {"title": "Типичные ошибки при заказе лазерной резки", "slug": "tipichnye-oshibki"},
     
     # Применение
-    "Лазерная резка для производства вывесок",
-    "Металлические детали мебели: лазерная резка",
-    "Лазерная резка в строительстве и архитектуре",
+    {"title": "Лазерная резка для производства вывесок", "slug": "rezka-dlya-vyvesok"},
+    {"title": "Металлические детали мебели: лазерная резка", "slug": "rezka-dlya-mebeli"},
+    {"title": "Лазерная резка в строительстве и архитектуре", "slug": "rezka-v-stroitelstve"},
 ]
 
 def get_existing_topics():
-    """Получить список уже использованных тем"""
+    """Получить список уже использованных slug"""
     posts_dir = '_posts'
     if not os.path.exists(posts_dir):
-        return [], []
+        return []
     
-    existing_titles = []
     existing_slugs = []
     for filename in os.listdir(posts_dir):
         if filename.endswith('.md'):
             with open(os.path.join(posts_dir, filename), 'r', encoding='utf-8') as f:
                 content = f.read()
-                # Извлечь title и slug из front matter
                 if '---' in content:
                     parts = content.split('---')
                     if len(parts) >= 3:
                         try:
                             front_matter = yaml.safe_load(parts[1])
-                            if 'title' in front_matter:
-                                existing_titles.append(front_matter['title'])
                             if 'slug' in front_matter:
                                 existing_slugs.append(front_matter['slug'])
                         except:
                             pass
-    return existing_titles, existing_slugs
+    return existing_slugs
 
 def select_topic():
     """Выбрать тему для новой статьи"""
-    existing_titles, existing_slugs = get_existing_topics()
-    available = [t for t in TOPICS if t not in existing_titles]
+    existing_slugs = get_existing_topics()
+    available = [t for t in TOPICS if t['slug'] not in existing_slugs]
     
     if not available:
         print("Все темы уже использованы!")
         return None
     
-    # Выбрать первую доступную тему
     return available[0]
 
 def generate_article(topic, api_key):
     """Сгенерировать статью через Groq API"""
-    prompt = f"""Напиши SEO-оптимизированную статью для блога цеха лазерной резки на тему: "{topic}"
+    prompt = f"""Напиши SEO-оптимизированную статью для блога цеха лазерной резки на тему: "{topic['title']}"
 
 Требования:
 - Объём: 1200-1800 слов
@@ -117,12 +112,12 @@ def generate_article(topic, api_key):
 
 def generate_metadata(topic, content, api_key):
     """Сгенерировать мета-данные для статьи"""
-    prompt = f"""Для статьи на тему "{topic}" создай SEO-метаданные в формате JSON:
+    prompt = f"""Для статьи на тему "{topic['title']}" создай SEO-метаданные в формате JSON:
 
 {{
   "title": "SEO-заголовок до 60 символов",
   "description": "Мета-описание 150-160 символов",
-  "slug": "url-friendly-slug",
+  "slug": "{topic['slug']}",
   "category": "technical|materials|tips|application",
   "tags": ["тег1", "тег2", "тег3"],
   "keywords": "ключевые, слова, через, запятую"
@@ -131,7 +126,7 @@ def generate_metadata(topic, content, api_key):
 Требования:
 - title: должен содержать ключевые слова и быть привлекательным
 - description: должно побуждать к клику
-- slug: только латиница, цифры и дефисы
+- slug: ИСПОЛЬЗУЙ ТОЛЬКО "{topic['slug']}" - НЕ ИЗМЕНЯЙ!
 - category: выбери одну из четырёх
 - tags: 3-5 релевантных тегов
 - keywords: 5-7 ключевых слов
@@ -213,7 +208,7 @@ def main():
     if not topic:
         sys.exit(1)
     
-    print(f"📝 Генерация статьи на тему: {topic}")
+    print(f"📝 Генерация статьи на тему: {topic['title']}")
     
     # Сгенерировать статью
     print("⏳ Генерация текста...")
@@ -224,7 +219,7 @@ def main():
     metadata = generate_metadata(topic, content, api_key)
     
     # Проверить что slug уникален
-    existing_titles, existing_slugs = get_existing_topics()
+    existing_slugs = get_existing_topics()
     if metadata['slug'] in existing_slugs:
         print(f"⚠️  Slug {metadata['slug']} уже существует! Пропускаем генерацию.")
         sys.exit(0)
