@@ -3354,6 +3354,36 @@ a, button, .card, .service-card, .advantage, .step {
   }
 }
 
+/* Portfolio Photo — real image inside .portfolio-image */
+.portfolio-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+  transition: transform var(--transition);
+}
+
+.portfolio-item:hover .portfolio-photo {
+  transform: scale(1.04);
+}
+
+/* Placeholder must center its emoji and stay as fallback */
+.portfolio-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 5rem;
+  opacity: 0.3;
+  filter: drop-shadow(0 0 20px rgba(255, 107, 43, 0.3));
+  position: relative;
+  z-index: 0;
+}
+
 /* Chat Categories */
 .chat-categories {
   margin-top: 24px;
