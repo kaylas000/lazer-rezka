@@ -3363,6 +3363,13 @@ a, button, .card, .service-card, .advantage, .step {
   .price-banner .btn {
     width: 100%;
     justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .price-banner-content > a:last-child {
+    margin-left: 0;
+    margin-top: 12px;
   }
 }
 
