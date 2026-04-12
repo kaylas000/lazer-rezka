@@ -502,8 +502,15 @@ section {
 }
 
 .service-card {
+  --service-bg: none;
   display: block;
-  background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-elevated) 100%);
+  background:
+    linear-gradient(to bottom, rgba(5, 5, 10, 0.38) 0%, rgba(5, 5, 10, 0.70) 100%),
+    var(--service-bg),
+    linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-elevated) 100%);
+  background-size: cover, cover, 100% 100%;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
   padding: 32px;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-default);
@@ -511,7 +518,7 @@ section {
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
-  color: var(--text-primary);
+  color: #fff;
   cursor: pointer;
 }
 
@@ -544,6 +551,11 @@ section {
 
 .service-card h3 {
   margin-bottom: 12px;
+  color: #fff;
+}
+
+.service-card p {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .service-link {
