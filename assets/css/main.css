@@ -3489,3 +3489,488 @@ a, button, .card, .service-card, .advantage, .step {
   color: var(--accent-orange);
   transform: translateX(4px);
 }
+
+/* ============================================
+   Service Pages
+   ============================================ */
+
+/* --- Service Detail (metal / nonmetal / bending / engraving) --- */
+
+.service-detail {
+  padding: 60px 0;
+}
+
+.service-intro {
+  margin-bottom: 40px;
+}
+
+.intro-text {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 800px;
+}
+
+/* Two-column grid: main content + sidebar */
+.service-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 48px;
+  align-items: start;
+}
+
+.service-content h2 {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-size: clamp(1.4rem, 3vw, 1.875rem);
+}
+
+.service-content h2:first-child {
+  margin-top: 0;
+}
+
+/* --- Sidebar --- */
+
+.service-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 88px;
+}
+
+.sidebar-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.sidebar-card h3 {
+  font-size: 1.0625rem;
+  margin-bottom: 10px;
+}
+
+.sidebar-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.sidebar-card p:last-child {
+  margin-bottom: 0;
+}
+
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-links li a {
+  color: var(--accent-orange);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color var(--transition);
+}
+
+.sidebar-links li a:hover {
+  color: var(--accent-light);
+  text-decoration: underline;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+/* --- Material specs table (metal / nonmetal) — horizontal scroll, no page overflow --- */
+
+.material-specs-table {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-lg);
+  max-width: 100%;
+  margin-bottom: 32px;
+  border: 1px solid var(--border-default);
+}
+
+.material-specs-table table {
+  min-width: 520px;
+  margin: 0;
+  border-radius: 0;
+  border: none;
+  width: 100%;
+}
+
+/* --- Tech specs grid --- */
+
+.tech-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.spec-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 20px 16px;
+  text-align: center;
+  transition: border-color var(--transition);
+}
+
+.spec-card:hover {
+  border-color: var(--border-accent);
+}
+
+.spec-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.spec-card h3 {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.spec-card p {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* --- Advantages list --- */
+
+.advantages-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.advantages-list li {
+  padding: 12px 16px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-orange);
+  color: var(--text-secondary);
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+/* --- Applications grid --- */
+
+.applications {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.app-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  transition: border-color var(--transition);
+}
+
+.app-item:hover {
+  border-color: var(--border-accent);
+}
+
+.app-item h4 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.app-item p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* --- Process steps --- */
+
+.process-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.process-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+}
+
+.step-num {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-light));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: white;
+}
+
+.step-content h4 {
+  color: var(--text-primary);
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.step-content p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* --- Simple service content template (powder-coating / sandblasting / welding) --- */
+
+section.service-content {
+  padding: 60px 0;
+}
+
+section.service-content .container {
+  max-width: 860px;
+}
+
+section.service-content h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  margin-top: 40px;
+  margin-bottom: 16px;
+}
+
+section.service-content h2:first-child {
+  margin-top: 0;
+}
+
+section.service-content p {
+  margin-bottom: 16px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+section.service-content ul,
+section.service-content ol {
+  padding-left: 0;
+  margin-bottom: 24px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+section.service-content ul li,
+section.service-content ol li {
+  padding: 10px 16px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--border-accent);
+  color: var(--text-secondary);
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+/* --- Service CTA (inside simple service-content template) --- */
+
+.service-cta {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  margin-top: 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.service-cta h2 {
+  margin: 0;
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+}
+
+.service-cta .btn {
+  min-width: 200px;
+}
+
+.service-cta a:not(.btn) {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.service-cta a:not(.btn):hover {
+  color: var(--accent-orange);
+}
+
+/* --- Related services section --- */
+
+section.related-services {
+  padding: 48px 0;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+}
+
+section.related-services h2 {
+  margin-bottom: 20px;
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+}
+
+section.related-services ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+section.related-services ul li a {
+  display: inline-block;
+  padding: 10px 22px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all var(--transition);
+}
+
+section.related-services ul li a:hover {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+/* --- CTA section (bending / metal / nonmetal pages) --- */
+
+.cta-section {
+  padding: 60px 0;
+  background: linear-gradient(135deg, rgba(255, 107, 43, 0.06) 0%, transparent 60%);
+}
+
+.cta-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-md);
+}
+
+.cta-box h2 {
+  margin-bottom: 12px;
+}
+
+.cta-box p {
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  font-size: 1.0625rem;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   Service Pages — Adaptive (<=768px)
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Sidebar drops below content -> 1 column */
+  .service-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .service-sidebar {
+    position: static;
+  }
+
+  /* Tech specs -> 2 columns on tablet */
+  .tech-specs {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* Applications -> 1 column */
+  .applications {
+    grid-template-columns: 1fr;
+  }
+
+  /* CTA buttons -> stack vertically */
+  .cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .cta-buttons .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .cta-box {
+    padding: 32px 20px;
+  }
+
+  .service-cta {
+    padding: 24px 16px;
+  }
+
+  section.service-content h2 {
+    margin-top: 28px;
+  }
+
+  section.related-services ul {
+    flex-direction: column;
+  }
+
+  section.related-services ul li a {
+    display: block;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Tech specs -> 1 column on small phones */
+  .tech-specs {
+    grid-template-columns: 1fr;
+  }
+}
