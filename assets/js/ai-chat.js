@@ -2,7 +2,7 @@
 // Ключ загружается из отдельного файла api-key.js
 
 const USE_DIRECT_API = false; // true = прямой вызов, false = через Cloudflare Worker
-const WORKER_URL = 'https://my-worker.prof9ai.workers.dev';
+const WORKER_URL = window.SITE_AI_WORKER_URL || '';
 
 // ВНИМАНИЕ: Системный промпт работает только при USE_DIRECT_API = true
 // Если используете Worker (false), обновите промпт в коде Worker на Cloudflare
@@ -25,6 +25,13 @@ class AIChat {
   }
   
   init() {
+    // If Worker URL is not configured and not using direct API, hide the widget
+    if (!USE_DIRECT_API && !WORKER_URL) {
+      const widget = document.getElementById('aiChat');
+      if (widget) widget.style.display = 'none';
+      return;
+    }
+
     // Восстановить историю из sessionStorage
     const saved = sessionStorage.getItem('chatHistory');
     if (saved) {
