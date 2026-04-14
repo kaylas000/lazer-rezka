@@ -950,7 +950,20 @@ input:focus, textarea:focus, select:focus {
     gap: 32px;
   }
   
-  .btn {
+  .hero-cta .btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .materials-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .materials-cta .btn {
+    margin-left: 0 !important;
     width: 100%;
     text-align: center;
   }
