@@ -3511,6 +3511,11 @@ a, button, .card, .service-card, .advantage, .step {
 
 .service-detail {
   padding: 60px 0;
+  overflow-x: hidden;
+}
+
+.service-content {
+  overflow-x: hidden;
 }
 
 .service-intro {
