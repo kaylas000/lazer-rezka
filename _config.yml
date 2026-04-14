@@ -8,11 +8,8 @@ url: "https://ceh-lazer-rezka.ru"
 # Настройки Jekyll
 markdown: kramdown
 highlighter: rouge
-permalink: /blog/:year/:month/:slug/
+permalink: /blog/:year/:month/:title/
 timezone: Europe/Moscow
-
-# Убрать .html из URL
-permalink: pretty
 
 # Плагины
 plugins:
@@ -64,3 +61,10 @@ collections:
   services:
     output: true
     permalink: /services/:name/
+
+# Web3Forms integration
+web3forms:
+  access_key: "YOUR_ACCESS_KEY_HERE"
+
+# AI Chat Worker URL (Cloudflare Worker)
+ai_worker_url: ""

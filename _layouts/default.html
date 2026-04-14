@@ -81,6 +81,9 @@
   {% include footer.html %}
   {% include ai-chat-widget.html %}
   
+  <script>
+    window.SITE_AI_WORKER_URL = {{ site.ai_worker_url | default: "" | jsonify }};
+  </script>
   <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
   <script src="{{ '/assets/js/ai-chat.js' | relative_url }}"></script>
 </body>

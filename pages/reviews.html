@@ -22,9 +22,9 @@ permalink: /reviews/
       <p>Ваше мнение очень важно для нас! Расскажите о своём опыте работы с нашим цехом — это поможет нам стать лучше и поможет другим клиентам сделать правильный выбор.</p>
     </div>
 
-    <form class="form review-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-      <input type="hidden" name="_subject" value="Новый отзыв с сайта">
-      <input type="hidden" name="_next" value="https://ceh-lazer-rezka.ru/reviews/?success=true">
+    <form class="form review-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="{{ site.web3forms.access_key }}">
+      <input type="hidden" name="redirect" value="https://ceh-lazer-rezka.ru/reviews/?success=true">
       <input type="hidden" name="subject" value="Новый отзыв с сайта">
       
       <div class="form-row">
