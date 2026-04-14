@@ -29,8 +29,6 @@ jobs:
       
       - name: Generate article
         id: generate
-        env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: |
           python .github/scripts/generate_article.py
       

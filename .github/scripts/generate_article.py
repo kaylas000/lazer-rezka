@@ -11,6 +11,8 @@ import requests
 from datetime import datetime
 
 # Темы для статей с фиксированными slug
+WORKER_URL = 'https://my-worker.prof9ai.workers.dev'
+
 TOPICS = [
     # Технические
     {"title": "Выбор толщины металла для лазерной резки", "slug": "vybor-tolshchiny-metalla"},
@@ -75,8 +77,31 @@ def select_topic():
     
     return available[0]
 
+def call_worker(message, system=None, max_tokens=800):
+    """Отправить запрос через Cloudflare Worker"""
+    payload = {
+        'message': message,
+        'history': [],
+        'mode': 'generate',
+        'max_tokens': max_tokens
+    }
+    if system:
+        payload['system'] = system
+
+    response = requests.post(WORKER_URL, json=payload, headers={'Content-Type': 'application/json'})
+    data = response.json()
+
+    if data.get('error'):
+        print(f"Worker error: {data.get('message', 'Unknown error')}")
+        sys.exit(1)
+    if 'reply' not in data:
+        print(f"Unexpected Worker response: {json.dumps(data, ensure_ascii=False)[:500]}")
+        sys.exit(1)
+    return data['reply']
+
+
 def generate_article(topic, api_key):
-    """Сгенерировать статью через Groq API"""
+    """Сгенерировать статью через Cloudflare Worker (Groq API)"""
     prompt = f"""Напиши SEO-оптимизированную статью для блога цеха лазерной резки на тему: "{topic['title']}"
 
 Требования:
@@ -91,31 +116,8 @@ def generate_article(topic, api_key):
 
 Начни сразу с введения, без заголовка статьи."""
 
-    response = requests.post(
-        'https://api.groq.com/openai/v1/chat/completions',
-        headers={
-            'Authorization': f'Bearer {api_key}',
-            'Content-Type': 'application/json'
-        },
-        json={
-            'model': 'llama-3.3-70b-versatile',
-            'messages': [
-                {'role': 'system', 'content': 'Ты - эксперт по лазерной резке металла, пишешь статьи для блога цеха.'},
-                {'role': 'user', 'content': prompt}
-            ],
-            'max_tokens': 6000,
-            'temperature': 0.7
-        }
-    )
-    
-    data = response.json()
-    if 'error' in data:
-        print(f"Groq API error: {data['error']}")
-        sys.exit(1)
-    if 'choices' not in data:
-        print(f"Unexpected API response: {json.dumps(data, ensure_ascii=False)[:500]}")
-        sys.exit(1)
-    return data['choices'][0]['message']['content']
+    system = 'Ты - эксперт по лазерной резке металла, пишешь статьи для блога цеха.'
+    return call_worker(prompt, system=system, max_tokens=6000)
 
 def generate_metadata(topic, content, api_key):
     """Сгенерировать мета-данные для статьи"""
@@ -140,31 +142,8 @@ def generate_metadata(topic, content, api_key):
 
 Верни ТОЛЬКО JSON, без дополнительного текста."""
 
-    response = requests.post(
-        'https://api.groq.com/openai/v1/chat/completions',
-        headers={
-            'Authorization': f'Bearer {api_key}',
-            'Content-Type': 'application/json'
-        },
-        json={
-            'model': 'llama-3.3-70b-versatile',
-            'messages': [
-                {'role': 'system', 'content': 'Ты - SEO-специалист.'},
-                {'role': 'user', 'content': prompt}
-            ],
-            'max_tokens': 500,
-            'temperature': 0.5
-        }
-    )
-    
-    data = response.json()
-    if 'error' in data:
-        print(f"Groq API error: {data['error']}")
-        sys.exit(1)
-    if 'choices' not in data:
-        print(f"Unexpected API response: {json.dumps(data, ensure_ascii=False)[:500]}")
-        sys.exit(1)
-    result = data['choices'][0]['message']['content'].strip()
+    system = 'Ты - SEO-специалист.'
+    result = call_worker(prompt, system=system, max_tokens=500)
     # Удалить markdown code blocks если есть
     if result.startswith('```'):
         result = result.split('\n', 1)[1]
@@ -212,10 +191,8 @@ def create_post_file(topic, content, metadata):
     return filepath
 
 def main():
-    api_key = os.environ.get('GROQ_API_KEY')
-    if not api_key:
-        print("❌ GROQ_API_KEY не установлен")
-        sys.exit(1)
+    # API key is no longer needed directly - we use the Cloudflare Worker
+    # which has the key configured in its environment
     
     # Выбрать тему
     topic = select_topic()
@@ -226,11 +203,11 @@ def main():
     
     # Сгенерировать статью
     print("⏳ Генерация текста...")
-    content = generate_article(topic, api_key)
+    content = generate_article(topic, None)
     
     # Сгенерировать метаданные
     print("⏳ Генерация метаданных...")
-    metadata = generate_metadata(topic, content, api_key)
+    metadata = generate_metadata(topic, content, None)
     
     # Проверить что slug уникален
     existing_slugs = get_existing_topics()

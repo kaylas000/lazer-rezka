@@ -20,7 +20,8 @@ export default {
     }
 
     try {
-      const { message, history } = await request.json();
+      const body = await request.json();
+      const { message, history, max_tokens: reqMaxTokens, system: reqSystem, mode } = body;
 
       if (!message) {
         return new Response(JSON.stringify({ error: true, message: 'Message is required' }), {
@@ -128,9 +129,10 @@ export default {
 ПОМНИ: Ты помогаешь клиенту решить его задачу, а не просто отвечаешь на вопросы. Будь полезным!`;
 
       // Подготовить сообщения для API
+      const useSystem = reqSystem || systemPrompt;
       const messages = [
-        { role: 'system', content: systemPrompt },
-        ...history.slice(-10), // Последние 10 сообщений из истории
+        { role: 'system', content: useSystem },
+        ...(history || []).slice(-10), // Последние 10 сообщений из истории
         { role: 'user', content: message }
       ];
 
@@ -144,8 +146,8 @@ export default {
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
           messages: messages,
-          max_tokens: 800,
-          temperature: 0.8
+          max_tokens: reqMaxTokens || 800,
+          temperature: mode === 'generate' ? 0.7 : 0.8
         })
       });
 
