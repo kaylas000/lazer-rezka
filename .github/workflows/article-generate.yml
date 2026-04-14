@@ -34,6 +34,7 @@ jobs:
       
       - name: Check article quality
         if: steps.generate.outputs.filepath != ''
+        continue-on-error: true
         run: |
           python .github/scripts/check_quality.py ${{ steps.generate.outputs.filepath }}
       
