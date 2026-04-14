@@ -12,7 +12,15 @@ layout: default
       </div>
       
       <h1>{{ page.title }}</h1>
-      
+
+      <div class="post-hero-image">
+        {% if page.image %}
+        <img src="{{ page.image }}" alt="{{ page.title }}" loading="eager">
+        {% elsif site.ai_image_worker_url and site.ai_image_worker_url != "" %}
+        <img src="{{ site.ai_image_worker_url }}/generate?slug={{ page.slug }}&prompt={{ page.image_prompt | default: page.title | url_encode }}" alt="{{ page.title }}" loading="eager" onerror="this.parentElement.style.display='none'">
+        {% endif %}
+      </div>
+
       <div class="post-meta">
         <span class="meta-item">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -72,6 +80,8 @@ layout: default
         <div class="blog-image">
           {% if post.image %}
           <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+          {% elsif site.ai_image_worker_url and site.ai_image_worker_url != "" %}
+          <img src="{{ site.ai_image_worker_url }}/generate?slug={{ post.slug }}&prompt={{ post.image_prompt | default: post.title | url_encode }}" alt="{{ post.title }}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=blog-placeholder>📝</div>'">
           {% else %}
           <div class="blog-placeholder">📝</div>
           {% endif %}

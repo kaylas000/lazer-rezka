@@ -28,6 +28,8 @@ permalink: /blog/
         <div class="blog-image">
           {% if post.image %}
           <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+          {% elsif site.ai_image_worker_url and site.ai_image_worker_url != "" %}
+          <img src="{{ site.ai_image_worker_url }}/generate?slug={{ post.slug }}&prompt={{ post.image_prompt | default: post.title | url_encode }}" alt="{{ post.title }}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=blog-placeholder>📝</div>'">
           {% else %}
           <div class="blog-placeholder">📝</div>
           {% endif %}

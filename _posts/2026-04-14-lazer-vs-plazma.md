@@ -13,6 +13,7 @@ tags:
 - лазерная резка
 - плазменная резка
 - металлообработка
+image_prompt: "Split comparison of laser cutting beam and plasma cutting torch working on metal, sparks flying, industrial workshop"
 title: Лазерная резка vs плазма
 ---
 

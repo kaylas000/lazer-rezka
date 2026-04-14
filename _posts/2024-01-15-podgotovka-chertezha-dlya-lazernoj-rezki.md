@@ -6,6 +6,7 @@ date: 2024-01-15 09:00:00 +0300
 slug: "podgotovka-chertezha-dlya-lazernoj-rezki"
 category: "tips"
 tags: ["чертежи", "DXF", "подготовка", "советы"]
+image_prompt: "Technical drawing blueprint on a computer screen, DXF file for laser cutting, metal workshop with laser cutter in background"
 keywords: "подготовка чертежа, DXF для лазерной резки, требования к чертежам"
 author: "Редакция"
 generated: false

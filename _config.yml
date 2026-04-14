@@ -68,3 +68,7 @@ web3forms:
 
 # AI Chat Worker URL (Cloudflare Worker)
 ai_worker_url: "https://my-worker.prof9ai.workers.dev"
+
+# AI Image Generation Worker URL (Cloudflare Worker)
+# Deploy cloudflare-image-worker.js and set the URL here
+ai_image_worker_url: "https://image-worker.prof9ai.workers.dev"

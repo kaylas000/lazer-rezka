@@ -13,6 +13,7 @@ tags:
 - лазерная резка
 - толщина металла
 - технологии обработки
+image_prompt: "Different metal sheets of varying thickness stacked together, steel plates being measured with calipers in a workshop"
 title: 'Лазерная резка: выбор толщины'
 ---
 
