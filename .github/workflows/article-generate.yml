@@ -53,7 +53,7 @@ jobs:
         run: |
           SLUG="${{ steps.generate.outputs.slug }}"
           DATE=$(date +%Y/%m)
-          echo "article_url=https://lasercut.ru/blog/${DATE}/${SLUG}/" >> $GITHUB_OUTPUT
+          echo "article_url=https://ceh-lazer-rezka.ru/blog/${DATE}/${SLUG}/" >> $GITHUB_OUTPUT
       
       - name: Send Telegram notification
         if: success() && env.TELEGRAM_BOT_TOKEN != ''
