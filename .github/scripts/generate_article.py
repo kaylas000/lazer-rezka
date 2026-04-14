@@ -23,7 +23,11 @@ TOPICS = [
     {"title": "Волоконный vs CO2 лазер: в чём разница", "slug": "volokonnyj-vs-co2"},
     {"title": "Скорость лазерной резки: от чего зависит", "slug": "skorost-rezki"},
     {"title": "Качество торца реза: что влияет и как оценить", "slug": "kachestvo-tortsa"},
-    
+    {"title": "Лазерная резка: как работает фокусировка луча", "slug": "fokusirovka-lucha"},
+    {"title": "Газы для лазерной резки: азот, кислород, воздух", "slug": "gazy-dlya-rezki"},
+    {"title": "Что такое прожиг и как он влияет на деталь", "slug": "prozhig-metalla"},
+    {"title": "Лазерная гравировка на металле: возможности", "slug": "lazernaya-gravirovka"},
+
     # Материалы
     {"title": "Лазерная резка нержавеющей стали AISI 304", "slug": "rezka-nerzhavejki"},
     {"title": "Алюминий для лазерной резки: марки и свойства", "slug": "rezka-alyuminiya"},
@@ -31,17 +35,33 @@ TOPICS = [
     {"title": "Лазерная резка меди и латуни", "slug": "rezka-medi-latuni"},
     {"title": "Лазерная резка акрила: прозрачный и цветной", "slug": "rezka-akrila"},
     {"title": "Фанера для лазерной резки: выбор и подготовка", "slug": "rezka-fanery"},
-    
+    {"title": "Сталь Ст3 и 09Г2С: отличия при лазерной резке", "slug": "st3-vs-09g2s"},
+    {"title": "Титан и лазерная резка: особенности обработки", "slug": "rezka-titana"},
+
     # Советы
     {"title": "Как оформить заказ на лазерную резку", "slug": "kak-oformit-zakaz"},
     {"title": "Чек-лист проверки чертежа перед отправкой", "slug": "chek-list-chertezha"},
     {"title": "Как снизить стоимость заказа лазерной резки", "slug": "kak-snizit-stoimost"},
     {"title": "Типичные ошибки при заказе лазерной резки", "slug": "tipichnye-oshibki"},
-    
+    {"title": "Как правильно упаковать и транспортировать детали", "slug": "upakovka-transportirovka"},
+    {"title": "Серийное производство деталей: выгода и процесс", "slug": "serijnoe-proizvodstvo"},
+    {"title": "Прототипирование металлических деталей", "slug": "prototipirovanie"},
+
     # Применение
     {"title": "Лазерная резка для производства вывесок", "slug": "rezka-dlya-vyvesok"},
     {"title": "Металлические детали мебели: лазерная резка", "slug": "rezka-dlya-mebeli"},
     {"title": "Лазерная резка в строительстве и архитектуре", "slug": "rezka-v-stroitelstve"},
+    {"title": "Декоративные панели и перегородки из металла", "slug": "dekorativnye-paneli"},
+    {"title": "Лазерная резка для автомобильной промышленности", "slug": "rezka-dlya-avto"},
+    {"title": "Металлические корпуса и кожухи: изготовление", "slug": "korpusa-kozhukhi"},
+    {"title": "Лазерная резка для систем вентиляции и HVAC", "slug": "rezka-dlya-ventilyacii"},
+    {"title": "Металлические ограждения и заборы: лазерная резка", "slug": "ograzhdeniya-zabory"},
+
+    # Сопутствующие услуги
+    {"title": "Гибка металла после лазерной резки", "slug": "gibka-posle-rezki"},
+    {"title": "Порошковая покраска: защита и эстетика", "slug": "poroshkovaya-pokraska"},
+    {"title": "Пескоструйная обработка: когда и зачем", "slug": "peskostrujnaya-obrabotka"},
+    {"title": "Сварка деталей после лазерной резки", "slug": "svarka-posle-rezki"},
 ]
 
 def get_existing_topics():
@@ -129,7 +149,8 @@ def generate_metadata(topic, content, api_key):
   "slug": "{topic['slug']}",
   "category": "technical|materials|tips|application",
   "tags": ["тег1", "тег2", "тег3"],
-  "keywords": "ключевые, слова, через, запятую"
+  "keywords": "ключевые, слова, через, запятую",
+  "image_prompt": "English description for AI image generation, visual and descriptive"
 }}
 
 Требования:
@@ -139,6 +160,9 @@ def generate_metadata(topic, content, api_key):
 - category: выбери одну из четырёх
 - tags: 3-5 релевантных тегов
 - keywords: 5-7 ключевых слов
+- image_prompt: ОБЯЗАТЕЛЬНО на английском, описание картинки для AI-генерации,
+  должно быть визуальным и связанным с темой статьи (например: "Laser beam cutting
+  through thick steel plate, sparks flying, industrial workshop")
 
 Верни ТОЛЬКО JSON, без дополнительного текста."""
 
@@ -177,8 +201,11 @@ def create_post_file(topic, content, metadata):
         'keywords': metadata['keywords'],
         'author': 'AI-редакция',
         'generated': True,
-        'reviewed': False
+        'reviewed': False,
     }
+    # Add image_prompt if available (for AI image generation)
+    if metadata.get('image_prompt'):
+        front_matter['image_prompt'] = metadata['image_prompt']
     
     # Записать файл
     with open(filepath, 'w', encoding='utf-8') as f:
