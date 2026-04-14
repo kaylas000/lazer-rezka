@@ -108,7 +108,14 @@ def generate_article(topic, api_key):
         }
     )
     
-    return response.json()['choices'][0]['message']['content']
+    data = response.json()
+    if 'error' in data:
+        print(f"Groq API error: {data['error']}")
+        sys.exit(1)
+    if 'choices' not in data:
+        print(f"Unexpected API response: {json.dumps(data, ensure_ascii=False)[:500]}")
+        sys.exit(1)
+    return data['choices'][0]['message']['content']
 
 def generate_metadata(topic, content, api_key):
     """Сгенерировать мета-данные для статьи"""
@@ -150,7 +157,14 @@ def generate_metadata(topic, content, api_key):
         }
     )
     
-    result = response.json()['choices'][0]['message']['content'].strip()
+    data = response.json()
+    if 'error' in data:
+        print(f"Groq API error: {data['error']}")
+        sys.exit(1)
+    if 'choices' not in data:
+        print(f"Unexpected API response: {json.dumps(data, ensure_ascii=False)[:500]}")
+        sys.exit(1)
+    result = data['choices'][0]['message']['content'].strip()
     # Удалить markdown code blocks если есть
     if result.startswith('```'):
         result = result.split('\n', 1)[1]
