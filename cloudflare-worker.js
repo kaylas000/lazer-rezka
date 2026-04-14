@@ -20,12 +20,39 @@ export default {
     }
 
     try {
+      // Определить регион пользователя из Cloudflare headers
+      const cf = request.cf || {};
+      const userRegion = cf.region || '';
+      const userCity = cf.city || '';
+      const userCountry = cf.country || '';
+      
+      // Москва и Московская область
+      const moscowRegions = ['Moscow', 'Moscow Oblast', 'Moskovskaya Oblast'];
+      const moscowCities = ['Moscow', 'Москва'];
+      const isLocalRegion = 
+        userCountry === 'RU' && (
+          moscowRegions.some(r => userRegion.includes(r)) ||
+          moscowCities.some(c => userCity.includes(c)) ||
+          userRegion === 'MOW' || userRegion === 'MOS'
+        );
+      // Если регион неизвестен (нет CF headers), считаем локальным
+      const regionUnknown = !userCountry && !userRegion && !userCity;
+      const treatAsLocal = isLocalRegion || regionUnknown;
+      
       const body = await request.json();
       const { message, history, max_tokens: reqMaxTokens, system: reqSystem, mode } = body;
 
       if (!message) {
         return new Response(JSON.stringify({ error: true, message: 'Message is required' }), {
           status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
+      // Для пользователей вне Москвы/МО -- вернуть шаблонный ответ
+      if (!treatAsLocal) {
+        const templateReply = getTemplateResponse(message);
+        return new Response(JSON.stringify({ reply: templateReply, region: 'other' }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         });
       }
@@ -167,7 +194,7 @@ export default {
       const data = await apiResponse.json();
       const reply = data.choices[0].message.content;
 
-      return new Response(JSON.stringify({ reply }), {
+      return new Response(JSON.stringify({ reply, region: 'local' }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
 
@@ -184,3 +211,29 @@ export default {
     }
   }
 };
+
+/**
+ * Шаблонные ответы для пользователей вне Москвы/МО.
+ * Подбор по ключевым словам в сообщении.
+ */
+function getTemplateResponse(message) {
+  const lower = message.toLowerCase();
+
+  if (lower.includes('цен') || lower.includes('стои') || lower.includes('прайс') || lower.includes('сколько')) {
+    return 'Стоимость лазерной резки зависит от материала, толщины и объёма заказа. Ориентировочные цены:\n\n• Сталь: от 80 руб/пог.м\n• Нержавейка: от 120 руб/пог.м\n• Алюминий: от 100 руб/пог.м\n\nДля точного расчёта отправьте чертёж на info@lasercut.ru или позвоните: +7 (985) 456-37-64';
+  }
+  if (lower.includes('материал') || lower.includes('металл') || lower.includes('нержав') || lower.includes('алюмин') || lower.includes('сталь')) {
+    return 'Мы работаем с основными металлами:\n\n• Сталь Ст3, 09Г2С: до 20 мм\n• Нержавейка AISI 304, 316: до 12 мм\n• Алюминий АД31, АМГ: до 10 мм\n\nПодробности по телефону: +7 (985) 456-37-64';
+  }
+  if (lower.includes('заказ') || lower.includes('оформ') || lower.includes('чертёж') || lower.includes('чертеж') || lower.includes('файл')) {
+    return 'Чтобы оформить заказ:\n\n1. Подготовьте чертёж (DXF, DWG, CDR, AI, SVG, PDF)\n2. Отправьте на info@lasercut.ru\n3. Мы рассчитаем стоимость в течение часа\n\n📞 +7 (985) 456-37-64\n📍 Нахабино ул. Новая 7';
+  }
+  if (lower.includes('доставк') || lower.includes('самовывоз') || lower.includes('привез')) {
+    return 'Самовывоз из цеха: Нахабино ул. Новая 7, Московская область.\nДоставка обсуждается индивидуально.\n\n📞 +7 (985) 456-37-64';
+  }
+  if (lower.includes('точност') || lower.includes('формат') || lower.includes('dxf') || lower.includes('толщин')) {
+    return 'Точность нашей лазерной резки: ±0.01 мм.\nПринимаем файлы: DXF, DWG, CDR, AI, SVG, PDF.\nВажно: векторные замкнутые контуры, толщина линий hairline.\n\nПодробнее: +7 (985) 456-37-64';
+  }
+
+  return 'Спасибо за интерес! Наш цех находится в Нахабино (Московская область). Для уточнения деталей и расчёта стоимости свяжитесь с нами:\n\n📞 +7 (985) 456-37-64\n📧 info@lasercut.ru\n\nМы работаем Пн-Пт 8:00-18:00.';
+}

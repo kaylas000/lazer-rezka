@@ -4,6 +4,19 @@
 const USE_DIRECT_API = false; // true = прямой вызов, false = через Cloudflare Worker
 const WORKER_URL = window.SITE_AI_WORKER_URL || '';
 
+// Лимит сообщений за сессию (только сообщения пользователя считаются)
+const MAX_USER_MESSAGES = 5;
+
+// Заготовки ответов для пользователей вне Москвы/МО
+const TEMPLATE_RESPONSES = {
+  default: 'Спасибо за интерес! Наш цех находится в Нахабино (Московская область). Для уточнения деталей и расчёта стоимости свяжитесь с нами:\n\n📞 +7 (985) 456-37-64\n📧 info@lasercut.ru\n\nМы работаем Пн-Пт 8:00-18:00.',
+  prices: 'Стоимость лазерной резки зависит от материала, толщины и объёма заказа. Ориентировочные цены:\n\n• Сталь: от 80 руб/пог.м\n• Нержавейка: от 120 руб/пог.м\n• Алюминий: от 100 руб/пог.м\n\nДля точного расчёта отправьте чертёж на info@lasercut.ru или позвоните: +7 (985) 456-37-64',
+  materials: 'Мы работаем с основными металлами:\n\n• Сталь Ст3, 09Г2С: до 20 мм\n• Нержавейка AISI 304, 316: до 12 мм\n• Алюминий АД31, АМГ: до 10 мм\n\nПодробности по телефону: +7 (985) 456-37-64',
+  order: 'Чтобы оформить заказ:\n\n1. Подготовьте чертёж (DXF, DWG, CDR, AI, SVG, PDF)\n2. Отправьте на info@lasercut.ru\n3. Мы рассчитаем стоимость в течение часа\n\n📞 +7 (985) 456-37-64\n📍 Нахабино ул. Новая 7',
+  delivery: 'Самовывоз из цеха: Нахабино ул. Новая 7, Московская область.\nДоставка обсуждается индивидуально.\n\n📞 +7 (985) 456-37-64',
+  technical: 'Точность нашей лазерной резки: ±0.01 мм.\nПринимаем файлы: DXF, DWG, CDR, AI, SVG, PDF.\nВажно: векторные замкнутые контуры, толщина линий hairline.\n\nПодробнее: +7 (985) 456-37-64',
+};
+
 // ВНИМАНИЕ: Системный промпт работает только при USE_DIRECT_API = true
 // Если используете Worker (false), обновите промпт в коде Worker на Cloudflare
 
@@ -20,6 +33,8 @@ class AIChat {
     
     this.history = [];
     this.isProcessing = false;
+    this.userMessageCount = parseInt(sessionStorage.getItem('chatMessageCount') || '0', 10);
+    this.isLocalRegion = null; // null = unknown, true = Moscow/MO, false = other
     
     this.init();
   }
@@ -32,11 +47,22 @@ class AIChat {
       return;
     }
 
+    // Восстановить регион из sessionStorage
+    const savedRegion = sessionStorage.getItem('chatRegion');
+    if (savedRegion) {
+      this.isLocalRegion = savedRegion === 'local';
+    }
+
     // Восстановить историю из sessionStorage
     const saved = sessionStorage.getItem('chatHistory');
     if (saved) {
       this.history = JSON.parse(saved);
       this.renderHistory();
+    }
+
+    // Проверить лимит при инициализации
+    if (this.userMessageCount >= MAX_USER_MESSAGES) {
+      this.disableInput();
     }
     
     // События
@@ -103,9 +129,31 @@ class AIChat {
   async sendMessage(message) {
     if (this.isProcessing) return;
     
+    // Проверить лимит сообщений
+    if (this.userMessageCount >= MAX_USER_MESSAGES) {
+      this.showLimitReached();
+      return;
+    }
+    
     // Добавить сообщение пользователя
     this.addMessage(message, 'user');
     this.history.push({ role: 'user', content: message });
+    this.userMessageCount++;
+    sessionStorage.setItem('chatMessageCount', this.userMessageCount.toString());
+    
+    // Если пользователь вне Москвы/МО -- отвечаем шаблоном без вызова AI
+    if (this.isLocalRegion === false) {
+      this.showTyping();
+      // Имитируем небольшую задержку для естественности
+      await new Promise(r => setTimeout(r, 500));
+      this.hideTyping();
+      const reply = this.getTemplateResponse(message);
+      this.addMessage(reply, 'assistant');
+      this.history.push({ role: 'assistant', content: reply });
+      this.saveHistory();
+      this.checkLimitAfterMessage();
+      return;
+    }
     
     // Показать индикатор печати
     this.showTyping();
@@ -168,6 +216,12 @@ class AIChat {
         throw new Error(data.message || 'Произошла ошибка');
       }
       
+      // Обновить информацию о регионе из ответа Worker
+      if (data.region !== undefined) {
+        this.isLocalRegion = data.region === 'local';
+        sessionStorage.setItem('chatRegion', this.isLocalRegion ? 'local' : 'other');
+      }
+      
       // Получить ответ (разные форматы для прямого API и Worker)
       const reply = USE_DIRECT_API ? data.choices[0].message.content : data.reply;
       
@@ -197,7 +251,63 @@ class AIChat {
       this.addMessage(errorMessage, 'assistant', true);
     } finally {
       this.isProcessing = false;
+      this.checkLimitAfterMessage();
     }
+  }
+  
+  /**
+   * Подбирает шаблонный ответ по ключевым словам в сообщении
+   */
+  getTemplateResponse(message) {
+    const lower = message.toLowerCase();
+    
+    if (lower.includes('цен') || lower.includes('стои') || lower.includes('прайс') || lower.includes('сколько')) {
+      return TEMPLATE_RESPONSES.prices;
+    }
+    if (lower.includes('материал') || lower.includes('металл') || lower.includes('нержав') || lower.includes('алюмин') || lower.includes('сталь')) {
+      return TEMPLATE_RESPONSES.materials;
+    }
+    if (lower.includes('заказ') || lower.includes('оформ') || lower.includes('чертёж') || lower.includes('чертеж') || lower.includes('файл')) {
+      return TEMPLATE_RESPONSES.order;
+    }
+    if (lower.includes('доставк') || lower.includes('самовывоз') || lower.includes('привез')) {
+      return TEMPLATE_RESPONSES.delivery;
+    }
+    if (lower.includes('точност') || lower.includes('формат') || lower.includes('dxf') || lower.includes('толщин')) {
+      return TEMPLATE_RESPONSES.technical;
+    }
+    
+    return TEMPLATE_RESPONSES.default;
+  }
+  
+  /**
+   * Показать сообщение о достижении лимита и заблокировать ввод
+   */
+  showLimitReached() {
+    const limitMsg = 'Вы достигли лимита сообщений в чате. Для продолжения общения свяжитесь с нами напрямую:\n\n📞 +7 (985) 456-37-64\n📧 info@lasercut.ru\n\nМы работаем Пн-Пт 8:00-18:00.';
+    this.addMessage(limitMsg, 'assistant');
+    this.disableInput();
+  }
+  
+  /**
+   * Проверить лимит после отправки сообщения
+   */
+  checkLimitAfterMessage() {
+    if (this.userMessageCount >= MAX_USER_MESSAGES) {
+      this.disableInput();
+    }
+  }
+  
+  /**
+   * Заблокировать поле ввода
+   */
+  disableInput() {
+    if (this.chatInput) {
+      this.chatInput.disabled = true;
+      this.chatInput.placeholder = 'Лимит сообщений достигнут. Позвоните: +7 (985) 456-37-64';
+    }
+    const submitBtn = this.chatForm?.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
   }
   
   addMessage(text, role, isError = false) {
