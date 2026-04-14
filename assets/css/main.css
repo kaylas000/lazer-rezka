@@ -1915,6 +1915,77 @@ a, button, .card, .service-card, .advantage, .step {
   margin-bottom: 24px;
 }
 
+/* Blog Post CTA */
+.post-cta {
+  max-width: 800px;
+  margin: 48px auto 0;
+  padding: 40px 36px;
+  background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-elevated) 100%);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.post-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-orange), var(--accent-light));
+}
+
+.post-cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  margin-top: 0;
+}
+
+.post-cta p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.post-cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.post-cta-buttons .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.post-cta-buttons .btn svg {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .post-cta {
+    padding: 28px 20px;
+    margin: 32px auto 0;
+  }
+
+  .post-cta-buttons {
+    flex-direction: column;
+  }
+
+  .post-cta-buttons .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 .post-footer {
   max-width: 800px;
   margin: 48px auto 0;
