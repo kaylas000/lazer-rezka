@@ -22,21 +22,21 @@ permalink: /contacts/
           <a href="tel:{{ site.company.phone }}" class="contact-link">{{ site.company.phone }}</a>
           <p>Звоните в рабочее время</p>
         </div>
-
+        
         <div class="contact-card">
           <div class="contact-icon">✉️</div>
           <h3>Email</h3>
           <a href="mailto:{{ site.company.email }}" class="contact-link">{{ site.company.email }}</a>
           <p>Ответим в течение 1 часа</p>
         </div>
-
+        
         <div class="contact-card">
           <div class="contact-icon">🕐</div>
           <h3>Режим работы</h3>
           <p class="contact-link">{{ site.company.hours }}</p>
           <p>Суббота, воскресенье — выходной</p>
         </div>
-
+        
         <div class="contact-card">
           <div class="contact-icon">📍</div>
           <h3>Адрес</h3>
@@ -44,56 +44,57 @@ permalink: /contacts/
           <p>Самовывоз по предварительной договорённости</p>
         </div>
       </div>
-
+      
       <div class="contact-form-wrapper">
         <div id="success-message" class="alert alert-success" style="display: none; padding: 16px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; margin-bottom: 24px; color: #155724;">
           ✅ <strong>Спасибо!</strong> Ваша заявка отправлена. Мы свяжемся с вами в течение 1 часа.
         </div>
-
+        
         <h2>Отправить заявку</h2>
         <p>Заполните форму, и мы свяжемся с вами в течение 1 часа</p>
-
+        
+        <!-- Яндекс.Карты -->
         <div class="yandex-map" style="margin-bottom: 32px;">
-          <iframe src="https://yandex.ru/map-widget/v1/?text=%D0%9D%D0%B0%D1%85%D0%B0%D0%B1%D0%B8%D0%BD%D0%BE%20%D1%83%D0%BB.%20%D0%9D%D0%BE%D0%B2%D0%B0%D1%8F%207&z=17" width="100%" height="400" frameborder="0" style="border-radius: 12px;"></iframe>
+          <iframe src="https://yandex.ru/map-widget/v1/?ll=37.1742%2C55.8397&z=16&pt=37.1742%2C55.8397~pm2rdm" width="100%" height="400" frameborder="0" style="border-radius: 12px;"></iframe>
         </div>
-
+        
         <form class="form" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
           <input type="hidden" name="access_key" value="{{ site.web3forms.access_key }}">
           <input type="hidden" name="redirect" value="https://ceh-lazer-rezka.ru/contacts/?success=true">
           <input type="hidden" name="subject" value="Новая заявка с сайта">
-
+          
           <div class="form-group">
             <label for="name">Имя *</label>
             <input type="text" id="name" name="name" required minlength="2">
           </div>
-
+          
           <div class="form-group">
             <label for="phone">Телефон *</label>
             <input type="tel" id="phone" name="phone" required pattern="[+]?[0-9]{10,15}">
           </div>
-
+          
           <div class="form-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email">
           </div>
-
+          
           <div class="form-group">
             <label for="message">Сообщение</label>
             <textarea id="message" name="message" rows="4"></textarea>
           </div>
-
+          
           <div class="form-group">
             <label for="file">Прикрепить чертёж (DXF, DWG, PDF)</label>
             <input type="file" id="file" name="attachment" accept=".dxf,.dwg,.pdf,.svg">
           </div>
-
+          
           <div class="form-group">
             <label class="checkbox">
               <input type="checkbox" name="consent" required>
               <span>Согласен на обработку персональных данных *</span>
             </label>
           </div>
-
+          
           <button type="submit" class="btn btn-primary btn-block">Отправить заявку</button>
         </form>
       </div>
