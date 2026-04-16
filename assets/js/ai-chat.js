@@ -73,10 +73,10 @@ class AIChat {
       }, 30000);
     }
     
-    // Автооткрытие на странице калькулятора
-    if (window.location.pathname.includes('/calculator/')) {
-      setTimeout(() => this.open(), 2000);
-    }
+    // Автооткрытие на странице калькулятора отключено, чтобы не мешать заполнению формы
+    // if (window.location.pathname.includes('/calculator/')) {
+    //   setTimeout(() => this.open(), 2000);
+    // }
   }
   
   open() {

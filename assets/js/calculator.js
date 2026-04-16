@@ -36,12 +36,12 @@ materialSelect.addEventListener('change', () => {
   const availableThicknesses = Object.keys(prices[material]).map(Number);
   const maxThickness = Math.max(...availableThicknesses);
   const minThickness = Math.min(...availableThicknesses);
-  
+
   thicknessSlider.max = maxThickness;
   thicknessSlider.min = minThickness;
   thicknessSlider.value = minThickness;
   thicknessValue.textContent = minThickness;
-  
+
   // Обновляем подписи
   const rangeLabels = document.querySelector('.range-labels');
   rangeLabels.innerHTML = `<span>${minThickness} мм</span><span>${maxThickness} мм</span>`;
@@ -54,34 +54,34 @@ calculateBtn.addEventListener('click', () => {
   const length = parseFloat(lengthInput.value);
   const quantity = parseInt(quantityInput.value);
   const orderType = document.querySelector('input[name="orderType"]:checked').value;
-  
+
   // Дополнительные услуги
   const bending = document.getElementById('bending')?.checked || false;
   const painting = document.getElementById('painting')?.checked || false;
   const sandblasting = document.getElementById('sandblasting')?.checked || false;
-  
+
   // Валидация
   if (!length || length <= 0) {
     showError('Укажите длину реза');
     return;
   }
-  
+
   if (!quantity || quantity <= 0) {
     showError('Укажите количество деталей');
     return;
   }
-  
+
   // Получаем цену за погонный метр
   let pricePerMeter = getPriceForThickness(material, thickness);
-  
+
   // Базовая стоимость
   let totalPrice = pricePerMeter * length * quantity;
-  
+
   // Коэффициенты
   let coefficient = 1;
   let coefficientText = '';
   const additionalServices = [];
-  
+
   if (orderType === 'urgent') {
     coefficient = 1.3;
     coefficientText = 'Срочный заказ: +30%';
@@ -89,9 +89,9 @@ calculateBtn.addEventListener('click', () => {
     coefficient = 0.85;
     coefficientText = 'Серийный заказ: -15%';
   }
-  
+
   totalPrice = totalPrice * coefficient;
-  
+
   // Дополнительные услуги
   if (bending) {
     totalPrice *= 1.2;
@@ -105,12 +105,12 @@ calculateBtn.addEventListener('click', () => {
     totalPrice *= 1.15;
     additionalServices.push('Пескоструйная обработка: +15%');
   }
-  
+
   // Минимальный заказ
   if (totalPrice < MIN_ORDER) {
     totalPrice = MIN_ORDER;
   }
-  
+
   // Показываем результат
   showResult({
     material: materialSelect.options[materialSelect.selectedIndex].text,
@@ -128,27 +128,27 @@ calculateBtn.addEventListener('click', () => {
 // Получение цены с интерполяцией
 function getPriceForThickness(material, thickness) {
   const priceList = prices[material];
-  
+
   // Если точное значение есть
   if (priceList[thickness]) {
     return priceList[thickness];
   }
-  
+
   // Интерполяция между ближайшими значениями
   const thicknesses = Object.keys(priceList).map(Number).sort((a, b) => a - b);
-  
+
   for (let i = 0; i < thicknesses.length - 1; i++) {
     if (thickness > thicknesses[i] && thickness < thicknesses[i + 1]) {
       const t1 = thicknesses[i];
       const t2 = thicknesses[i + 1];
       const p1 = priceList[t1];
       const p2 = priceList[t2];
-      
+
       // Линейная интерполяция
       return p1 + (p2 - p1) * (thickness - t1) / (t2 - t1);
     }
   }
-  
+
   // Если толщина больше максимальной
   return priceList[thicknesses[thicknesses.length - 1]];
 }
@@ -160,7 +160,7 @@ function showResult(data) {
       <div class="result-header">
         <h3>Расчёт стоимости</h3>
       </div>
-      
+
       <div class="result-details">
         <div class="result-row">
           <span>Материал:</span>
@@ -193,23 +193,23 @@ function showResult(data) {
         </div>
         `).join('') : ''}
       </div>
-      
+
       <div class="result-total">
         <span>Итого:</span>
         <strong>${data.totalPrice.toLocaleString('ru-RU')} ₽</strong>
       </div>
-      
+
       <div class="result-actions">
         <button class="btn btn-primary btn-block" onclick="openOrderForm()">Заказать</button>
         <button class="btn btn-secondary btn-block" onclick="window.print()">Распечатать</button>
       </div>
-      
+
       <div class="result-note">
         <small>* Окончательная цена зависит от сложности контура и уточняется после анализа чертежа</small>
       </div>
     </div>
   `;
-  
+
   resultDiv.innerHTML = html;
   resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
@@ -222,7 +222,7 @@ function showError(message) {
       <p>${message}</p>
     </div>
   `;
-  
+
   resultDiv.innerHTML = html;
 }
 
@@ -232,7 +232,7 @@ function openOrderForm() {
   const thickness = thicknessSlider.value;
   const length = lengthInput.value;
   const quantity = quantityInput.value;
-  
+
   // Переход на страницу контактов с параметрами
   const params = new URLSearchParams({
     material,
@@ -240,7 +240,7 @@ function openOrderForm() {
     length,
     quantity
   });
-  
+
   window.location.href = `/contacts/?${params.toString()}`;
 }
 

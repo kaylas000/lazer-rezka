@@ -1,7 +1,7 @@
 {
   "site": {
     "name": "Цех лазерной резки",
-    "url": "https://lazer-rezka.github.io",
+    "url": "https://ceh-lazer-rezka.ru",
     "description": "Профессиональная лазерная резка металла в Москве. Точность ±0.01мм, сроки от 1 дня, онлайн-калькулятор стоимости.",
     "language": "ru",
     "updated": "2024-04-01",
@@ -120,6 +120,18 @@
       "priority": "medium"
     },
     {
+      "url": "/services/engraving/",
+      "title": "Лазерная гравировка металла",
+      "description": "Лазерная гравировка на металле, пластике, дереве и стекле. Нанесение логотипов, маркировка деталей.",
+      "topics": ["лазерная гравировка", "маркировка", "нанесение логотипов"],
+      "last_updated": "2024-04-01",
+      "content_type": "service",
+      "word_count": 1000,
+      "has_data": true,
+      "citable": true,
+      "priority": "medium"
+    },
+    {
       "url": "/calculator/",
       "title": "Калькулятор стоимости лазерной резки",
       "description": "Онлайн-калькулятор для расчёта стоимости лазерной резки металла. Мгновенный расчёт цены.",
@@ -225,5 +237,5 @@
   ],
   "update_frequency": "weekly",
   "citation_policy": "open",
-  "preferred_citation": "Цех лазерной резки (lazer-rezka, 2024)"
+  "preferred_citation": "Цех лазерной резки (ceh-lazer-rezka.ru, 2024)"
 }

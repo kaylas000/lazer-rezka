@@ -89,13 +89,13 @@
     transition: var(--transition);
     pointer-events: none;
   }
-  
+
   .nav-menu.active {
     transform: translateY(0);
     opacity: 1;
     pointer-events: all;
   }
-  
+
   .nav-menu li {
     margin-bottom: 16px;
   }

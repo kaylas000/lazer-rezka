@@ -1,5 +1,3 @@
-// Главный JS файл
-
 // Мобильное меню
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('.nav-menu');
@@ -10,7 +8,7 @@ if (navToggle && navMenu) {
     navMenu.classList.toggle('active');
     navToggle.classList.toggle('active');
   });
-  
+
   // Закрыть меню при клике на ссылку
   navMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
@@ -18,7 +16,7 @@ if (navToggle && navMenu) {
       navToggle.classList.remove('active');
     });
   });
-  
+
   // Закрыть меню при клике вне его
   document.addEventListener('click', (e) => {
     if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
@@ -62,14 +60,14 @@ document.querySelectorAll('.stat-value').forEach(stat => {
 function animateCounter(element) {
   const text = element.textContent;
   const number = parseInt(text.replace(/\D/g, ''));
-  
+
   if (isNaN(number)) return;
-  
+
   const duration = 2000;
   const steps = 60;
   const increment = number / steps;
   let current = 0;
-  
+
   const timer = setInterval(() => {
     current += increment;
     if (current >= number) {

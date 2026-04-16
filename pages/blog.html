@@ -20,7 +20,7 @@ permalink: /blog/
       <button class="filter-btn" data-filter="materials">Материалы</button>
       <button class="filter-btn" data-filter="tips">Советы</button>
     </div>
-    
+
     {% if site.posts.size > 0 %}
     <div class="blog-grid">
       {% for post in site.posts limit: 12 %}
@@ -49,7 +49,7 @@ permalink: /blog/
       <div class="empty-icon">📚</div>
       <h3>Скоро здесь появятся статьи</h3>
       <p>Мы готовим для вас полезные материалы о лазерной резке</p>
-      
+
       <div class="blog-preview">
         <h4>Планируемые темы:</h4>
         <ul>
@@ -87,10 +87,10 @@ const blogCards = document.querySelectorAll('.blog-card');
 blogFilterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     const filter = btn.dataset.filter;
-    
+
     blogFilterBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    
+
     blogCards.forEach(card => {
       if (filter === 'all' || card.dataset.category === filter) {
         card.style.display = 'block';

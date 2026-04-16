@@ -7,7 +7,7 @@ layout: null
   "home_page_url": "{{ site.url }}",
   "feed_url": "{{ site.url }}/feed.json",
   "description": "{{ site.description }}",
-  "icon": "{{ site.url }}/assets/images/icon.png",
+  "icon": "{{ site.url }}/assets/images/icon-512.png",
   "favicon": "{{ site.url }}/favicon.ico",
   "authors": [
     {

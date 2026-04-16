@@ -37,7 +37,7 @@ company:
   email: "info@lasercut.ru"
   address: "Нахабино ул. Новая 7"
   hours: "Пн-Пт 8:00-18:00"
-  
+
 # SEO
 lang: ru
 author: "Цех лазерной резки"
@@ -55,7 +55,7 @@ image: /assets/images/hero.jpg
 # Настройки производительности
 sass:
   style: compressed
-  
+
 # Коллекции
 collections:
   services:

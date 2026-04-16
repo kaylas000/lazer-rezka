@@ -18,7 +18,7 @@ permalink: /reviews/
       <div id="success-message" class="alert alert-success" style="display: none; padding: 16px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; margin-bottom: 24px; color: #155724;">
         ✅ <strong>Спасибо за отзыв!</strong> Мы получили ваше сообщение и опубликуем его после модерации.
       </div>
-      
+
       <p>Ваше мнение очень важно для нас! Расскажите о своём опыте работы с нашим цехом — это поможет нам стать лучше и поможет другим клиентам сделать правильный выбор.</p>
     </div>
 
@@ -26,31 +26,31 @@ permalink: /reviews/
       <input type="hidden" name="access_key" value="{{ site.web3forms.access_key }}">
       <input type="hidden" name="redirect" value="https://ceh-lazer-rezka.ru/reviews/?success=true">
       <input type="hidden" name="subject" value="Новый отзыв с сайта">
-      
+
       <div class="form-row">
         <div class="form-group">
           <label for="name">Ваше имя *</label>
           <input type="text" id="name" name="name" required minlength="2" placeholder="Иван Иванов">
         </div>
-        
+
         <div class="form-group">
           <label for="company">Компания</label>
           <input type="text" id="company" name="company" placeholder="ООО «Название»">
         </div>
       </div>
-      
+
       <div class="form-row">
         <div class="form-group">
           <label for="email">Email *</label>
           <input type="email" id="email" name="email" required placeholder="ivan@example.com">
         </div>
-        
+
         <div class="form-group">
           <label for="phone">Телефон</label>
           <input type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67">
         </div>
       </div>
-      
+
       <div class="form-group">
         <label for="rating">Оценка *</label>
         <div class="rating-input">
@@ -66,20 +66,20 @@ permalink: /reviews/
           <label for="star1" title="1 звезда">★</label>
         </div>
       </div>
-      
+
       <div class="form-group">
         <label for="review">Ваш отзыв *</label>
         <textarea id="review" name="review" rows="6" required minlength="50" placeholder="Расскажите о своём опыте работы с нами: что понравилось, что можно улучшить..."></textarea>
         <small>Минимум 50 символов</small>
       </div>
-      
+
       <div class="form-group">
         <label class="checkbox">
           <input type="checkbox" name="consent" required>
           <span>Согласен на обработку персональных данных и публикацию отзыва на сайте *</span>
         </label>
       </div>
-      
+
       <button type="submit" class="btn btn-primary">Отправить отзыв</button>
     </form>
   </div>
@@ -88,7 +88,7 @@ permalink: /reviews/
 <section class="existing-reviews">
   <div class="container">
     <h2 class="section-title">Отзывы наших клиентов</h2>
-    
+
     <div class="reviews-grid">
       <div class="review-card">
         <div class="review-header">

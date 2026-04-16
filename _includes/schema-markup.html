@@ -1,167 +1,82 @@
-<!-- Schema.org JSON-LD разметка -->
+<!-- Organization Schema (global, safe on all pages) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "{{ site.company.name }}",
-  "image": "{{ '/assets/images/logo.png' | absolute_url }}",
-  "@id": "{{ site.url }}",
-  "url": "{{ site.url }}",
-  "telephone": "{{ site.company.phone }}",
-  "email": "{{ site.company.email }}",
+  "@type": "Organization",
+  "name": "{{ site.data.business.name }}",
+  "legalName": "{{ site.data.business.legalName }}",
+  "url": "{{ site.data.business.url }}",
+  "logo": "{{ '/assets/images/icon-512.png' | absolute_url }}",
+  "description": "{{ site.data.business.description }}",
+  "foundingDate": "{{ site.data.business.foundingDate }}",
+  "telephone": "{{ site.data.business.phone }}",
+  "email": "{{ site.data.business.email }}",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "ул. Новая, д.7",
-    "addressLocality": "Нахабино",
-    "addressRegion": "Московская область",
-    "addressCountry": "RU"
+    "streetAddress": "{{ site.data.business.address.street }}",
+    "addressLocality": "{{ site.data.business.address.locality }}",
+    "addressRegion": "{{ site.data.business.address.region }}",
+    "postalCode": "{{ site.data.business.address.postalCode }}",
+    "addressCountry": "{{ site.data.business.address.country }}"
   },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 55.8397,
-    "longitude": 37.1742
-  },
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday"
-    ],
-    "opens": "08:00",
-    "closes": "18:00"
-  },
-  "priceRange": "₽₽",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "127",
-    "bestRating": "5",
-    "worstRating": "1"
-  },
-  "review": [
-    {
-      "@type": "Review",
-      "author": {
-        "@type": "Person",
-        "name": "Алексей Морозов"
-      },
-      "datePublished": "2024-03-15",
-      "reviewBody": "Заказывали резку металлоконструкций для производственного цеха. Точность идеальная, сроки соблюдены.",
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      }
-    },
-    {
-      "@type": "Review",
-      "author": {
-        "@type": "Person",
-        "name": "Мария Соколова"
-      },
-      "datePublished": "2024-03-08",
-      "reviewBody": "Делали декоративные панели из нержавейки для ресторана. Качество резки на высоте.",
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      }
-    },
-    {
-      "@type": "Review",
-      "author": {
-        "@type": "Person",
-        "name": "Дмитрий Петров"
-      },
-      "datePublished": "2024-03-01",
-      "reviewBody": "Срочно нужна была резка алюминия. Сделали за день! Точность ±0.01мм — это не просто слова.",
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      }
-    }
+  "areaServed": [
+    { "@type": "City", "name": "Москва" },
+    { "@type": "State", "name": "Московская область" }
   ],
-  "sameAs": [
-    "{{ site.url }}"
-  ]
-}
-</script>
-
-{% if page.layout == 'post' %}
-<!-- BlogPosting Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "{{ page.title }}",
-  "description": "{{ page.description }}",
-  "image": "{{ page.image | default: '/assets/images/default-post.jpg' | absolute_url }}",
-  "datePublished": "{{ page.date | date_to_xmlschema }}",
-  "dateModified": "{{ page.date | date_to_xmlschema }}",
-  "author": {
-    "@type": "Organization",
-    "name": "{{ site.company.name }}"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "{{ site.company.name }}",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "{{ '/assets/images/logo.png' | absolute_url }}"
-    }
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "{{ page.url | absolute_url }}"
-  },
-  "keywords": "{{ page.keywords | default: page.tags | join: ', ' }}"
-}
-</script>
-{% endif %}
-
-{% if page.url contains '/services/' %}
-<!-- Service Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "{{ page.title }}",
-  "provider": {
-    "@type": "LocalBusiness",
-    "name": "{{ site.company.name }}",
-    "telephone": "{{ site.company.phone }}",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Москва",
-      "addressCountry": "RU"
-    }
-  },
-  "areaServed": {
-    "@type": "City",
-    "name": "Москва"
-  },
+  "knowsAbout": {{ site.data.business.knowsAbout | jsonify }},
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Услуги лазерной резки",
+    "name": "Услуги металлообработки",
     "itemListElement": [
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "{{ page.title }}"
-        }
+        "itemOffered": { "@type": "Service", "name": "Лазерная резка стали", "description": "Резка стали толщиной 1-20мм с точностью ±0.01мм" }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "Лазерная резка нержавейки", "description": "Резка нержавеющей стали AISI 304 толщиной 1-12мм" }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "Лазерная резка алюминия", "description": "Резка алюминия АД31 толщиной 1-10мм" }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "Гибка металла", "description": "Листогибочные работы до 4мм" }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "Порошковая покраска", "description": "Прочное полимерное покрытие любого цвета RAL" }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "Пескоструйная обработка", "description": "Очистка и подготовка металлической поверхности" }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "Сварочные работы", "description": "Аргонно-дуговая сварка стали и нержавейки" }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "Лазерная гравировка", "description": "Гравировка на металле, нанесение логотипов" }
       }
     ]
   }
 }
 </script>
-{% endif %}
 
-<!-- BreadcrumbList Schema -->
+<!-- WebSite Schema (global) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ site.data.business.name }}",
+  "url": "{{ site.data.business.url }}",
+  "inLanguage": "ru-RU"
+}
+</script>
+
+<!-- BreadcrumbList Schema (all pages except home) -->
 {% if page.url != '/' %}
 <script type="application/ld+json">
 {
@@ -213,89 +128,74 @@
 </script>
 {% endif %}
 
-
-<!-- Organization Schema с полным E-E-A-T -->
+<!-- ManufacturingFacility Schema (contacts page only) -->
+{% if page.url == '/contacts/' %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "{{ site.company.name }}",
-  "url": "{{ site.url }}",
-  "logo": "{{ '/assets/images/icon-512.png' | absolute_url }}",
-  "description": "Профессиональная лазерная резка металла в Москве. Точность ±0.01мм, сроки от 1 дня.",
-  "foundingDate": "2020",
+  "@type": "ManufacturingFacility",
+  "name": "{{ site.data.business.name }}",
+  "url": "{{ site.data.business.url }}",
+  "telephone": "{{ site.data.business.phone }}",
+  "email": "{{ site.data.business.email }}",
+  "image": "{{ '/assets/images/icon-512.png' | absolute_url }}",
+  "priceRange": "{{ site.data.business.priceRange }}",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "ул. Новая, д.7",
-    "addressLocality": "Нахабино",
-    "addressRegion": "Московская область",
-    "addressCountry": "RU"
+    "streetAddress": "{{ site.data.business.address.street }}",
+    "addressLocality": "{{ site.data.business.address.locality }}",
+    "addressRegion": "{{ site.data.business.address.region }}",
+    "postalCode": "{{ site.data.business.address.postalCode }}",
+    "addressCountry": "{{ site.data.business.address.country }}"
   },
-  "areaServed": [
-    {
-      "@type": "City",
-      "name": "Москва"
-    },
-    {
-      "@type": "State",
-      "name": "Московская область"
-    }
-  ],
-  "knowsAbout": [
-    "лазерная резка металла",
-    "лазерная резка стали",
-    "лазерная резка нержавейки",
-    "лазерная резка алюминия",
-    "гибка металла",
-    "порошковая покраска",
-    "пескоструйная обработка",
-    "сварочные работы"
-  ],
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Услуги металлообработки",
-    "itemListElement": [
-      {
-        "@type": "OfferCatalog",
-        "name": "Лазерная резка металла",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Лазерная резка стали",
-              "description": "Резка стали толщиной 1-20мм с точностью ±0.01мм"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Лазерная резка нержавейки",
-              "description": "Резка нержавеющей стали AISI 304 толщиной 1-12мм"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Лазерная резка алюминия",
-              "description": "Резка алюминия АД31 толщиной 1-10мм с точностью ±0.01мм"
-            }
-          }
-        ]
-      }
-    ]
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": {{ site.data.business.geo.lat }},
+    "longitude": {{ site.data.business.geo.lon }}
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": {{ site.data.business.openingHours.days | jsonify }},
+    "opens": "{{ site.data.business.openingHours.opens }}",
+    "closes": "{{ site.data.business.openingHours.closes }}"
   }
 }
 </script>
+{% endif %}
 
-{% if page.layout == 'post' %}
-<!-- Article Schema с E-E-A-T и SpeakableSpecification -->
+<!-- Service Schema (service pages only) -->
+{% if page.url contains '/services/' %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
+  "@type": "Service",
+  "serviceType": "{{ page.title }}",
+  "provider": {
+    "@type": "Organization",
+    "name": "{{ site.data.business.name }}",
+    "telephone": "{{ site.data.business.phone }}",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ site.data.business.address.street }}",
+      "addressLocality": "{{ site.data.business.address.locality }}",
+      "addressRegion": "{{ site.data.business.address.region }}",
+      "addressCountry": "{{ site.data.business.address.country }}"
+    }
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Москва"
+  }
+}
+</script>
+{% endif %}
+
+<!-- BlogPosting + Article Schema (blog posts only) -->
+{% if page.layout == 'post' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
   "headline": "{{ page.title }}",
   "description": "{{ page.description | default: page.excerpt | strip_html | truncate: 160 }}",
   "image": "{{ page.image | default: '/assets/images/icon-512.png' | absolute_url }}",
@@ -303,14 +203,12 @@
   "dateModified": "{{ page.date | date_to_xmlschema }}",
   "author": {
     "@type": "Organization",
-    "name": "{{ site.company.name }}",
-    "url": "{{ site.url }}",
-    "knowsAbout": ["лазерная резка", "металлообработка", "производство"],
-    "hasCredential": "4+ года опыта в лазерной резке металла"
+    "name": "{{ site.data.business.name }}",
+    "url": "{{ site.data.business.url }}"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "{{ site.company.name }}",
+    "name": "{{ site.data.business.name }}",
     "logo": {
       "@type": "ImageObject",
       "url": "{{ '/assets/images/icon-512.png' | absolute_url }}"
@@ -319,10 +217,6 @@
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "{{ page.url | absolute_url }}"
-  },
-  "about": {
-    "@type": "Thing",
-    "name": "{{ page.tags | first | default: 'лазерная резка' }}"
   },
   "keywords": "{{ page.keywords | default: page.tags | join: ', ' }}",
   "speakable": {
@@ -334,22 +228,3 @@
 }
 </script>
 {% endif %}
-
-<!-- WebSite Schema для поиска -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "{{ site.company.name }}",
-  "url": "{{ site.url }}",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": "{{ site.url }}/search?q={search_term_string}"
-    },
-    "query-input": "required name=search_term_string"
-  },
-  "inLanguage": "ru-RU"
-}
-</script>
