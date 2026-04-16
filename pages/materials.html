@@ -16,12 +16,11 @@ permalink: /materials/
   <div class="container">
     <div class="materials-tabs">
       <button class="tab-btn active" data-tab="metals">Металлы</button>
-
     </div>
-    
+
     <div class="tab-content active" id="metals">
       <h2>Металлы</h2>
-      
+
       <div class="material-card">
         <div class="material-header">
           <h3>🔥 Сталь конструкционная (Ст3, 09Г2С)</h3>
@@ -41,7 +40,7 @@ permalink: /materials/
           <p>Самый популярный материал для лазерной резки. Отличное соотношение цены и качества. Подходит для большинства задач: детали машин, корпуса, конструкции.</p>
         </div>
       </div>
-      
+
       <div class="material-card">
         <div class="material-header">
           <h3>✨ Нержавеющая сталь (AISI 304, 316)</h3>
@@ -61,7 +60,7 @@ permalink: /materials/
           <p>Коррозионностойкая сталь для пищевой промышленности, медицины, декора. Красивый внешний вид, долговечность. AISI 316 — повышенная стойкость к агрессивным средам.</p>
         </div>
       </div>
-      
+
       <div class="material-card">
         <div class="material-header">
           <h3>⚡ Алюминий (АД31, АМГ)</h3>
@@ -81,7 +80,7 @@ permalink: /materials/
           <p>Лёгкий, не ржавеет, хорошо поддаётся обработке. Идеален для фасадов, вывесок, корпусов приборов. АМГ — повышенная прочность для нагруженных конструкций.</p>
         </div>
       </div>
-      
+
     </div>
   </div>
 </section>
@@ -121,10 +120,10 @@ const tabContents = document.querySelectorAll('.tab-content');
 tabBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     const tab = btn.dataset.tab;
-    
+
     tabBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    
+
     tabContents.forEach(content => {
       if (content.id === tab) {
         content.classList.add('active');

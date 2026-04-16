@@ -17,13 +17,13 @@ class AIChat {
     this.chatInput = document.getElementById('chatInput');
     this.chatBody = document.getElementById('chatBody');
     this.quickButtons = document.getElementById('quickButtons');
-    
+
     this.history = [];
     this.isProcessing = false;
-    
+
     this.init();
   }
-  
+
   init() {
     // If Worker URL is not configured and not using direct API, hide the widget
     if (!USE_DIRECT_API && !WORKER_URL) {
@@ -38,13 +38,13 @@ class AIChat {
       this.history = JSON.parse(saved);
       this.renderHistory();
     }
-    
+
     // События
     this.chatToggle?.addEventListener('click', () => this.open());
     this.chatClose?.addEventListener('click', () => this.close());
     this.chatMinimize?.addEventListener('click', () => this.close());
     this.chatForm?.addEventListener('submit', (e) => this.handleSubmit(e));
-    
+
     // Быстрые кнопки
     this.quickButtons?.addEventListener('click', (e) => {
       if (e.target.classList.contains('quick-btn')) {
@@ -53,7 +53,7 @@ class AIChat {
         this.quickButtons.style.display = 'none';
       }
     });
-    
+
     // Категории
     const categoryButtons = document.querySelectorAll('.category-btn');
     categoryButtons.forEach(btn => {
@@ -62,7 +62,7 @@ class AIChat {
         this.showCategoryQuestions(category);
       });
     });
-    
+
     // Автооткрытие через 30 секунд (один раз)
     if (!sessionStorage.getItem('chatOpened')) {
       setTimeout(() => {
@@ -72,48 +72,48 @@ class AIChat {
         }
       }, 30000);
     }
-    
+
     // Автооткрытие на странице калькулятора
     if (window.location.pathname.includes('/calculator/')) {
       setTimeout(() => this.open(), 2000);
     }
   }
-  
+
   open() {
     this.chatWindow.classList.add('active');
     this.chatToggle.style.display = 'none';
     this.chatInput?.focus();
   }
-  
+
   close() {
     this.chatWindow.classList.remove('active');
     this.chatToggle.style.display = 'flex';
   }
-  
+
   async handleSubmit(e) {
     e.preventDefault();
-    
+
     const message = this.chatInput.value.trim();
     if (!message || this.isProcessing) return;
-    
+
     this.sendMessage(message);
     this.chatInput.value = '';
   }
-  
+
   async sendMessage(message) {
     if (this.isProcessing) return;
-    
+
     // Добавить сообщение пользователя
     this.addMessage(message, 'user');
     this.history.push({ role: 'user', content: message });
-    
+
     // Показать индикатор печати
     this.showTyping();
     this.isProcessing = true;
-    
+
     try {
       let response;
-      
+
       if (USE_DIRECT_API) {
         // Прямой вызов Groq API
         response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -146,13 +146,13 @@ class AIChat {
           })
         });
       }
-      
+
       this.hideTyping();
-      
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         console.error('API Error:', response.status, errorData);
-        
+
         if (response.status === 429) {
           throw new Error('Слишком много запросов. Пожалуйста, позвоните нам: +7 (985) 456-37-64');
         }
@@ -161,68 +161,68 @@ class AIChat {
         }
         throw new Error('Ошибка связи с сервером. Позвоните: +7 (985) 456-37-64');
       }
-      
+
       const data = await response.json();
-      
+
       if (data.error) {
         throw new Error(data.message || 'Произошла ошибка');
       }
-      
+
       // Получить ответ (разные форматы для прямого API и Worker)
       const reply = USE_DIRECT_API ? data.choices[0].message.content : data.reply;
-      
+
       // Добавить ответ бота
       this.addMessage(reply, 'assistant');
       this.history.push({ role: 'assistant', content: reply });
-      
+
       // Сохранить историю
       this.saveHistory();
-      
+
     } catch (error) {
       this.hideTyping();
       console.error('Chat error:', error);
-      
+
       // Показать сообщение об ошибке
       let errorMessage = error.message;
-      
+
       // CORS ошибка
       if (error.message.includes('Failed to fetch') || error.message.includes('CORS')) {
         errorMessage = 'Извините, сейчас я временно недоступен. Позвоните нам: +7 (985) 456-37-64 или напишите на info@lasercut.ru';
       }
-      
+
       if (!errorMessage) {
         errorMessage = 'Сейчас я временно недоступен. Позвоните нам: +7 (985) 456-37-64';
       }
-      
+
       this.addMessage(errorMessage, 'assistant', true);
     } finally {
       this.isProcessing = false;
     }
   }
-  
+
   addMessage(text, role, isError = false) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${role}`;
     if (isError) messageDiv.classList.add('error');
-    
+
     const contentDiv = document.createElement('div');
     contentDiv.className = 'message-content';
     contentDiv.textContent = text;
-    
+
     const timeDiv = document.createElement('div');
     timeDiv.className = 'message-time';
     timeDiv.textContent = new Date().toLocaleTimeString('ru-RU', {
       hour: '2-digit',
       minute: '2-digit'
     });
-    
+
     messageDiv.appendChild(contentDiv);
     messageDiv.appendChild(timeDiv);
-    
+
     this.chatBody.appendChild(messageDiv);
     this.scrollToBottom();
   }
-  
+
   showTyping() {
     const typingDiv = document.createElement('div');
     typingDiv.className = 'typing-indicator';
@@ -231,16 +231,16 @@ class AIChat {
     this.chatBody.appendChild(typingDiv);
     this.scrollToBottom();
   }
-  
+
   hideTyping() {
     const typing = document.getElementById('typing');
     typing?.remove();
   }
-  
+
   scrollToBottom() {
     this.chatBody.scrollTop = this.chatBody.scrollHeight;
   }
-  
+
   renderHistory() {
     this.history.forEach(msg => {
       if (msg.role === 'user' || msg.role === 'assistant') {
@@ -248,7 +248,7 @@ class AIChat {
       }
     });
   }
-  
+
   saveHistory() {
     // Ограничить историю 50 сообщениями
     if (this.history.length > 50) {
@@ -256,7 +256,7 @@ class AIChat {
     }
     sessionStorage.setItem('chatHistory', JSON.stringify(this.history));
   }
-  
+
   showCategoryQuestions(category) {
     const questions = {
       prices: [
@@ -284,19 +284,19 @@ class AIChat {
         'Нужна ли предоплата?'
       ]
     };
-    
+
     const categoryQuestions = questions[category];
     if (!categoryQuestions) return;
-    
+
     const categoriesDiv = document.querySelector('.chat-categories');
     if (categoriesDiv) categoriesDiv.style.display = 'none';
-    
+
     const questionsDiv = document.createElement('div');
     questionsDiv.className = 'quick-buttons category-questions';
-    questionsDiv.innerHTML = categoryQuestions.map(q => 
+    questionsDiv.innerHTML = categoryQuestions.map(q =>
       `<button class="quick-btn" data-message="${q}">${q}</button>`
     ).join('');
-    
+
     const backBtn = document.createElement('button');
     backBtn.className = 'quick-btn back-btn';
     backBtn.textContent = '← Назад к категориям';
@@ -305,7 +305,7 @@ class AIChat {
       if (categoriesDiv) categoriesDiv.style.display = 'block';
     };
     questionsDiv.appendChild(backBtn);
-    
+
     questionsDiv.addEventListener('click', (e) => {
       if (e.target.classList.contains('quick-btn') && !e.target.classList.contains('back-btn')) {
         const message = e.target.dataset.message;
@@ -313,11 +313,11 @@ class AIChat {
         questionsDiv.remove();
       }
     });
-    
+
     this.chatBody.appendChild(questionsDiv);
     this.scrollToBottom();
   }
-  
+
   getSystemPrompt() {
     return `Ты — опытный консультант цеха лазерной резки с 10-летним стажем.
 Общаешься с клиентами в онлайн-чате как живой человек — дружелюбно, профессионально и по делу.

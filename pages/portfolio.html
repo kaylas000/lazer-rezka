@@ -19,7 +19,7 @@ permalink: /portfolio/
       <button class="filter-btn" data-filter="metal">Резка металла</button>
       <button class="filter-btn" data-filter="bending">Гибка</button>
     </div>
-    
+
     <div class="portfolio-grid">
       <div class="portfolio-item" data-category="metal">
         <div class="portfolio-image">
@@ -36,7 +36,7 @@ permalink: /portfolio/
           <h3>Детали изготовленные методом лазерной резки</h3>
         </div>
       </div>
-      
+
       <div class="portfolio-item" data-category="metal">
         <div class="portfolio-image">
           <img class="portfolio-photo"
@@ -52,7 +52,7 @@ permalink: /portfolio/
           <h3>Порошковая покраска деталей,элементов до 6 метров</h3>
         </div>
       </div>
-      
+
       <div class="portfolio-item" data-category="metal">
         <div class="portfolio-image">
           <img class="portfolio-photo"
@@ -68,7 +68,7 @@ permalink: /portfolio/
           <h3>Изготовление деталей на станке лазерной резки</h3>
         </div>
       </div>
-      
+
       <div class="portfolio-item" data-category="metal">
         <div class="portfolio-image">
           <img class="portfolio-photo"
@@ -84,7 +84,7 @@ permalink: /portfolio/
           <h3>Процесс нанесения порошковой краски</h3>
         </div>
       </div>
-      
+
       <div class="portfolio-item" data-category="metal">
         <div class="portfolio-image">
           <img class="portfolio-photo"
@@ -141,11 +141,11 @@ const portfolioItems = document.querySelectorAll('.portfolio-item');
 filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     const filter = btn.dataset.filter;
-    
+
     // Активная кнопка
     filterBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    
+
     // Фильтрация
     portfolioItems.forEach(item => {
       if (filter === 'all' || item.dataset.category === filter) {

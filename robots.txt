@@ -104,6 +104,13 @@ Allow: /
 User-agent: *
 Allow: /
 Disallow: /assets/js/api-key.js
+Disallow: /assets/js/api-key.template.js
+Disallow: /assets/js/ai-config.template.js
+Disallow: /AI_KEY_SETUP.md
+Disallow: /AI_SETUP.md
+Disallow: /EMAIL_SETUP.md
+Disallow: /FORMSPREE_SETUP.md
+Disallow: /SETUP.md
 
 Crawl-delay: 1
 

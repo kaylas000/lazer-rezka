@@ -7,11 +7,11 @@ export const AI_CONFIG = {
   model: 'gpt-4-turbo-preview', // или gpt-3.5-turbo для экономии
   maxTokens: 500,
   temperature: 0.7,
-  
+
   // Rate Limiting
   maxRequestsPerMinute: 10,
   maxRequestsPerHour: 50,
-  
+
   // System Prompt - главная инструкция для AI
   systemPrompt: `Ты — профессиональный консультант цеха лазерной резки металла в Москве (Нахабино).
 
