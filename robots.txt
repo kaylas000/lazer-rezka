@@ -122,4 +122,3 @@ Disallow: /SETUP.md
 Crawl-delay: 1
 
 Sitemap: https://ceh-lazer-rezka.ru/sitemap.xml
-Sitemap: https://ceh-lazer-rezka.ru/ai-sitemap.json
