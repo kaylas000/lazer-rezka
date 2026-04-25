@@ -4,37 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% seo %}
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ page.url | absolute_url }}">
-  <meta property="og:title" content="{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  <meta property="og:image" content="{{ site.image | absolute_url }}">
+
+  <!-- Open Graph дополнительные поля (jekyll-seo-tag не добавляет эти) -->
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ru_RU">
-  
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="{{ page.url | absolute_url }}">
-  <meta name="twitter:title" content="{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  <meta name="twitter:image" content="{{ site.image | absolute_url }}">
-  
+  <meta property="og:type" content="website">
+
   <!-- Telegram -->
   <meta property="telegram:channel" content="@lasercut">
-  
+
+  <!-- Keywords (local SEO) -->
+  {% if page.keywords %}<meta name="keywords" content="{{ page.keywords }}">{% endif %}
+
+  <!-- Geo / Local SEO -->
+  <meta name="geo.region" content="RU-MOS">
+  <meta name="geo.placename" content="Нахабино, Московская область">
+  <meta name="geo.position" content="55.8397;37.1742">
+  <meta name="ICBM" content="55.8397, 37.1742">
+  <meta name="language" content="ru">
+
   {% include schema-markup.html %}
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/chat.css' | relative_url }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-  
+
   <!-- Preconnect to Cloudflare Worker -->
   <link rel="preconnect" href="https://workers.cloudflare.com">
-  
+
   <!-- PWA Manifest -->
   <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
   <link rel="icon" type="image/svg+xml" href="{{ '/favicon.svg' | relative_url }}">
@@ -44,17 +43,7 @@
   <link rel="icon" type="image/png" sizes="512x512" href="{{ '/assets/images/icon-512.png' | relative_url }}">
   <link rel="apple-touch-icon" href="{{ '/assets/images/icon-192.png' | relative_url }}">
   <meta name="theme-color" content="#FF6B2B">
-  
-  <!-- Search Engines Verification -->
-  <meta name="google-site-verification" content="REPLACE_WITH_GOOGLE_VERIFICATION_CODE">
-  <meta name="yandex-verification" content="REPLACE_WITH_YANDEX_VERIFICATION_CODE">
-  <!-- Additional SEO -->
-  <meta name="language" content="ru">
-  <meta name="revisit-after" content="7 days">
-  <meta name="distribution" content="global">
-  <link rel="canonical" href="{{ page.url | absolute_url }}">
-  <link rel="alternate" hreflang="ru" href="{{ page.url | absolute_url }}">
-  
+
   <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
@@ -68,14 +57,13 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/108547987" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-  
+
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GPPFDM2B2G"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-GPPFDM2B2G');
 </script>
 
@@ -85,19 +73,19 @@
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "wbrh5xbzy4");
-</script>  
+</script>
 </head>
 <body>
   {% include header.html %}
-  
+
   <main>
     {% include breadcrumbs.html %}
     {{ content }}
   </main>
-  
+
   {% include footer.html %}
   {% include ai-chat-widget.html %}
-  
+
   <script>
     window.SITE_AI_WORKER_URL = {{ site.ai_worker_url | default: "" | jsonify }};
   </script>

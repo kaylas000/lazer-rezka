@@ -1,16 +1,23 @@
-<!-- Organization Schema (global, safe on all pages) -->
+<!-- LocalBusiness Schema (global, all pages) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["LocalBusiness", "ManufacturingBusiness"],
   "name": "{{ site.data.business.name }}",
   "legalName": "{{ site.data.business.legalName }}",
   "url": "{{ site.data.business.url }}",
-  "logo": "{{ '/assets/images/icon-512.png' | absolute_url }}",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "{{ '/assets/images/icon-512.png' | absolute_url }}",
+    "width": 512,
+    "height": 512
+  },
+  "image": "{{ '/assets/images/hero.jpg' | absolute_url }}",
   "description": "{{ site.data.business.description }}",
   "foundingDate": "{{ site.data.business.foundingDate }}",
   "telephone": "{{ site.data.business.phone }}",
   "email": "{{ site.data.business.email }}",
+  "priceRange": "{{ site.data.business.priceRange }}",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "{{ site.data.business.address.street }}",
@@ -19,30 +26,65 @@
     "postalCode": "{{ site.data.business.address.postalCode }}",
     "addressCountry": "{{ site.data.business.address.country }}"
   },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": {{ site.data.business.geo.lat }},
+    "longitude": {{ site.data.business.geo.lon }}
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": {{ site.data.business.openingHours.days | jsonify }},
+    "opens": "{{ site.data.business.openingHours.opens }}",
+    "closes": "{{ site.data.business.openingHours.closes }}"
+  },
   "areaServed": [
     { "@type": "City", "name": "Москва" },
-    { "@type": "State", "name": "Московская область" }
+    { "@type": "City", "name": "Нахабино" },
+    { "@type": "AdministrativeArea", "name": "Московская область" }
   ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ site.data.business.aggregateRating.ratingValue }}",
+    "reviewCount": "{{ site.data.business.aggregateRating.reviewCount }}",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "sameAs": {{ site.data.business.sameAs | jsonify }},
   "knowsAbout": {{ site.data.business.knowsAbout | jsonify }},
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Услуги металлообработки",
+    "name": "Услуги лазерной резки и металлообработки",
     "itemListElement": [
       {
         "@type": "Offer",
-        "itemOffered": { "@type": "Service", "name": "Лазерная резка стали", "description": "Резка стали толщиной 1-20мм с точностью ±0.01мм" }
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Лазерная резка стали",
+          "description": "Резка стали Ст3, 09Г2С толщиной 1–20 мм с точностью ±0.01 мм. Москва, Нахабино.",
+          "areaServed": [{"@type": "City", "name": "Москва"}, {"@type": "City", "name": "Нахабино"}]
+        }
       },
       {
         "@type": "Offer",
-        "itemOffered": { "@type": "Service", "name": "Лазерная резка нержавейки", "description": "Резка нержавеющей стали AISI 304 толщиной 1-12мм" }
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Лазерная резка нержавейки",
+          "description": "Резка нержавеющей стали AISI 304/316 толщиной 1–12 мм",
+          "areaServed": [{"@type": "City", "name": "Москва"}, {"@type": "City", "name": "Нахабино"}]
+        }
       },
       {
         "@type": "Offer",
-        "itemOffered": { "@type": "Service", "name": "Лазерная резка алюминия", "description": "Резка алюминия АД31 толщиной 1-10мм" }
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Лазерная резка алюминия",
+          "description": "Резка алюминия АД31 толщиной 1–10 мм",
+          "areaServed": [{"@type": "City", "name": "Москва"}]
+        }
       },
       {
         "@type": "Offer",
-        "itemOffered": { "@type": "Service", "name": "Гибка металла", "description": "Листогибочные работы до 4мм" }
+        "itemOffered": { "@type": "Service", "name": "Гибка металла", "description": "Листогибочные работы до 4 мм" }
       },
       {
         "@type": "Offer",
@@ -54,25 +96,26 @@
       },
       {
         "@type": "Offer",
-        "itemOffered": { "@type": "Service", "name": "Сварочные работы", "description": "Аргонно-дуговая сварка стали и нержавейки" }
+        "itemOffered": { "@type": "Service", "name": "Сварочные работы", "description": "Аргонно-дуговая и полуавтоматическая сварка стали и нержавейки" }
       },
       {
         "@type": "Offer",
-        "itemOffered": { "@type": "Service", "name": "Лазерная гравировка", "description": "Гравировка на металле, нанесение логотипов" }
+        "itemOffered": { "@type": "Service", "name": "Лазерная гравировка", "description": "Гравировка на металле, нанесение логотипов и маркировка деталей" }
       }
     ]
   }
 }
 </script>
 
-<!-- WebSite Schema (global) -->
+<!-- WebSite Schema with SearchAction -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "{{ site.data.business.name }}",
   "url": "{{ site.data.business.url }}",
-  "inLanguage": "ru-RU"
+  "inLanguage": "ru-RU",
+  "description": "{{ site.data.business.description }}"
 }
 </script>
 
@@ -128,64 +171,35 @@
 </script>
 {% endif %}
 
-<!-- ManufacturingFacility Schema (contacts page only) -->
-{% if page.url == '/contacts/' %}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ManufacturingFacility",
-  "name": "{{ site.data.business.name }}",
-  "url": "{{ site.data.business.url }}",
-  "telephone": "{{ site.data.business.phone }}",
-  "email": "{{ site.data.business.email }}",
-  "image": "{{ '/assets/images/icon-512.png' | absolute_url }}",
-  "priceRange": "{{ site.data.business.priceRange }}",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "{{ site.data.business.address.street }}",
-    "addressLocality": "{{ site.data.business.address.locality }}",
-    "addressRegion": "{{ site.data.business.address.region }}",
-    "postalCode": "{{ site.data.business.address.postalCode }}",
-    "addressCountry": "{{ site.data.business.address.country }}"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": {{ site.data.business.geo.lat }},
-    "longitude": {{ site.data.business.geo.lon }}
-  },
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": {{ site.data.business.openingHours.days | jsonify }},
-    "opens": "{{ site.data.business.openingHours.opens }}",
-    "closes": "{{ site.data.business.openingHours.closes }}"
-  }
-}
-</script>
-{% endif %}
-
 <!-- Service Schema (service pages only) -->
 {% if page.url contains '/services/' %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Service",
-  "serviceType": "{{ page.title }}",
+  "name": "{{ page.title }}",
+  "serviceType": "{{ page.service_type | default: page.title }}",
+  "description": "{{ page.description }}",
   "provider": {
-    "@type": "Organization",
+    "@type": "LocalBusiness",
     "name": "{{ site.data.business.name }}",
     "telephone": "{{ site.data.business.phone }}",
+    "url": "{{ site.data.business.url }}",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "{{ site.data.business.address.street }}",
       "addressLocality": "{{ site.data.business.address.locality }}",
       "addressRegion": "{{ site.data.business.address.region }}",
+      "postalCode": "{{ site.data.business.address.postalCode }}",
       "addressCountry": "{{ site.data.business.address.country }}"
     }
   },
-  "areaServed": {
-    "@type": "City",
-    "name": "Москва"
-  }
+  "areaServed": [
+    { "@type": "City", "name": "Москва" },
+    { "@type": "City", "name": "Нахабино" },
+    { "@type": "AdministrativeArea", "name": "Московская область" }
+  ],
+  "url": "{{ page.url | absolute_url }}"
 }
 </script>
 {% endif %}
@@ -200,7 +214,7 @@
   "description": "{{ page.description | default: page.excerpt | strip_html | truncate: 160 }}",
   "image": "{{ page.image | default: '/assets/images/icon-512.png' | absolute_url }}",
   "datePublished": "{{ page.date | date_to_xmlschema }}",
-  "dateModified": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
   "author": {
     "@type": "Organization",
     "name": "{{ site.data.business.name }}",

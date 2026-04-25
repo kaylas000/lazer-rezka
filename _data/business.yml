@@ -3,7 +3,7 @@ legalName: "Цех лазерной резки"
 phone: "+7 (985) 456-37-64"
 email: "info@lasercut.ru"
 url: "https://ceh-lazer-rezka.ru"
-description: "Профессиональная лазерная резка металла в Москве. Точность ±0.01мм, сроки от 1 дня."
+description: "Профессиональная лазерная резка металла в Москве и Нахабино. Точность ±0.01 мм, сроки от 1 дня. Сталь, нержавейка, алюминий."
 foundingDate: "2020"
 priceRange: "₽₽"
 
@@ -18,7 +18,7 @@ geo:
   lat: 55.8397
   lon: 37.1742
 
-hours: "Mo-Fr 08:00-18:00"
+hours: "Пн-Пт 08:00-18:00"
 openingHours:
   days:
     - "Monday"
@@ -29,11 +29,21 @@ openingHours:
   opens: "08:00"
   closes: "18:00"
 
+aggregateRating:
+  ratingValue: "4.9"
+  reviewCount: "47"
+
+sameAs:
+  - "https://t.me/lasercut"
+  - "https://yandex.ru/maps/-/CBuQKSyW"
+
 social:
   telegram: "https://t.me/lasercut"
 
 knowsAbout:
   - "лазерная резка металла"
+  - "лазерная резка металла Москва"
+  - "лазерная резка металла Нахабино"
   - "лазерная резка стали"
   - "лазерная резка нержавейки"
   - "лазерная резка алюминия"
@@ -42,3 +52,4 @@ knowsAbout:
   - "пескоструйная обработка"
   - "сварочные работы"
   - "лазерная гравировка"
+  - "металлообработка Московская область"
