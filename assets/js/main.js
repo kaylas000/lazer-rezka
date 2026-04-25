@@ -1,3 +1,31 @@
+// Hero video: iOS / Android fallback
+(function() {
+  var video = document.querySelector('.hero-video');
+  if (!video) return;
+
+  // Если видео не может воспроизводиться — скрываем его, показывается poster через CSS
+  video.addEventListener('error', function() {
+    video.style.display = 'none';
+  });
+
+  // Плавное появление когда видео готово
+  function showVideo() { video.classList.add('loaded'); }
+  if (video.readyState >= 3) {
+    showVideo();
+  } else {
+    video.addEventListener('canplay', showVideo, { once: true });
+  }
+
+  // iOS Safari иногда требует явного вызова play()
+  var playPromise = video.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(function() {
+      // Автовоспроизведение заблокировано — видео остаётся на кадре poster
+      video.pause();
+    });
+  }
+})();
+
 // Мобильное меню
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('.nav-menu');
