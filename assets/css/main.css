@@ -987,7 +987,7 @@ input:focus, textarea:focus, select:focus {
   }
 
   .hero-video {
-    object-position: 20% 85%;
+    object-position: 0% 100%;
   }
 
   .hero-title {
