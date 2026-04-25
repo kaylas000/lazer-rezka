@@ -151,6 +151,70 @@ def generate_metadata(topic, content, api_key):
     
     return json.loads(result)
 
+def generate_faq_entry(topic, content, metadata, api_key):
+    """Сгенерировать один FAQ-вопрос на основе статьи"""
+    prompt = f"""На основе статьи на тему "{topic['title']}" создай один FAQ-вопрос и краткий ответ.
+
+Требования:
+- question: конкретный вопрос который задают клиенты (не более 90 символов)
+- answer: краткий и полезный ответ (2-3 предложения, максимум 300 символов)
+- category: одна из: technical, prices, process, materials
+
+Верни ТОЛЬКО JSON без дополнительного текста:
+{{
+  "question": "Вопрос",
+  "answer": "Краткий ответ",
+  "category": "technical"
+}}"""
+
+    system = 'Ты - эксперт по лазерной резке металла.'
+    result = call_worker(prompt, system=system, max_tokens=300)
+
+    if result.startswith('```'):
+        result = result.split('\n', 1)[1]
+        result = result.rsplit('\n', 1)[0]
+
+    faq_data = json.loads(result)
+    return faq_data
+
+
+def add_faq_entry(faq_data, metadata, post_url):
+    """Добавить FAQ-вопрос в _data/faq_from_posts.yml"""
+    faq_file = '_data/faq_from_posts.yml'
+    os.makedirs('_data', exist_ok=True)
+
+    # Загрузить существующие вопросы
+    existing = []
+    if os.path.exists(faq_file):
+        with open(faq_file, 'r', encoding='utf-8') as f:
+            loaded = yaml.safe_load(f)
+            if loaded:
+                existing = loaded
+
+    # Проверить что такого вопроса ещё нет
+    for item in existing:
+        if item.get('post_url') == post_url:
+            print(f"FAQ для {post_url} уже существует, пропускаем")
+            return
+
+    # Добавить новый вопрос
+    new_entry = {
+        'question': faq_data['question'],
+        'answer': faq_data['answer'],
+        'category': faq_data.get('category', 'technical'),
+        'post_url': post_url,
+        'post_title': metadata['title']
+    }
+    existing.append(new_entry)
+
+    # Сохранить файл
+    with open(faq_file, 'w', encoding='utf-8') as f:
+        f.write('# Вопросы из статей блога — генерируются автоматически при публикации\n')
+        yaml.dump(existing, f, allow_unicode=True, default_flow_style=False)
+
+    print(f"✅ FAQ-вопрос добавлен: {faq_data['question']}")
+
+
 def create_post_file(topic, content, metadata):
     """Создать файл статьи"""
     date = datetime.now()
@@ -217,7 +281,18 @@ def main():
     
     # Создать файл
     filepath = create_post_file(topic, content, metadata)
-    
+
+    if filepath:
+        # Сгенерировать FAQ-вопрос и добавить в _data/faq_from_posts.yml
+        print("⏳ Генерация FAQ-вопроса...")
+        try:
+            date_str = datetime.now().strftime('%Y/%m')
+            post_url = f"/blog/{date_str}/{metadata['slug']}/"
+            faq_data = generate_faq_entry(topic, content, metadata, None)
+            add_faq_entry(faq_data, metadata, post_url)
+        except Exception as e:
+            print(f"⚠️  Не удалось сгенерировать FAQ-вопрос: {e}")
+
     # Вывести информацию для GitHub Actions
     github_output = os.environ.get('GITHUB_OUTPUT')
     if github_output:

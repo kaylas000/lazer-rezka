@@ -273,6 +273,34 @@ permalink: /faq/
   </div>
 </section>
 
+{% if site.data.faq_from_posts and site.data.faq_from_posts.size > 0 %}
+<section class="faq-section faq-from-blog">
+  <div class="container">
+    <h2 class="section-title" style="margin-bottom: 12px;">Ответы из наших статей</h2>
+    <p class="section-subtitle">Подробные ответы на технические вопросы — в блоге</p>
+
+    <div class="faq-list">
+      {% for item in site.data.faq_from_posts %}
+      <div class="faq-item" data-category="{{ item.category }}">
+        <button class="faq-question">
+          <span>{{ item.question }}</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>{{ item.answer }}</p>
+          <p style="margin-top: 12px;">
+            <a href="{{ item.post_url }}" style="color: var(--accent-orange); font-weight: 500;">
+              Читать полную статью: {{ item.post_title }} →
+            </a>
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
 <section class="cta-section">
   <div class="container">
     <div class="cta-box">
@@ -435,6 +463,16 @@ permalink: /faq/
         "text": "Мы гарантируем соответствие размеров чертежу в пределах допусков. При обнаружении брака по нашей вине — бесплатная переделка."
       }
     }
+    {% for item in site.data.faq_from_posts %}
+    ,{
+      "@type": "Question",
+      "name": {{ item.question | jsonify }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ item.answer | jsonify }}
+      }
+    }
+    {% endfor %}
   ]
 }
 </script>
