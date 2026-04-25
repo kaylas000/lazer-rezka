@@ -269,17 +269,7 @@ permalink: /faq/
           <p>Наше производство расположено по адресу: <strong>Нахабино, ул. Новая 7, Московская область</strong>. От Москвы — 30 км по Новорижскому шоссе. Добраться можно на автомобиле (бесплатная парковка) или электричкой до станции Нахабино.</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-{% if site.data.faq_from_posts and site.data.faq_from_posts.size > 0 %}
-<section class="faq-section faq-from-blog">
-  <div class="container">
-    <h2 class="section-title" style="margin-bottom: 12px;">Ответы из наших статей</h2>
-    <p class="section-subtitle">Подробные ответы на технические вопросы — в блоге</p>
-
-    <div class="faq-list">
       {% for item in site.data.faq_from_posts %}
       <div class="faq-item" data-category="{{ item.category }}">
         <button class="faq-question">
@@ -290,16 +280,16 @@ permalink: /faq/
           <p>{{ item.answer }}</p>
           <p style="margin-top: 12px;">
             <a href="{{ item.post_url }}" style="color: var(--accent-orange); font-weight: 500;">
-              Читать полную статью: {{ item.post_title }} →
+              Подробнее: {{ item.post_title }} →
             </a>
           </p>
         </div>
       </div>
       {% endfor %}
+
     </div>
   </div>
 </section>
-{% endif %}
 
 <section class="cta-section">
   <div class="container">
