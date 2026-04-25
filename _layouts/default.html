@@ -11,6 +11,7 @@
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="dns-prefetch" href="https://mc.yandex.ru">
+  {% if page.head_extra %}{{ page.head_extra }}{% endif %}
 
   <!-- Open Graph дополнительные поля (jekyll-seo-tag не добавляет эти) -->
   <meta property="og:image:width" content="1200">

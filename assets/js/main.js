@@ -1,7 +1,16 @@
-// Hero video: iOS / Android fallback
+// Hero video: fast load + iOS / Android fallback
 (function() {
   var video = document.querySelector('.hero-video');
   if (!video) return;
+
+  // На медленном соединении (2G/slow-2G) — не грузим видео, показываем постер
+  var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (conn && (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.saveData)) {
+    video.removeAttribute('src');
+    video.querySelectorAll('source').forEach(function(s) { s.removeAttribute('src'); });
+    video.load();
+    return;
+  }
 
   // Если видео не может воспроизводиться — скрываем его, показывается poster через CSS
   video.addEventListener('error', function() {
@@ -20,7 +29,6 @@
   var playPromise = video.play();
   if (playPromise !== undefined) {
     playPromise.catch(function() {
-      // Автовоспроизведение заблокировано — видео остаётся на кадре poster
       video.pause();
     });
   }
