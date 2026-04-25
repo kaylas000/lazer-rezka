@@ -1,3 +1,8 @@
+---
+layout: null
+permalink: /robots.txt
+sitemap: false
+---
 # ===== ПОИСКОВЫЕ РОБОТЫ =====
 User-agent: Googlebot
 Allow: /
@@ -19,10 +24,6 @@ Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
-
-# ===== SITEMAP =====
-Sitemap: https://ceh-lazer-rezka.ru/sitemap.xml
-Sitemap: https://ceh-lazer-rezka.ru/ai-sitemap.json
 
 User-agent: OAI-SearchBot
 Allow: /
