@@ -11,13 +11,10 @@
 2. **llms.txt** (для AI-систем)
    - Добавлен телефон в раздел "Контакты и верификация"
 
-3. **ai-sitemap.json** (машиночитаемая карта)
-   - Добавлен phone в site.contact
-
-4. **mcp-manifest.json** (для AI-агентов)
+3. **mcp-manifest.json** (для AI-агентов)
    - Добавлен phone и address в metadata
 
-5. **Все HTML страницы** (автоматически через Jekyll)
+4. **Все HTML страницы** (автоматически через Jekyll)
    - Header (кнопка звонка)
    - Footer (контакты)
    - Schema.org разметка (LocalBusiness)
@@ -31,7 +28,6 @@
 ✅ Header навигация: кнопка с телефоном
 ✅ Footer: контактная информация
 ✅ llms.txt: телефон для AI-систем
-✅ ai-sitemap.json: телефон в метаданных
 ✅ mcp-manifest.json: телефон для AI-агентов
 
 ### ГДЕ ОТОБРАЖАЕТСЯ ТЕЛЕФОН:
@@ -41,8 +37,7 @@
 3. **Страница /contacts/** - карточка с телефоном
 4. **Schema.org разметка** - для поисковых систем
 5. **llms.txt** - для AI-систем (ChatGPT, Claude, Perplexity)
-6. **ai-sitemap.json** - для AI-индексации
-7. **mcp-manifest.json** - для AI-агентов
+6. **mcp-manifest.json** - для AI-агентов
 
 ### ФОРМАТ ТЕЛЕФОНА:
 
@@ -69,7 +64,7 @@ git push origin main
 После деплоя телефон будет доступен:
 - На всех страницах сайта
 - В поисковой выдаче (через Schema.org)
-- Для AI-систем (через llms.txt, ai-sitemap.json)
+- Для AI-систем (через llms.txt)
 - Для AI-агентов (через MCP)
 
 ---
