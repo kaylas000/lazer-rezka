@@ -148,7 +148,7 @@ def build_pdf(biz: dict) -> None:
 def main() -> None:
     biz = load_business()
     build_pdf(biz)
-    print(f"OK: wrote {OUTPUT_PDF.relative_to(REPO_ROOT)}")
+    print("OK: wrote assets/files/price-list.pdf")
 
 
 if __name__ == "__main__":
