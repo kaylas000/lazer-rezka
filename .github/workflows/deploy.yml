@@ -34,7 +34,17 @@ jobs:
         run: bundle exec jekyll build
         env:
           JEKYLL_ENV: production
-          
+
+      - name: Setup Python for price-list PDF
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate price-list PDF for site artifact
+        run: |
+          python3 -m pip install -r requirements/price-list.txt
+          python3 scripts/build_price_list.py --output _site/assets/files/price-list.pdf
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
