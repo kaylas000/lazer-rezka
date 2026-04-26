@@ -25,11 +25,6 @@ defaults:
       sitemap: false
       tech_doc_noindex: true
   - scope:
-      path: "AI_KEY_SETUP.md"
-    values:
-      sitemap: false
-      tech_doc_noindex: true
-  - scope:
       path: "AI_SETUP.md"
     values:
       sitemap: false
