@@ -73,8 +73,8 @@ def build_extra_rows(prices: dict) -> list[list[str]]:
 def footer_text(prices: dict) -> str:
     mo = prices.get("min_order", 1500)
     return (
-        f"Минимальный заказ: {mo} ₽. Скидки на объём: от 50 деталей - 15%. "
-        "Доставка по Москве - от 500 ₽. Цены ориентировочные; итоговая стоимость - после анализа чертежа."
+        f"Минимальный заказ: {mo} ₽. Скидки на объём: от 50 деталей — 15%. "
+        "Доставка по Москве — от 500 ₽. Цены ориентировочные; итоговая стоимость — после анализа чертежа."
     )
 
 
@@ -120,7 +120,7 @@ def build_pdf(biz: dict, prices: dict, output_path: Path) -> None:
             pdf.ln(line_h)
 
     pdf.set_font("DejaVu", "B", 16)
-    pdf.cell(0, 10, "Цех лазерной резки - прайс-лист", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 10, "Цех лазерной резки — прайс-лист", new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("DejaVu", "", 10)
     pdf.cell(0, 6, site, link=site, new_x="LMARGIN", new_y="NEXT")
     pdf.ln(2)
