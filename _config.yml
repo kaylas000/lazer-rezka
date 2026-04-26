@@ -17,6 +17,39 @@ plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
 
+# Служебная документация (не в sitemap, noindex для поисковиков)
+defaults:
+  - scope:
+      path: "SETUP.md"
+    values:
+      sitemap: false
+      tech_doc_noindex: true
+  - scope:
+      path: "AI_KEY_SETUP.md"
+    values:
+      sitemap: false
+      tech_doc_noindex: true
+  - scope:
+      path: "AI_SETUP.md"
+    values:
+      sitemap: false
+      tech_doc_noindex: true
+  - scope:
+      path: "EMAIL_SETUP.md"
+    values:
+      sitemap: false
+      tech_doc_noindex: true
+  - scope:
+      path: "FORMSPREE_SETUP.md"
+    values:
+      sitemap: false
+      tech_doc_noindex: true
+  - scope:
+      path: "PHONE_UPDATE_REPORT.md"
+    values:
+      sitemap: false
+      tech_doc_noindex: true
+
 # Исключения
 exclude:
   - Gemfile
