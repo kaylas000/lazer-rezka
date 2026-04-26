@@ -7,7 +7,7 @@
     "search": "/search.json?q={query}",
     "content": "/api/content/{id}",
     "latest": "/feed.json",
-    "sitemap": "/ai-sitemap.json",
+    "sitemap": "/sitemap.xml",
     "llms": "/llms.txt",
     "llms_full": "/llms-full.txt"
   },
@@ -53,7 +53,7 @@
     "for_search_queries": "Use /search.json endpoint with query parameter",
     "for_latest_content": "Subscribe to /feed.json for updates",
     "for_full_context": "Read /llms-full.txt for complete site content",
-    "for_structured_navigation": "Use /ai-sitemap.json for page discovery"
+    "for_structured_navigation": "Use /sitemap.xml for page discovery"
   },
   "citation_format": "Цех лазерной резки (lazer-rezka, 2024)",
   "last_updated": "2024-04-01"
