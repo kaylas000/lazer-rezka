@@ -1,5 +1,5 @@
 // Калькулятор стоимости лазерной резки
-// Цены и минимальный заказ — из window.__PRICES_DATA__ / window.__MIN_ORDER__ (Jekyll + _data/prices.yml)
+// Цены и минимальный заказ - из window.__PRICES_DATA__ / window.__MIN_ORDER__ (Jekyll + _data/prices.yml)
 
 function thicknessMapFromYaml(node) {
   const out = {};
