@@ -1,6 +1,6 @@
 {% comment %}
-  min–max ₽/п.м для целых мм от include.from_mm до include.to_mm (включительно).
-  include.laser_key — steel | stainless | stainless_316 | aluminum
+  Min-max RUB za pog.m. dlya tselyh mm ot include.from_mm do include.to_mm (vklyuchitelno).
+  include.laser_key: steel | stainless | stainless_316 | aluminum
 {% endcomment %}
 {% assign lk = include.laser_key %}
 {% assign mmhash = site.data.prices.laser[lk].thickness_mm %}
