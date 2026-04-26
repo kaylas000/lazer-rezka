@@ -1,17 +1,18 @@
 ---
 layout: null
 sitemap: false
+redirect_url: "https://ceh-lazer-rezka.ru/blog/2026/04/vybor-tolshchiny-metalla/"
 ---
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=https://ceh-lazer-rezka.ru/blog/">
-  <link rel="canonical" href="https://ceh-lazer-rezka.ru/blog/">
+  <meta http-equiv="refresh" content="0; url={{ page.redirect_url }}">
+  <link rel="canonical" href="{{ page.redirect_url }}">
   <title>Перенаправление...</title>
 </head>
 <body>
-  <p>Страница перемещена. <a href="https://ceh-lazer-rezka.ru/blog/">Перейти в блог</a></p>
-  <script>window.location.replace("https://ceh-lazer-rezka.ru/blog/");</script>
+  <p>Страница перемещена. <a href="{{ page.redirect_url }}">Перейти к статье</a></p>
+  <script>window.location.replace("{{ page.redirect_url }}");</script>
 </body>
 </html>

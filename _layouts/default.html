@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% seo %}
+  {% if page.tech_doc_noindex %}
+  <meta name="robots" content="noindex,nofollow">
+  {% endif %}
 
   <!-- Preload критических ресурсов -->
   <link rel="preload" href="{{ '/assets/css/main.css' | relative_url }}" as="style">
