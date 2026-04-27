@@ -15,20 +15,22 @@ permalink: /contacts/
 
 <script>
 (function autofillContactMessage() {
-  var params = new URLSearchParams(window.location.search);
-  var field = document.getElementById('message');
-  if (!field) return;
-  var messageFromQuery = params.get('message');
-  if (messageFromQuery) {
-    field.value = messageFromQuery;
-    return;
-  }
-  if (params.get('from_calc') === '1') {
-    var saved = localStorage.getItem('calc_message');
-    if (saved) {
-      field.value = saved;
+  document.addEventListener('DOMContentLoaded', function () {
+    var params = new URLSearchParams(window.location.search);
+    var field = document.getElementById('message');
+    if (!field) return;
+    var messageFromQuery = params.get('message');
+    if (messageFromQuery) {
+      field.value = messageFromQuery;
+      return;
     }
-  }
+    if (params.get('from_calc') === '1') {
+      var saved = localStorage.getItem('calc_message');
+      if (saved) {
+        field.value = saved;
+      }
+    }
+  });
 })();
 </script>
 
