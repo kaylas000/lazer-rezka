@@ -173,3 +173,29 @@ document.querySelectorAll('form.form').forEach(function(form) {
     }
   });
 });
+
+// Сообщение об успехе после редиректа с ?success=true (текст не в статике — для сниппетов)
+(function showFormSuccessMessage() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('success') !== 'true') return;
+  const el = document.getElementById('success-message');
+  if (!el) return;
+  const path = window.location.pathname;
+  const contactsHtml = '✅ <strong>Спасибо!</strong> Ваша заявка отправлена. Мы свяжемся с вами в течение 1 часа.';
+  const reviewsHtml = '✅ <strong>Спасибо за отзыв!</strong> Мы получили ваше сообщение и опубликуем его после модерации.';
+  let inner;
+  if (path.includes('contacts')) {
+    inner = contactsHtml;
+  } else if (path.includes('reviews')) {
+    inner = reviewsHtml;
+  } else {
+    return;
+  }
+  el.innerHTML = inner;
+  el.style.cssText = 'display:block; padding: 16px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; margin-bottom: 24px; color: #155724;';
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const url = new URL(window.location.href);
+  url.searchParams.delete('success');
+  const clean = url.pathname + url.search + url.hash;
+  window.history.replaceState({}, document.title, clean);
+})();

@@ -15,9 +15,7 @@ permalink: /reviews/
 <section class="review-form-section">
   <div class="container">
     <div class="review-form-intro">
-      <div id="success-message" class="alert alert-success" style="display: none; padding: 16px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; margin-bottom: 24px; color: #155724;">
-        ✅ <strong>Спасибо за отзыв!</strong> Мы получили ваше сообщение и опубликуем его после модерации.
-      </div>
+      <div id="success-message" style="display:none" data-nosnippet></div>
 
       <p>Ваше мнение очень важно для нас! Расскажите о своём опыте работы с нашим цехом — это поможет нам стать лучше и поможет другим клиентам сделать правильный выбор.</p>
     </div>
@@ -194,12 +192,3 @@ permalink: /reviews/
     </div>
   </div>
 </section>
-
-<script>
-// Показать сообщение об успешной отправке
-if (window.location.search.includes('success=true')) {
-  document.getElementById('success-message').style.display = 'block';
-  document.getElementById('success-message').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  window.history.replaceState({}, document.title, window.location.pathname);
-}
-</script>
