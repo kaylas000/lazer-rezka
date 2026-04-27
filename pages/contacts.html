@@ -47,9 +47,7 @@ permalink: /contacts/
       </div>
 
       <div class="contact-form-wrapper">
-        <div id="success-message" class="alert alert-success" style="display: none; padding: 16px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; margin-bottom: 24px; color: #155724;">
-          ✅ <strong>Спасибо!</strong> Ваша заявка отправлена. Мы свяжемся с вами в течение 1 часа.
-        </div>
+        <div id="success-message" style="display:none" data-nosnippet></div>
 
         <h2>Отправить заявку</h2>
         <p>Заполните форму, и мы свяжемся с вами в течение 1 часа</p>
@@ -101,14 +99,3 @@ permalink: /contacts/
     </div>
   </div>
 </section>
-
-<script>
-// Показать сообщение об успешной отправке
-if (window.location.search.includes('success=true')) {
-  document.getElementById('success-message').style.display = 'block';
-  // Прокрутить к сообщению
-  document.getElementById('success-message').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  // Убрать параметр из URL
-  window.history.replaceState({}, document.title, window.location.pathname);
-}
-</script>
