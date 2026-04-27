@@ -995,10 +995,8 @@ input:focus, textarea:focus, select:focus {
   }
 
   .hero-video {
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
-    transform: scale(0.82);
-    transform-origin: center;
   }
 
   .hero-title {
