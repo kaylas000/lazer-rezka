@@ -195,7 +195,7 @@ function showResult(data) {
 
       <div class="result-total">
         <span>Итого:</span>
-        <strong>${data.totalPrice.toLocaleString('ru-RU')} ₽</strong>
+        <strong><span id="calcTotalRub" data-total-rub="${data.totalPrice}">${data.totalPrice.toLocaleString('ru-RU')} ₽</span></strong>
       </div>
 
       <div class="result-actions">

@@ -13,6 +13,29 @@ permalink: /contacts/
   </div>
 </section>
 
+<script>
+(function autofillContactMessage() {
+  document.addEventListener('DOMContentLoaded', function () {
+    var params = new URLSearchParams(window.location.search);
+    var field = document.getElementById('message');
+    if (!field) return;
+    if (field.value && field.value.trim() !== '') return;
+    var messageFromQuery = params.get('message');
+    if (messageFromQuery) {
+      field.value = messageFromQuery;
+      return;
+    }
+    if (params.get('from_calc') === '1') {
+      var saved = localStorage.getItem('calc_message');
+      if (saved) {
+        field.value = saved;
+        localStorage.removeItem('calc_message');
+      }
+    }
+  });
+})();
+</script>
+
 <section class="contacts-content">
   <div class="container">
     <div class="contacts-grid">

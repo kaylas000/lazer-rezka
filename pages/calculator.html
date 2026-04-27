@@ -12,7 +12,39 @@ permalink: /calculator/
   </div>
 </section>
 
-<section class="calculator-section">
+<section class="calculator-tabs-section">
+  <div class="container">
+    <div class="calc-tabs" role="tablist" aria-label="Калькулятор проекта">
+      <button class="calc-tab-btn" data-tab-target="project-tab">Проект</button>
+      <button class="calc-tab-btn is-active" data-tab-target="sheet-tab">Лист (резка)</button>
+      <button class="calc-tab-btn" data-tab-target="round-tab">Труба круглая</button>
+      <button class="calc-tab-btn" data-tab-target="profile-tab">Труба профильная</button>
+      <button class="calc-tab-btn" data-tab-target="summary-tab">Итог</button>
+      <button class="calc-tab-btn" data-tab-target="price-tab">Прайс</button>
+    </div>
+  </div>
+</section>
+
+<section class="project-tab-pane calc-tab-pane" id="project-tab">
+  <div class="container">
+    <div class="calculator-note" style="margin-bottom: 16px;">
+      <p><strong>Проект:</strong> собирайте позиции листа и труб в одном расчёте, чтобы получить общий вес, площадь и ориентир по материалу.</p>
+    </div>
+    <div class="project-controls-grid">
+      <div class="form-group">
+        <label for="projectPricePerKg">Цена металла, ₽/кг (если знаете)</label>
+        <input type="number" id="projectPricePerKg" class="calc-input" min="0" step="0.1" placeholder="Например, 95">
+      </div>
+      <div class="form-group project-button-wrap">
+        <button id="addProjectItemBtn" class="btn btn-secondary">Добавить позицию</button>
+      </div>
+    </div>
+    <div id="projectItems" class="project-items"></div>
+    <div class="project-metrics" id="projectMetrics"></div>
+  </div>
+</section>
+
+<section class="calculator-section calc-tab-pane is-active" id="sheet-tab">
   <div class="container">
     <div class="calculator-wrapper">
       <div class="calculator-form">
@@ -81,6 +113,9 @@ permalink: /calculator/
         </div>
 
         <button id="calculateBtn" class="btn btn-primary btn-block">Рассчитать</button>
+        <button id="addSheetCutToProjectBtn" class="btn btn-secondary btn-block" style="margin-top: 12px;">
+          Добавить расчёт резки в проект
+        </button>
       </div>
 
       <div class="calculator-result" id="result">
@@ -97,8 +132,116 @@ permalink: /calculator/
   </div>
 </section>
 
-<section class="price-list-section" id="price-list">
+<section class="calc-tab-pane" id="round-tab">
   <div class="container">
+    <div class="calculator-wrapper">
+      <div class="calculator-form">
+        <h3>Труба круглая</h3>
+        <div class="form-group">
+          <label for="roundPreset">Популярный размер</label>
+          <select id="roundPreset" class="calc-input"></select>
+        </div>
+        <div class="form-group">
+          <label for="roundMaterial">Материал</label>
+          <select id="roundMaterial" class="calc-input">
+            <option value="steel">Сталь</option>
+            <option value="stainless">Нержавейка</option>
+            <option value="aluminum">Алюминий</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="roundQuantity">Количество</label>
+          <input type="number" id="roundQuantity" min="1" value="1" class="calc-input">
+        </div>
+        <div class="form-group">
+          <label for="roundOd">Диаметр, мм</label>
+          <input type="number" id="roundOd" min="1" step="0.1" class="calc-input">
+        </div>
+        <div class="form-group">
+          <label for="roundWall">Стенка, мм</label>
+          <input type="number" id="roundWall" min="0.1" step="0.1" class="calc-input">
+        </div>
+        <div class="form-group">
+          <label for="roundLength">Длина, м</label>
+          <input type="number" id="roundLength" min="0.01" step="0.01" value="1" class="calc-input">
+        </div>
+        <button id="addRoundToProjectBtn" class="btn btn-primary btn-block">Добавить в проект</button>
+      </div>
+      <div class="calculator-result" id="roundPreview">
+        <div class="result-placeholder">
+          <div class="result-icon">🧱</div>
+          <p>Выберите размеры трубы и добавьте позицию в проект.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="calc-tab-pane" id="profile-tab">
+  <div class="container">
+    <div class="calculator-wrapper">
+      <div class="calculator-form">
+        <h3>Труба профильная</h3>
+        <div class="form-group">
+          <label for="profilePreset">Популярный размер</label>
+          <select id="profilePreset" class="calc-input"></select>
+        </div>
+        <div class="form-group">
+          <label for="profileMaterial">Материал</label>
+          <select id="profileMaterial" class="calc-input">
+            <option value="steel">Сталь</option>
+            <option value="stainless">Нержавейка</option>
+            <option value="aluminum">Алюминий</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="profileQuantity">Количество</label>
+          <input type="number" id="profileQuantity" min="1" value="1" class="calc-input">
+        </div>
+        <div class="form-group">
+          <label for="profileA">Сторона A, мм</label>
+          <input type="number" id="profileA" min="1" step="0.1" class="calc-input">
+        </div>
+        <div class="form-group">
+          <label for="profileB">Сторона B, мм</label>
+          <input type="number" id="profileB" min="1" step="0.1" class="calc-input">
+        </div>
+        <div class="form-group">
+          <label for="profileWall">Стенка, мм</label>
+          <input type="number" id="profileWall" min="0.1" step="0.1" class="calc-input">
+        </div>
+        <div class="form-group">
+          <label for="profileLength">Длина, м</label>
+          <input type="number" id="profileLength" min="0.01" step="0.01" value="1" class="calc-input">
+        </div>
+        <button id="addProfileToProjectBtn" class="btn btn-primary btn-block">Добавить в проект</button>
+      </div>
+      <div class="calculator-result" id="profilePreview">
+        <div class="result-placeholder">
+          <div class="result-icon">📐</div>
+          <p>Выберите размеры трубы и добавьте позицию в проект.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="calc-tab-pane" id="summary-tab">
+  <div class="container">
+    <div class="calculator-note">
+      <p><strong>Итог по проекту:</strong> проверьте сводку и отправьте её в форму контактов.</p>
+    </div>
+    <div id="projectSummary" class="project-summary"></div>
+    <div class="cta-buttons" style="margin-top: 20px;">
+      <button id="copyProjectCalcBtn" class="btn btn-secondary">Скопировать расчёт</button>
+      <button id="sendProjectCalcBtn" class="btn btn-primary">Отправить расчёт</button>
+    </div>
+  </div>
+</section>
+
+<section class="price-list-section calc-tab-pane" id="price-tab">
+  <div class="container">
+    <div id="price-list"></div>
     <div class="price-header">
       <h2 class="section-title">Прайс-лист на услуги</h2>
       <a href="/assets/files/price-list.pdf" class="btn btn-secondary" download>
@@ -191,5 +334,7 @@ permalink: /calculator/
 <script>
   window.__PRICES_DATA__ = {{ site.data.prices | jsonify }};
   window.__MIN_ORDER__ = {{ site.data.prices.min_order }};
+  window.__METAL_CALC__ = {{ site.data.metal_calc | jsonify }};
 </script>
 <script src="{{ '/assets/js/calculator.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/project-calculator.js' | relative_url }}" defer></script>
