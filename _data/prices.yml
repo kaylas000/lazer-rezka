@@ -1,0 +1,135 @@
+# =============================================================================
+# ЕДИНЫЙ ФАЙЛ ЦЕН - меняйте только здесь.
+# Используется: /calculator/, /services/metal/, PDF (скрипт + деплой).
+# =============================================================================
+
+min_order: 1500
+
+accuracy:
+  laser_table: "±0.01 мм"
+
+# Цена ₽/п.м на каждую целую мм толщины (калькулятор интерполирует).
+laser:
+  steel:
+    thickness_mm:
+      "1": 80
+      "2": 90
+      "3": 100
+      "4": 110
+      "5": 120
+      "6": 130
+      "8": 150
+      "10": 180
+      "12": 220
+      "15": 280
+      "20": 350
+  stainless:
+    thickness_mm:
+      "1": 120
+      "2": 140
+      "3": 160
+      "4": 180
+      "5": 200
+      "6": 220
+      "8": 260
+      "10": 320
+      "12": 400
+  stainless_316:
+    thickness_mm:
+      "1": 140
+      "2": 160
+      "3": 180
+      "4": 200
+      "5": 220
+      "6": 240
+      "8": 280
+      "10": 340
+      "12": 420
+  aluminum:
+    thickness_mm:
+      "1": 100
+      "2": 110
+      "3": 120
+      "4": 130
+      "5": 140
+      "6": 150
+      "8": 180
+      "10": 220
+
+# Таблица "лазерная резка" на /calculator/ и в PDF (порядок строк = порядок в PDF).
+calculator_laser_tables:
+  - laser_key: steel
+    material_label: "Сталь Ст3"
+    bands:
+      - { from_mm: 1, to_mm: 2 }
+      - { from_mm: 3, to_mm: 5 }
+      - { from_mm: 6, to_mm: 8 }
+      - { from_mm: 10, to_mm: 12 }
+      - { from_mm: 15, to_mm: 20 }
+  - laser_key: stainless
+    material_label: "Нержавейка AISI 304"
+    bands:
+      - { from_mm: 1, to_mm: 2 }
+      - { from_mm: 3, to_mm: 5 }
+      - { from_mm: 6, to_mm: 8 }
+      - { from_mm: 10, to_mm: 12 }
+  - laser_key: aluminum
+    material_label: "Алюминий АД31"
+    bands:
+      - { from_mm: 1, to_mm: 3 }
+      - { from_mm: 4, to_mm: 6 }
+      - { from_mm: 8, to_mm: 10 }
+
+additional_services:
+  - service: "Гибка металла"
+    description: "Листовой металл до 4 мм"
+    surcharge: "+20%"
+  - service: "Порошковая покраска"
+    description: "Любой цвет по RAL"
+    surcharge: "+40%"
+  - service: "Пескоструйная обработка"
+    description: "Очистка и подготовка"
+    surcharge: "+15%"
+  - service: "Сварочные работы"
+    description: "Сварка стали и нержавейки"
+    surcharge: "от 500 ₽"
+  - service: "Гравировка"
+    description: "Лазерная гравировка"
+    surcharge: "от 300 ₽"
+  - service: "Срочный заказ"
+    description: "Выполнение в день обращения"
+    surcharge: "+30%"
+  - service: "Серийный заказ"
+    description: "От 50 деталей"
+    surcharge: "-15%"
+
+price_notes:
+  - title: "💰 Минимальный заказ"
+    body: "Минимальная стоимость заказа - 1500 ₽"
+  - title: "📦 Скидки на объём"
+    body: "При заказе от 50 деталей - скидка 15%. От 100 деталей - индивидуальные условия"
+  - title: "🚚 Доставка"
+    body: "По Москве - от 500 ₽. По России - транспортными компаниями"
+
+# Сводная таблица на /services/metal/ (одна строка = мин. цена "от" за п.м в диапазоне)
+metal_summary_rows:
+  - material: "Сталь Ст3, 09Г2С"
+    thickness_label: "1-20"
+    laser_key: steel
+    from_mm: 1
+    to_mm: 20
+  - material: "Нержавейка AISI 304"
+    thickness_label: "1-12"
+    laser_key: stainless
+    from_mm: 1
+    to_mm: 12
+  - material: "Нержавейка AISI 316"
+    thickness_label: "1-12"
+    laser_key: stainless_316
+    from_mm: 1
+    to_mm: 12
+  - material: "Алюминий АД31"
+    thickness_label: "1-10"
+    laser_key: aluminum
+    from_mm: 1
+    to_mm: 10

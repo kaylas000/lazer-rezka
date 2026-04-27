@@ -1,0 +1,21 @@
+{% comment %}
+  Min-max RUB za pog.m. dlya tselyh mm ot include.from_mm do include.to_mm (vklyuchitelno).
+  include.laser_key: steel | stainless | stainless_316 | aluminum
+{% endcomment %}
+{% assign lk = include.laser_key %}
+{% assign mmhash = site.data.prices.laser[lk].thickness_mm %}
+{% assign minp = 999999 %}
+{% assign maxp = -1 %}
+{% assign from = include.from_mm | plus: 0 %}
+{% assign to = include.to_mm | plus: 0 %}
+{% for i in (1..25) %}
+  {% if i >= from and i <= to %}
+    {% assign k = i | append: '' %}
+    {% if mmhash[k] %}
+      {% assign pr = mmhash[k] | plus: 0 %}
+      {% if pr < minp %}{% assign minp = pr %}{% endif %}
+      {% if pr > maxp %}{% assign maxp = pr %}{% endif %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{% if minp == maxp %}{{ minp }}{% else %}{{ minp }}-{{ maxp }}{% endif %}

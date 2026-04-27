@@ -1,20 +1,28 @@
 // Калькулятор стоимости лазерной резки
+// Цены и минимальный заказ - из window.__PRICES_DATA__ / window.__MIN_ORDER__ (Jekyll + _data/prices.yml)
 
-// Прайс-лист (цена за погонный метр в рублях)
-const prices = {
-  steel: {
-    1: 80, 2: 90, 3: 100, 4: 110, 5: 120, 6: 130, 8: 150, 10: 180, 12: 220, 15: 280, 20: 350
-  },
-  stainless: {
-    1: 120, 2: 140, 3: 160, 4: 180, 5: 200, 6: 220, 8: 260, 10: 320, 12: 400
-  },
-  aluminum: {
-    1: 100, 2: 110, 3: 120, 4: 130, 5: 140, 6: 150, 8: 180, 10: 220
+function thicknessMapFromYaml(node) {
+  const out = {};
+  if (!node || !node.thickness_mm) return out;
+  for (const [k, v] of Object.entries(node.thickness_mm)) {
+    out[parseInt(k, 10)] = Number(v);
   }
-};
+  return out;
+}
 
-// Минимальная стоимость заказа
-const MIN_ORDER = 1500;
+const raw = window.__PRICES_DATA__ && window.__PRICES_DATA__.laser ? window.__PRICES_DATA__.laser : null;
+const prices = raw
+  ? {
+      steel: thicknessMapFromYaml(raw.steel),
+      stainless: thicknessMapFromYaml(raw.stainless),
+      aluminum: thicknessMapFromYaml(raw.aluminum),
+    }
+  : {};
+
+const MIN_ORDER =
+  typeof window.__MIN_ORDER__ === 'number' && !Number.isNaN(window.__MIN_ORDER__)
+    ? window.__MIN_ORDER__
+    : 1500;
 
 // Элементы
 const materialSelect = document.getElementById('material');
@@ -33,7 +41,10 @@ thicknessSlider.addEventListener('input', () => {
 // Обновление диапазона толщины при смене материала
 materialSelect.addEventListener('change', () => {
   const material = materialSelect.value;
-  const availableThicknesses = Object.keys(prices[material]).map(Number);
+  const priceList = prices[material];
+  if (!priceList || Object.keys(priceList).length === 0) return;
+
+  const availableThicknesses = Object.keys(priceList).map(Number);
   const maxThickness = Math.max(...availableThicknesses);
   const minThickness = Math.min(...availableThicknesses);
 
@@ -42,7 +53,6 @@ materialSelect.addEventListener('change', () => {
   thicknessSlider.value = minThickness;
   thicknessValue.textContent = minThickness;
 
-  // Обновляем подписи
   const rangeLabels = document.querySelector('.range-labels');
   rangeLabels.innerHTML = `<span>${minThickness} мм</span><span>${maxThickness} мм</span>`;
 });
@@ -50,17 +60,15 @@ materialSelect.addEventListener('change', () => {
 // Функция расчёта
 calculateBtn.addEventListener('click', () => {
   const material = materialSelect.value;
-  const thickness = parseInt(thicknessSlider.value);
+  const thickness = parseInt(thicknessSlider.value, 10);
   const length = parseFloat(lengthInput.value);
-  const quantity = parseInt(quantityInput.value);
+  const quantity = parseInt(quantityInput.value, 10);
   const orderType = document.querySelector('input[name="orderType"]:checked').value;
 
-  // Дополнительные услуги
   const bending = document.getElementById('bending')?.checked || false;
   const painting = document.getElementById('painting')?.checked || false;
   const sandblasting = document.getElementById('sandblasting')?.checked || false;
 
-  // Валидация
   if (!length || length <= 0) {
     showError('Укажите длину реза');
     return;
@@ -71,13 +79,9 @@ calculateBtn.addEventListener('click', () => {
     return;
   }
 
-  // Получаем цену за погонный метр
   let pricePerMeter = getPriceForThickness(material, thickness);
-
-  // Базовая стоимость
   let totalPrice = pricePerMeter * length * quantity;
 
-  // Коэффициенты
   let coefficient = 1;
   let coefficientText = '';
   const additionalServices = [];
@@ -92,7 +96,6 @@ calculateBtn.addEventListener('click', () => {
 
   totalPrice = totalPrice * coefficient;
 
-  // Дополнительные услуги
   if (bending) {
     totalPrice *= 1.2;
     additionalServices.push('Гибка металла: +20%');
@@ -106,12 +109,10 @@ calculateBtn.addEventListener('click', () => {
     additionalServices.push('Пескоструйная обработка: +15%');
   }
 
-  // Минимальный заказ
   if (totalPrice < MIN_ORDER) {
     totalPrice = MIN_ORDER;
   }
 
-  // Показываем результат
   showResult({
     material: materialSelect.options[materialSelect.selectedIndex].text,
     thickness,
@@ -121,21 +122,23 @@ calculateBtn.addEventListener('click', () => {
     coefficient,
     coefficientText,
     additionalServices,
-    totalPrice: Math.round(totalPrice)
+    totalPrice: Math.round(totalPrice),
   });
 });
 
-// Получение цены с интерполяцией
 function getPriceForThickness(material, thickness) {
   const priceList = prices[material];
+  if (!priceList || Object.keys(priceList).length === 0) {
+    return 0;
+  }
 
-  // Если точное значение есть
   if (priceList[thickness]) {
     return priceList[thickness];
   }
 
-  // Интерполяция между ближайшими значениями
-  const thicknesses = Object.keys(priceList).map(Number).sort((a, b) => a - b);
+  const thicknesses = Object.keys(priceList)
+    .map(Number)
+    .sort((a, b) => a - b);
 
   for (let i = 0; i < thicknesses.length - 1; i++) {
     if (thickness > thicknesses[i] && thickness < thicknesses[i + 1]) {
@@ -143,17 +146,13 @@ function getPriceForThickness(material, thickness) {
       const t2 = thicknesses[i + 1];
       const p1 = priceList[t1];
       const p2 = priceList[t2];
-
-      // Линейная интерполяция
-      return p1 + (p2 - p1) * (thickness - t1) / (t2 - t1);
+      return p1 + ((p2 - p1) * (thickness - t1)) / (t2 - t1);
     }
   }
 
-  // Если толщина больше максимальной
   return priceList[thicknesses[thicknesses.length - 1]];
 }
 
-// Показать результат
 function showResult(data) {
   const html = `
     <div class="result-content">
@@ -214,7 +213,6 @@ function showResult(data) {
   resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// Показать ошибку
 function showError(message) {
   const html = `
     <div class="result-error">
@@ -226,26 +224,22 @@ function showError(message) {
   resultDiv.innerHTML = html;
 }
 
-// Открыть форму заказа
 function openOrderForm() {
   const material = materialSelect.options[materialSelect.selectedIndex].text;
   const thickness = thicknessSlider.value;
   const length = lengthInput.value;
   const quantity = quantityInput.value;
 
-  // Переход на страницу контактов с параметрами
   const params = new URLSearchParams({
     material,
     thickness,
     length,
-    quantity
+    quantity,
   });
 
   window.location.href = `/contacts/?${params.toString()}`;
 }
 
-// Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', () => {
-  // Установить начальные значения диапазона
   materialSelect.dispatchEvent(new Event('change'));
 });

@@ -1,35 +1,30 @@
-name: Deploy to GitHub Pages
+name: PR check (Jekyll + price PDF)
 
 on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+  pull_request:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-verify:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
+      - name: Scan for prohibited bidi / zero-width / U+2011 Unicode
+        run: python3 scripts/scan_prohibited_unicode.py
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
           bundler-cache: true
-          
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        
+
+      - name: Install Ruby gems
+        run: bundle install
+
       - name: Build with Jekyll
         run: bundle exec jekyll build
         env:
@@ -40,22 +35,13 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Generate price-list PDF for site artifact
+      - name: Generate price-list PDF into _site
         run: |
           mkdir -p _site/assets/files
           python3 -m pip install -r requirements/price-list.txt
           python3 scripts/build_price_list.py --output _site/assets/files/price-list.pdf
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Verify calculator embed and PDF artifact
+        run: |
+          grep -F "__PRICES_DATA__" _site/calculator/index.html
+          test -f _site/assets/files/price-list.pdf

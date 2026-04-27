@@ -123,71 +123,17 @@ permalink: /calculator/
               </tr>
             </thead>
             <tbody>
+              {% for tbl in site.data.prices.calculator_laser_tables %}
+              {% assign band_count = tbl.bands | size %}
+              {% for band in tbl.bands %}
               <tr>
-                <td rowspan="5">Сталь Ст3</td>
-                <td>1-2</td>
-                <td>80-90</td>
-                <td>±0.01 мм</td>
+                {% if forloop.first %}<td rowspan="{{ band_count }}">{{ tbl.material_label }}</td>{% endif %}
+                <td>{{ band.from_mm }}-{{ band.to_mm }}</td>
+                <td>{% include price-laser-band.html laser_key=tbl.laser_key from_mm=band.from_mm to_mm=band.to_mm %}</td>
+                <td>{{ site.data.prices.accuracy.laser_table }}</td>
               </tr>
-              <tr>
-                <td>3-5</td>
-                <td>100-120</td>
-                <td>±0.01 мм</td>
-              </tr>
-              <tr>
-                <td>6-8</td>
-                <td>130-150</td>
-                <td>±0.01 мм</td>
-              </tr>
-              <tr>
-                <td>10-12</td>
-                <td>180-220</td>
-                <td>±0.01 мм</td>
-              </tr>
-              <tr>
-                <td>15-20</td>
-                <td>280-350</td>
-                <td>±0.01 мм</td>
-              </tr>
-
-              <tr>
-                <td rowspan="4">Нержавейка AISI 304</td>
-                <td>1-2</td>
-                <td>120-140</td>
-                <td>±0.01 мм</td>
-              </tr>
-              <tr>
-                <td>3-5</td>
-                <td>160-200</td>
-                <td>±0.01 мм</td>
-              </tr>
-              <tr>
-                <td>6-8</td>
-                <td>220-260</td>
-                <td>±0.01 мм</td>
-              </tr>
-              <tr>
-                <td>10-12</td>
-                <td>320-400</td>
-                <td>±0.01 мм</td>
-              </tr>
-
-              <tr>
-                <td rowspan="3">Алюминий АД31</td>
-                <td>1-3</td>
-                <td>100-120</td>
-                <td>±0.01 мм</td>
-              </tr>
-              <tr>
-                <td>4-6</td>
-                <td>130-150</td>
-                <td>±0.01 мм</td>
-              </tr>
-              <tr>
-                <td>8-10</td>
-                <td>180-220</td>
-                <td>±0.01 мм</td>
-              </tr>
+              {% endfor %}
+              {% endfor %}
             </tbody>
           </table>
         </div>
@@ -205,41 +151,13 @@ permalink: /calculator/
               </tr>
             </thead>
             <tbody>
+              {% for row in site.data.prices.additional_services %}
               <tr>
-                <td>Гибка металла</td>
-                <td>Листовой металл до 4 мм</td>
-                <td>+20%</td>
+                <td>{{ row.service }}</td>
+                <td>{{ row.description }}</td>
+                <td>{{ row.surcharge }}</td>
               </tr>
-              <tr>
-                <td>Порошковая покраска</td>
-                <td>Любой цвет по RAL</td>
-                <td>+40%</td>
-              </tr>
-              <tr>
-                <td>Пескоструйная обработка</td>
-                <td>Очистка и подготовка</td>
-                <td>+15%</td>
-              </tr>
-              <tr>
-                <td>Сварочные работы</td>
-                <td>Сварка стали и нержавейки</td>
-                <td>от 500 ₽</td>
-              </tr>
-              <tr>
-                <td>Гравировка</td>
-                <td>Лазерная гравировка</td>
-                <td>от 300 ₽</td>
-              </tr>
-              <tr>
-                <td>Срочный заказ</td>
-                <td>Выполнение в день обращения</td>
-                <td>+30%</td>
-              </tr>
-              <tr>
-                <td>Серийный заказ</td>
-                <td>От 50 деталей</td>
-                <td>-15%</td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
@@ -247,18 +165,12 @@ permalink: /calculator/
     </div>
 
     <div class="price-notes">
+      {% for note in site.data.prices.price_notes %}
       <div class="price-note-card">
-        <h4>💰 Минимальный заказ</h4>
-        <p>Минимальная стоимость заказа — 1500 ₽</p>
+        <h4>{{ note.title }}</h4>
+        <p>{{ note.body | replace: '1500', site.data.prices.min_order }}</p>
       </div>
-      <div class="price-note-card">
-        <h4>📦 Скидки на объём</h4>
-        <p>При заказе от 50 деталей — скидка 15%. От 100 деталей — индивидуальные условия</p>
-      </div>
-      <div class="price-note-card">
-        <h4>🚚 Доставка</h4>
-        <p>По Москве — от 500 ₽. По России — транспортными компаниями</p>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -276,4 +188,8 @@ permalink: /calculator/
   </div>
 </section>
 
+<script>
+  window.__PRICES_DATA__ = {{ site.data.prices | jsonify }};
+  window.__MIN_ORDER__ = {{ site.data.prices.min_order }};
+</script>
 <script src="{{ '/assets/js/calculator.js' | relative_url }}"></script>
