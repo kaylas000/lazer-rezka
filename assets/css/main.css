@@ -996,8 +996,8 @@ input:focus, textarea:focus, select:focus {
 
   .hero-video {
     object-fit: cover;
-    object-position: 54% center;
-    transform: scale(0.94);
+    object-position: 72% 38%;
+    transform: scale(0.88);
     transform-origin: center;
   }
 
