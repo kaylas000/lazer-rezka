@@ -990,7 +990,7 @@ input:focus, textarea:focus, select:focus {
 /* Responsive */
 @media (max-width: 768px) {
   .hero {
-    min-height: 60vh;
+    min-height: 45vh;
     padding: 70px 0 48px;
   }
 
