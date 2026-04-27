@@ -121,12 +121,9 @@
   }
 
   function parseCutResultFromDom() {
-    const result = document.getElementById("result");
-    if (!result || !result.querySelector(".result-content")) return null;
-    const totalStrong = result.querySelector(".result-total strong");
-    if (!totalStrong) return null;
-    const totalText = totalStrong.textContent || "";
-    const cost = Number(totalText.replace(/[^\d]/g, "")) || 0;
+    const totalNode = document.getElementById("calcTotalRub");
+    if (!totalNode) return null;
+    const cost = Number(totalNode.getAttribute("data-total-rub")) || 0;
     if (!cost) return null;
     const materialEl = document.getElementById("material");
     const thicknessEl = document.getElementById("thickness");
@@ -215,7 +212,7 @@
             </div>`;
         } else {
           dims = `
-            <div class="result-row"><span>Описание:</span> <strong>${item.description || "Расчёт резки"}</strong></div>
+            <div class="result-row"><span>Описание:</span> <strong data-sheet-desc="${idx}"></strong></div>
             <div class="result-row"><span>Стоимость резки:</span> <strong>${Number(item.cutCost || 0).toLocaleString("ru-RU")} ₽</strong></div>`;
         }
         return `
@@ -230,6 +227,12 @@
           </div>`;
       })
       .join("");
+    state.items.forEach((item, idx) => {
+      const descNode = wrap.querySelector(`[data-sheet-desc="${idx}"]`);
+      if (descNode) {
+        descNode.textContent = item.description || "Расчёт резки";
+      }
+    });
   }
 
   function renderMetrics() {
@@ -278,7 +281,11 @@
       wrap.innerHTML = '<div class="result-placeholder"><p>Пока нет позиций проекта.</p></div>';
       return;
     }
-    wrap.innerHTML = `<pre class="project-summary-pre">${summaryText()}</pre>`;
+    wrap.textContent = "";
+    const pre = document.createElement("pre");
+    pre.className = "project-summary-pre";
+    pre.textContent = summaryText();
+    wrap.appendChild(pre);
   }
 
   function rerender() {

@@ -19,6 +19,7 @@ permalink: /contacts/
     var params = new URLSearchParams(window.location.search);
     var field = document.getElementById('message');
     if (!field) return;
+    if (field.value && field.value.trim() !== '') return;
     var messageFromQuery = params.get('message');
     if (messageFromQuery) {
       field.value = messageFromQuery;
@@ -28,6 +29,7 @@ permalink: /contacts/
       var saved = localStorage.getItem('calc_message');
       if (saved) {
         field.value = saved;
+        localStorage.removeItem('calc_message');
       }
     }
   });
