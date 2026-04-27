@@ -3499,6 +3499,96 @@ a, button, .card, .service-card, .advantage, .step {
   gap: 32px;
 }
 
+/* Project calculator tabs */
+.calculator-tabs-section {
+  padding: 24px 0 0;
+  background: var(--bg-surface);
+}
+
+.calc-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.calc-tab-btn {
+  border: 1px solid var(--border-default);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.calc-tab-btn.is-active {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+.calc-tab-pane {
+  display: none;
+}
+
+.calc-tab-pane.is-active {
+  display: block;
+}
+
+.project-controls-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+.project-button-wrap {
+  display: flex;
+  align-items: flex-end;
+}
+
+.project-items {
+  display: grid;
+  gap: 16px;
+}
+
+.project-item-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.project-item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.project-delete-btn {
+  margin-top: 10px;
+}
+
+.project-metrics,
+.project-summary {
+  margin-top: 16px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.project-summary-pre {
+  white-space: pre-wrap;
+  margin: 0;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .project-controls-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .price-banner-text {
   display: flex;
   align-items: center;
