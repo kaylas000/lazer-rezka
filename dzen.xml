@@ -1,0 +1,73 @@
+---
+layout: null
+permalink: /dzen.xml
+sitemap: false
+---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ site.title | xml_escape }}</title>
+    <link>{{ site.url }}</link>
+    <description>{{ site.description | strip_newlines | xml_escape }}</description>
+    <language>ru</language>
+    <atom:link href="{{ '/dzen.xml' | absolute_url }}" rel="self" type="application/rss+xml"/>
+
+    {% assign max_items = 10 %}
+    {% assign count = 0 %}
+
+    {% assign href_abs = 'href="' | append: site.url | append: '/' %}
+    {% assign src_abs  = 'src="'  | append: site.url | append: '/' %}
+
+    {% for post in site.posts %}
+      {% if count >= max_items %}{% break %}{% endif %}
+
+      {%- assign c = post.content -%}
+      {%- if c contains '<script' -%}{%- continue -%}{%- endif -%}
+      {%- if c contains '<table' -%}{%- continue -%}{%- endif -%}
+      {%- if c contains '<pre' -%}{%- continue -%}{%- endif -%}
+      {%- if c contains '<code' -%}{%- continue -%}{%- endif -%}
+
+      {% assign cover = post.image | default: site.image | absolute_url %}
+      {% assign mime = 'image/jpeg' %}
+      {% if cover contains '.png' %}{% assign mime = 'image/png' %}{% endif %}
+      {% if cover contains '.gif' %}{% assign mime = 'image/gif' %}{% endif %}
+
+      {% assign html = post.content
+        | replace: '<strong>', '<b>' | replace: '</strong>', '</b>'
+        | replace: '<em>', '<i>'     | replace: '</em>', '</i>'
+        | replace: 'href="/', href_abs
+        | replace: 'src="/',  src_abs
+      %}
+
+      <item>
+        <title>{{ post.title | xml_escape }}</title>
+        <link>{{ post.url | absolute_url }}</link>
+        <guid isPermaLink="true">{{ post.url | absolute_url }}</guid>
+        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
+
+        <!-- Дзен: безопасный режим — отправлять как черновик-статью, не индексировать, комментарии открыты -->
+        <category>native-draft</category>
+        <category>format-article</category>
+        <category>noindex</category>
+        <category>comment-all</category>
+
+        <enclosure url="{{ cover }}" type="{{ mime }}"/>
+
+        <description>{{ post.excerpt | strip_html | strip_newlines | truncate: 220 | xml_escape }}</description>
+
+        <content:encoded><![CDATA[
+          <h1>{{ post.title | escape }}</h1>
+          <figure><img src="{{ cover }}" /></figure>
+          {{ html }}
+          <p><a href="{{ post.url | absolute_url }}">Читать на сайте</a></p>
+        ]]></content:encoded>
+      </item>
+
+      {% assign count = count | plus: 1 %}
+    {% endfor %}
+
+  </channel>
+</rss>
