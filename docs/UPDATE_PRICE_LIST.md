@@ -1,3 +1,11 @@
+---
+layout: default
+title: "Как обновить цены и прайс PDF"
+permalink: /docs/UPDATE_PRICE_LIST/
+tech_doc_noindex: true
+sitemap: false
+---
+
 # Как обновить цены и прайс PDF
 
 Коротко: **все цифры цен** — в одном файле **`_data/prices.yml`**. Телефон, почта и адрес для PDF — в **`_data/business.yml`**.
