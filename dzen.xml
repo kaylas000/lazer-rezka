@@ -15,32 +15,17 @@ sitemap: false
     <language>ru</language>
     <atom:link href="{{ '/dzen.xml' | absolute_url }}" rel="self" type="application/rss+xml"/>
 
-    {% assign max_items = 10 %}
+    {% assign max_items = 20 %}
     {% assign count = 0 %}
-
-    {% assign href_abs = 'href="' | append: site.url | append: '/' %}
-    {% assign src_abs  = 'src="'  | append: site.url | append: '/' %}
 
     {% for post in site.posts %}
       {% if count >= max_items %}{% break %}{% endif %}
-
-      {%- assign c = post.content -%}
-      {%- if c contains '<script' -%}{%- continue -%}{%- endif -%}
-      {%- if c contains '<table' -%}{%- continue -%}{%- endif -%}
-      {%- if c contains '<pre' -%}{%- continue -%}{%- endif -%}
-      {%- if c contains '<code' -%}{%- continue -%}{%- endif -%}
 
       {% assign cover = post.image | default: site.image | absolute_url %}
       {% assign mime = 'image/jpeg' %}
       {% if cover contains '.png' %}{% assign mime = 'image/png' %}{% endif %}
       {% if cover contains '.gif' %}{% assign mime = 'image/gif' %}{% endif %}
-
-      {% assign html = post.content
-        | replace: '<strong>', '<b>' | replace: '</strong>', '</b>'
-        | replace: '<em>', '<i>'     | replace: '</em>', '</i>'
-        | replace: 'href="/', href_abs
-        | replace: 'src="/',  src_abs
-      %}
+      {% assign text = post.excerpt | strip_html | strip_newlines | replace: '  ', ' ' %}
 
       <item>
         <title>{{ post.title | xml_escape }}</title>
@@ -61,7 +46,7 @@ sitemap: false
         <content:encoded><![CDATA[
           <h1>{{ post.title | escape }}</h1>
           <figure><img src="{{ cover }}" /></figure>
-          {{ html }}
+          <p>{{ text | escape }}</p>
           <p><a href="{{ post.url | absolute_url }}">Читать на сайте</a></p>
         ]]></content:encoded>
       </item>
