@@ -96,3 +96,9 @@
   post_title: фанера для лазерной резки
   post_url: /blog/2026/05/rezka-fanery/
   question: Фанера для лазера?
+- answer: 'Принимаем DXF, DWG, CDR, AI, SVG, PDF. Важно: векторные замкнутые контуры,
+    толщина линий 0.01 мм.'
+  category: technical
+  post_title: 'Лазерная резка: оформление заказа'
+  post_url: /blog/2026/05/kak-oformit-zakaz/
+  question: Какой формат файлов принимаете?
