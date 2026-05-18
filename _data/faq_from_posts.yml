@@ -102,3 +102,9 @@
   post_title: 'Лазерная резка: оформление заказа'
   post_url: /blog/2026/05/kak-oformit-zakaz/
   question: Какой формат файлов принимаете?
+- answer: Мы принимаем DXF, DWG, CDR, AI, SVG, PDF. Обязательно используйте векторные
+    замкнутые контуры и толщину линий 0.01 мм.
+  category: technical
+  post_title: Чек-лист для лазерной резки
+  post_url: /blog/2026/05/chek-list-chertezha/
+  question: Чертеж какой формой?
