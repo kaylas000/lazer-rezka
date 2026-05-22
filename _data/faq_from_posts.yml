@@ -114,3 +114,9 @@
   post_title: снижение стоимости лазерной резки
   post_url: /blog/2026/05/kak-snizit-stoimost/
   question: Как снизить стоимость?
+- answer: 'Мы принимаем DXF, DWG, CDR, AI, SVG, PDF. Важно: векторные замкнутые контуры,
+    толщина линий 0.01 мм.'
+  category: technical
+  post_title: типичные ошибки при лазерной резке
+  post_url: /blog/2026/05/tipichnye-oshibki/
+  question: Какой формат файла?
