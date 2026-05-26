@@ -137,7 +137,7 @@
     window.SITE_AI_WORKER_URL = {{ site.ai_worker_url | default: "" | jsonify }};
   </script>
   <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
-  <!-- <script src="{{ '/assets/js/ai-chat.js' | relative_url }}" defer></script> -->
+  {% comment %}<script src="{{ '/assets/js/ai-chat.js' | relative_url }}" defer></script>{% endcomment %}
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
