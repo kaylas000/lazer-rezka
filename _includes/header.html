@@ -1,24 +1,27 @@
-<header class="header">
+<header class="header" id="header">
   <nav class="nav container">
-    <a href="/" class="logo">
+    <a href="/" class="logo" aria-label="Цех лазерной резки — на главную">
       <span class="logo-text">Лазерная Резка</span>
     </a>
 
-    <button class="nav-toggle" aria-label="Открыть меню">
+    <button class="nav-toggle" aria-label="Открыть меню" aria-expanded="false">
       <span></span>
       <span></span>
       <span></span>
     </button>
 
     <ul class="nav-menu">
-      <li><a href="/">Главная</a></li>
       <li><a href="/services/">Услуги</a></li>
       <li><a href="/calculator/">Калькулятор</a></li>
       <li><a href="/portfolio/">Портфолио</a></li>
       <li><a href="/blog/">Блог</a></li>
+      <li><a href="/faq/">FAQ</a></li>
       <li><a href="/contacts/">Контакты</a></li>
     </ul>
 
-    <a href="tel:{{ site.company.phone }}" class="btn-phone">{{ site.company.phone }}</a>
+    <div class="nav-actions">
+      <a href="/calculator/" class="btn btn-primary btn-sm nav-cta">Рассчитать стоимость</a>
+      <a href="tel:{{ site.company.phone }}" class="btn-phone" aria-label="Позвонить">{{ site.company.phone }}</a>
+    </div>
   </nav>
 </header>

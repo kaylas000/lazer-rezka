@@ -1,0 +1,67 @@
+---
+layout: default
+title: "Карта сайта — Цех лазерной резки"
+description: "Полная карта сайта ceh-lazer-rezka.ru: все страницы и разделы для удобной навигации."
+permalink: /sitemap/
+sitemap:
+  priority: 0.5
+---
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Карта сайта</h1>
+    <p class="lead">Все страницы и разделы сайта</p>
+  </div>
+</section>
+
+<section class="sitemap-section">
+  <div class="container">
+    <div class="sitemap-grid">
+      <div class="sitemap-col">
+        <h2>Услуги</h2>
+        <ul>
+          <li><a href="/services/metal/">Лазерная резка металла</a></li>
+          <li><a href="/services/bending/">Гибка металла</a></li>
+          <li><a href="/services/powder-coating/">Порошковая покраска</a></li>
+          <li><a href="/services/sandblasting/">Пескоструйная обработка</a></li>
+          <li><a href="/services/welding/">Сварочные работы</a></li>
+          <li><a href="/services/locksmith/">Слесарные работы</a></li>
+        </ul>
+      </div>
+
+      <div class="sitemap-col">
+        <h2>Инструменты</h2>
+        <ul>
+          <li><a href="/calculator/">Калькулятор стоимости</a></li>
+          <li><a href="/materials/">Материалы и толщины</a></li>
+          <li><a href="/prices/">Прайс-лист</a></li>
+        </ul>
+      </div>
+
+      <div class="sitemap-col">
+        <h2>Информация</h2>
+        <ul>
+          <li><a href="/portfolio/">Портфолио</a></li>
+          <li><a href="/blog/">Блог</a></li>
+          <li><a href="/faq/">Часто задаваемые вопросы</a></li>
+          <li><a href="/contacts/">Контакты</a></li>
+        </ul>
+      </div>
+
+      <div class="sitemap-col">
+        <h2>Правовая информация</h2>
+        <ul>
+          <li><a href="/privacy/">Политика конфиденциальности</a></li>
+          <li><a href="/sitemap/">Карта сайта</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 style="margin-top: 48px;">Статьи блога</h2>
+    <ul class="sitemap-posts">
+      {% for post in site.posts %}
+      <li><a href="{{ post.url }}">{{ post.title }}</a> — {{ post.date | date: "%d.%m.%Y" }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

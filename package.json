@@ -1,0 +1,27 @@
+{
+  "name": "lazer-rezka-study",
+  "version": "1.0.0",
+  "description": "Корпоративный сайт цеха лазерной резки с AI-консультантом и системой автопубликации статей.",
+  "main": "cloudflare-worker.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaylas000/lazer-rezka.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kaylas000/lazer-rezka/issues"
+  },
+  "homepage": "https://github.com/kaylas000/lazer-rezka#readme",
+  "dependencies": {
+    "sharp": "^0.34.5"
+  }
+}

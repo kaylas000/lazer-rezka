@@ -102,19 +102,18 @@ class AIChat {
   
   async sendMessage(message) {
     if (this.isProcessing) return;
-    
-    // Добавить сообщение пользователя
+
     this.addMessage(message, 'user');
     this.history.push({ role: 'user', content: message });
-    
-    // Показать индикатор печати
+
     this.showTyping();
     this.isProcessing = true;
-    
+
     try {
       let response;
-      
+
       if (USE_DIRECT_API) {
+        console.log('[AI Chat] Прямой вызов Groq API...');
         // Прямой вызов Groq API
         response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
@@ -135,16 +134,13 @@ class AIChat {
         });
       } else {
         // Через Cloudflare Worker
+        console.log('[AI Chat] Вызов Worker:', WORKER_URL);
         response = await fetch(WORKER_URL, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            message: message,
-            history: this.history.slice(-10)
-          })
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: message, history: this.history.slice(-10) })
         });
+        console.log('[AI Chat] Worker ответ:', response.status, response.statusText);
       }
       
       this.hideTyping();
@@ -180,7 +176,9 @@ class AIChat {
       
     } catch (error) {
       this.hideTyping();
-      console.error('Chat error:', error);
+      console.error('[AI Chat] Ошибка:', error.message);
+      console.error('[AI Chat] Тип:', error.name);
+      console.error('[AI Chat] Полная:', error);
       
       // Показать сообщение об ошибке
       let errorMessage = error.message;
@@ -376,7 +374,7 @@ class AIChat {
 КОНТАКТЫ:
 📞 +7 (985) 456-37-64
 📧 info@lasercut.ru
-⏰ Пн-Пт 8:00-18:00
+⏰ Пн-Пт 9:00-18:00
 📍 Нахабино ул. Новая 7, Московская область
 
 КАК ОТВЕЧАТЬ:
@@ -405,7 +403,7 @@ class AIChat {
 - Заключить договор
 - Получить коммерческое предложение
 
-Скажи: "Оставьте телефон через форму на сайте — наш менеджер перезвонит в течение часа (в рабочее время пн-пт 8:00-18:00) и всё обсудит детально."
+Скажи: "Оставьте телефон через форму на сайте — наш менеджер перезвонит в течение часа (в рабочее время пн-пт 9:00-18:00) и всё обсудит детально."
 
 ЧТО НЕ ДЕЛАТЬ:
 ❌ Не придумывай точные цены — давай диапазоны

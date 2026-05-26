@@ -1,0 +1,64 @@
+<h2>Блок «Наши услуги» — текущий vs предложение</h2>
+<p class="subtitle">Карточки услуг. Слева — как сейчас. Справа — вариант усиления.</p>
+
+<div class="split">
+  <!-- CURRENT -->
+  <div class="mockup">
+    <div class="mockup-header">Сейчас (emoji + карточки)</div>
+    <div class="mockup-body" style="background:#0B0B0F;padding:32px 24px">
+      <div style="display:grid;gap:20px">
+        <!-- Card 1 -->
+        <div style="background:linear-gradient(135deg,#16161F,#1E1E2E);padding:24px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);font-family:Inter,sans-serif">
+          <div style="font-size:32px;margin-bottom:12px;filter:drop-shadow(0 0 12px rgba(255,107,43,0.3))">🔥</div>
+          <h3 style="font-size:16px;color:#fff;margin:0 0 8px">Лазерная резка металла</h3>
+          <p style="font-size:11px;color:rgba(255,255,255,0.5);margin:0 0 12px;line-height:1.4">Высокоточная резка металлов на современном волоконном лазере.</p>
+          <div style="display:grid;gap:6px;margin-bottom:14px">
+            <div style="background:#0B0B0F;padding:7px 10px;border-radius:6px;font-size:10px;border:1px solid rgba(255,255,255,0.04)"><strong style="color:#FF6B2B">Толщина:</strong> до 20 мм</div>
+            <div style="background:#0B0B0F;padding:7px 10px;border-radius:6px;font-size:10px;border:1px solid rgba(255,255,255,0.04)"><strong style="color:#FF6B2B">Точность:</strong> ±0.01 мм</div>
+            <div style="background:#0B0B0F;padding:7px 10px;border-radius:6px;font-size:10px;border:1px solid rgba(255,255,255,0.04)"><strong style="color:#FF6B2B">Формат:</strong> до 3000×1500 мм</div>
+          </div>
+          <div style="background:#FF6B2B;color:#fff;text-align:center;padding:10px;border-radius:7px;font-size:12px;font-weight:600">Подробнее</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROPOSED -->
+  <div class="mockup">
+    <div class="mockup-header">Предложение (SVG иконки + глубина)</div>
+    <div class="mockup-body" style="background:#0B0B0F;padding:32px 24px">
+      <div style="display:grid;gap:20px">
+        <!-- Card 1 redesigned -->
+        <div style="background:linear-gradient(135deg,#16161F,#1E1E2E);padding:28px;border-radius:14px;border:1px solid rgba(255,107,43,0.12);font-family:Inter,sans-serif;position:relative;overflow:hidden">
+          <!-- Glow accent top-right -->
+          <div style="position:absolute;top:-40px;right:-40px;width:120px;height:120px;background:radial-gradient(circle,rgba(255,107,43,0.12),transparent 70%);border-radius:50%"></div>
+          <!-- Number badge -->
+          <div style="position:absolute;top:16px;right:16px;font-size:64px;font-weight:800;color:rgba(255,255,255,0.02);line-height:1">01</div>
+          <!-- SVG icon (simulated with CSS) -->
+          <div style="width:44px;height:44px;background:rgba(255,107,43,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;z-index:1">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B2B" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="9"/></svg>
+          </div>
+          <h3 style="font-size:17px;color:#fff;margin:0 0 6px;position:relative;z-index:1">Лазерная резка металла</h3>
+          <p style="font-size:11px;color:rgba(255,255,255,0.45);margin:0 0 16px;line-height:1.4;position:relative;z-index:1">Высокоточная резка на волоконном лазере. Сталь, нержавейка, алюминий.</p>
+          <!-- Feature pills -->
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1">
+            <span style="background:rgba(255,107,43,0.08);color:#FF8C55;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600">до 20 мм</span>
+            <span style="background:rgba(255,107,43,0.08);color:#FF8C55;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600">±0.01 мм</span>
+            <span style="background:rgba(255,107,43,0.08);color:#FF8C55;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600">3000×1500</span>
+          </div>
+          <a style="color:#FF6B2B;font-size:12px;font-weight:600;text-decoration:none;position:relative;z-index:1;display:flex;align-items:center;gap:4px">Подробнее <span style="font-size:14px">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top:24px">Конкретные изменения:</h3>
+<div style="display:grid;gap:8px;font-size:13px;color:rgba(255,255,255,0.7)">
+  <div>• Emoji → SVG иконки в accent-плашке</div>
+  <div>• Параметры не списком, а пилюлями (компактнее)</div>
+  <div>• Номер карточки водяным знаком (глубина)</div>
+  <div>• Accent-свечение в углу (атмосфера)</div>
+  <div>• Кнопка → текстовая ссылка (меньше визуального шума)</div>
+  <div>• Всё на CSS — никаких новых зависимостей</div>
+</div>

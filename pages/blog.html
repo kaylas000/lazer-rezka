@@ -1,7 +1,8 @@
 ---
 layout: default
-title: "Блог о лазерной резке металла — Советы и руководства"
-description: "Статьи, советы и руководства по лазерной резке стали, нержавейки и алюминия. Технические материалы и практические рекомендации."
+title: "Блог о лазерной резке металла — Экспертные статьи | Цех в Нахабино"
+description: "Экспертные статьи о лазерной резке металла: подготовка DXF, выбор толщины, сравнение технологий. Технические материалы от цеха в Нахабино, Москва и МО."
+keywords: "лазерная резка металла блог, статьи о лазерной резке, DXF подготовка, резка металла технологии"
 permalink: /blog/
 ---
 
@@ -23,11 +24,12 @@ permalink: /blog/
 
     {% if site.posts.size > 0 %}
     <div class="blog-grid">
-      {% for post in site.posts limit: 12 %}
+      {% for post in site.posts %}
       <article class="blog-card" data-category="{{ post.category }}">
         <div class="blog-image">
           {% if post.image %}
-          <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+          <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="blog-placeholder" style="display:none">📝</div>
           {% else %}
           <div class="blog-placeholder">📝</div>
           {% endif %}
@@ -70,10 +72,9 @@ permalink: /blog/
   <div class="container">
     <div class="cta-box">
       <h2>Есть вопросы?</h2>
-      <p>Наш AI-консультант ответит на любые вопросы о лазерной резке</p>
+      <p>Свяжитесь с нами — ответим в течение часа</p>
       <div class="cta-buttons">
-        <button class="btn btn-primary" onclick="document.getElementById('chatToggle').click()">Задать вопрос</button>
-        <a href="/contacts/" class="btn btn-secondary">Связаться с нами</a>
+        <a href="/contacts/" class="btn btn-primary">Связаться с нами</a>
       </div>
     </div>
   </div>
