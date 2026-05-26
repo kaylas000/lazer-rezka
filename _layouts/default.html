@@ -10,17 +10,24 @@
 
   <!-- Preload критических ресурсов -->
   <link rel="preload" href="{{ '/assets/css/main.css' | relative_url }}" as="style">
-  <link rel="preload" href="{{ '/assets/js/main.js' | relative_url }}" as="script">
+  {% if page.url == '/' %}<link rel="preload" href="{{ '/assets/images/hero.jpg' | relative_url }}" as="image">{% endif %}
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="dns-prefetch" href="https://mc.yandex.ru">
   {% if page.head_extra %}{{ page.head_extra }}{% endif %}
 
-  <!-- Open Graph дополнительные поля (jekyll-seo-tag не добавляет эти) -->
+  <!-- Open Graph дополнительные поля -->
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ru_RU">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.company.name }}">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="twitter:image" content="{{ '/assets/images/hero.jpg' | absolute_url }}">
 
   <!-- Telegram -->
   <meta property="telegram:channel" content="@lasercut">
@@ -29,15 +36,19 @@
   {% if page.keywords %}<meta name="keywords" content="{{ page.keywords }}">{% endif %}
 
   <!-- Geo / Local SEO -->
-  <meta name="geo.region" content="RU-MOS">
-  <meta name="geo.placename" content="Нахабино, Московская область">
-  <meta name="geo.position" content="55.8397;37.1742">
-  <meta name="ICBM" content="55.8397, 37.1742">
+  <meta name="geo.region" content="{{ site.geo_region }}">
+  <meta name="geo.placename" content="{{ site.geo_placename }}">
+  <meta name="geo.position" content="{{ site.geo_position }}">
+  <meta name="ICBM" content="{{ site.geo_icbm }}">
   <meta name="language" content="ru">
+  <link rel="alternate" hreflang="ru-RU" href="{{ page.url | absolute_url }}">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
 
   {% include schema-markup.html %}
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-  <link rel="stylesheet" href="{{ '/assets/css/chat.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/chat.css' | relative_url }}" media="print" onload="this.media='all'">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
@@ -53,7 +64,9 @@
   <link rel="icon" type="image/png" sizes="192x192" href="{{ '/assets/images/icon-192.png' | relative_url }}">
   <link rel="icon" type="image/png" sizes="512x512" href="{{ '/assets/images/icon-512.png' | relative_url }}">
   <link rel="apple-touch-icon" href="{{ '/assets/images/icon-192.png' | relative_url }}">
-  <meta name="theme-color" content="#FF6B2B">
+  <meta name="theme-color" content="#0B0B0F">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
@@ -94,13 +107,43 @@
     {{ content }}
   </main>
 
+  {% unless page.url == '/materials/' or page.url == '/prices/' %}
+  <section class="price-banner">
+    <div class="container">
+      <div class="price-banner-content">
+        <div class="price-banner-text">
+          <span class="price-banner-icon">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="2" width="28" height="32" rx="3" stroke="#FF6B2B" stroke-width="2"/><path d="M12 2v8h12V2" stroke="#FF6B2B" stroke-width="2"/><text x="18" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="9" fill="#FF6B2B">PDF</text></svg>
+          </span>
+          <div>
+            <strong>Полный прайс-лист</strong>
+            <span>Цены на все услуги и материалы</span>
+          </div>
+        </div>
+        <a href="/assets/files/price-list.pdf" class="btn btn-primary" download>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:4px;"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Скачать PDF <span class="pdf-size">(~1.2 МБ)</span>
+        </a>
+        <a href="/prices/" class="btn btn-secondary">Смотреть прайс</a>
+      </div>
+    </div>
+  </section>
+  {% endunless %}
+
   {% include footer.html %}
-  {% include ai-chat-widget.html %}
+  <!-- AI-чат временно отключён -->
+  {% comment %}{% include ai-chat-widget.html %}{% endcomment %}
 
   <script>
     window.SITE_AI_WORKER_URL = {{ site.ai_worker_url | default: "" | jsonify }};
   </script>
-  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
-  <script src="{{ '/assets/js/ai-chat.js' | relative_url }}"></script>
+  <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
+  <!-- <script src="{{ '/assets/js/ai-chat.js' | relative_url }}" defer></script> -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('{{ "/sw.js" | relative_url }}');
+      });
+    }
+  </script>
 </body>
 </html>

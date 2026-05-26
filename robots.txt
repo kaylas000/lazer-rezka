@@ -18,6 +18,14 @@ Crawl-delay: 1
 User-agent: Slurp
 Allow: /
 
+# ===== YANDEX =====
+User-agent: YandexBot
+Allow: /
+Host: ceh-lazer-rezka.ru
+
+User-agent: YandexGPT
+Allow: /
+
 # ===== OPENAI / ChatGPT =====
 User-agent: GPTBot
 Allow: /
@@ -88,7 +96,7 @@ Allow: /
 User-agent: YouBot
 Allow: /
 
-# ===== COMMON CRAWL (обучение LLM) =====
+# ===== COMMON CRAWL (LLM обучение) =====
 User-agent: CCBot
 Allow: /
 
@@ -98,13 +106,6 @@ Allow: /
 
 # ===== BYTEDANCE =====
 User-agent: Bytespider
-Allow: /
-
-# ===== YANDEX =====
-User-agent: YandexBot
-Allow: /
-
-User-agent: YandexGPT
 Allow: /
 
 # ===== ВСЕ ОСТАЛЬНЫЕ =====
@@ -117,7 +118,6 @@ Disallow: /AI_SETUP.md
 Disallow: /EMAIL_SETUP.md
 Disallow: /FORMSPREE_SETUP.md
 Disallow: /SETUP.md
-
 Crawl-delay: 1
 
 Sitemap: https://ceh-lazer-rezka.ru/sitemap.xml

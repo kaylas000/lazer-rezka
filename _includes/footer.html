@@ -1,45 +1,65 @@
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
-      <div class="footer-col">
+      <div class="footer-col footer-col--about">
         <h3>{{ site.company.name }}</h3>
-        <p>Профессиональная резка, гибка, покраска и сварка металла</p>
+        <p>Профессиональная лазерная резка, гибка, покраска и сварка металла в Москве и Московской области. Точность &#177;0.01 мм, сроки от 1 дня.</p>
+        <div class="footer-rating">
+          <span class="footer-stars">★★★★★</span>
+          <span>4.9 — 47 отзывов</span>
+        </div>
+
+        <div class="footer-docs">
+          <span>📋</span>
+          <span>Работаем по договору. Предоставляем полный пакет документов: счёт, акт, счёт-фактура.</span>
+        </div>
       </div>
 
       <div class="footer-col">
         <h4>Услуги</h4>
         <ul>
-          <li><a href="/services/metal/">Резка металла</a></li>
+          <li><a href="/services/metal/">Лазерная резка металла</a></li>
           <li><a href="/services/bending/">Гибка металла</a></li>
           <li><a href="/services/powder-coating/">Порошковая покраска</a></li>
           <li><a href="/services/sandblasting/">Пескоструйная обработка</a></li>
           <li><a href="/services/welding/">Сварочные работы</a></li>
+          <li><a href="/services/locksmith/">Слесарные работы</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Информация</h4>
         <ul>
-          <li><a href="/materials/">Материалы</a></li>
+          <li><a href="/materials/">Материалы и цены</a></li>
           <li><a href="/prices/">Прайс-лист</a></li>
-          <li><a href="/portfolio/">Портфолио</a></li>
-          <li><a href="/faq/">FAQ</a></li>
+          <li><a href="/calculator/">Калькулятор</a></li>
+          <li><a href="/portfolio/">Портфолио работ</a></li>
           <li><a href="/blog/">Блог</a></li>
+          <li><a href="/faq/">FAQ</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Контакты</h4>
-        <ul>
-          <li><a href="tel:{{ site.company.phone }}">{{ site.company.phone }}</a></li>
+        <ul class="footer-contacts">
+          <li><a href="tel:{{ site.company.phone }}" class="footer-phone">{{ site.company.phone }}</a></li>
           <li><a href="mailto:{{ site.company.email }}">{{ site.company.email }}</a></li>
-          <li>Нахабино ул. Новая 7</li>
+          <li>{{ site.company.address_short }}</li>
           <li>{{ site.company.hours }}</li>
         </ul>
+
+        <div class="footer-map">
+          <iframe src="https://yandex.ru/map-widget/v1/?ll=37.143549%2C55.843419&mode=search&z=16&pt=37.143549,55.843419,pm2rdm" allowfullscreen loading="lazy" title="Цех на карте"></iframe>
+        </div>
+        <a href="https://yandex.ru/maps/?ll=37.143549%2C55.843419&z=16&pt=37.143549,55.843419,pm2rdm" target="_blank" rel="noopener" class="footer-map-link">Построить маршрут →</a>
       </div>
     </div>
 
     <div class="footer-bottom">
+      <div class="footer-bottom-links">
+        <a href="/privacy/">Политика конфиденциальности</a>
+        <a href="/sitemap/">Карта сайта</a>
+      </div>
       <p>&copy; {{ 'now' | date: "%Y" }} {{ site.company.name }}. Все права защищены.</p>
     </div>
   </div>

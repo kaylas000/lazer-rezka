@@ -10,35 +10,39 @@
 </div>
 
 <div class="price-tables">
+
+  <!-- Лазерная резка с объёмами -->
+  {% for mat in site.data.prices.price_list_volume %}
   <div class="price-table-wrapper">
-    <h3>Лазерная резка металлов</h3>
+    <h3>Лазерная резка — {{ mat[1].label }}</h3>
     <div class="price-table-scroll">
       <table class="price-table">
         <thead>
           <tr>
-            <th>Материал</th>
-            <th>Толщина, мм</th>
-            <th>Цена, ₽/п.м</th>
+            <th>Толщина</th>
+            <th>до 100 пог.м<br><small>₽/п.м</small></th>
+            <th>100–500 пог.м<br><small>₽/п.м</small></th>
+            <th>500–1000 пог.м<br><small>₽/п.м</small></th>
             <th>Точность</th>
           </tr>
         </thead>
         <tbody>
-          {% for tbl in site.data.prices.calculator_laser_tables %}
-          {% assign band_count = tbl.bands | size %}
-          {% for band in tbl.bands %}
+          {% for row in mat[1].rows %}
           <tr>
-            {% if forloop.first %}<td rowspan="{{ band_count }}">{{ tbl.material_label }}</td>{% endif %}
-            <td>{{ band.from_mm }}-{{ band.to_mm }}</td>
-            <td>{% include price-laser-band.html laser_key=tbl.laser_key from_mm=band.from_mm to_mm=band.to_mm %}</td>
+            <td>{{ row.thickness }}</td>
+            <td><strong>{{ row.up_to_100 }} ₽</strong></td>
+            <td>{{ row.from_100 }} ₽</td>
+            <td>{{ row.from_500 }} ₽</td>
             <td>{{ site.data.prices.accuracy.laser_table }}</td>
           </tr>
-          {% endfor %}
           {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
+  {% endfor %}
 
+  <!-- Дополнительные услуги -->
   <div class="price-table-wrapper">
     <h3>Дополнительные услуги</h3>
     <div class="price-table-scroll">
@@ -47,7 +51,7 @@
           <tr>
             <th>Услуга</th>
             <th>Описание</th>
-            <th>Наценка</th>
+            <th>Цена</th>
           </tr>
         </thead>
         <tbody>
@@ -55,9 +59,29 @@
           <tr>
             <td>{{ row.service }}</td>
             <td>{{ row.description }}</td>
-            <td>{{ row.surcharge }}</td>
+            <td>{{ row.price }}</td>
           </tr>
           {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Слесарные работы -->
+  <div class="price-table-wrapper">
+    <h3>Слесарные работы</h3>
+    <div class="price-table-scroll">
+      <table class="price-table">
+        <thead>
+          <tr><th>Операция</th><th>Цена</th><th>Примечание</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Нарезание резьбы М3–М6</td><td>от 50 ₽/отв</td><td>Сталь, алюминий</td></tr>
+          <tr><td>Нарезание резьбы М8–М12</td><td>от 80 ₽/отв</td><td>Сталь, алюминий</td></tr>
+          <tr><td>Нарезание резьбы М14–М24</td><td>от 140 ₽/отв</td><td>Машинный метчик</td></tr>
+          <tr><td>Зенковка отверстий</td><td>от 35 ₽/отв</td><td>Под потайной винт</td></tr>
+          <tr><td>Зачистка / шлифовка</td><td>от 150 ₽/деталь</td><td>Удаление грата</td></tr>
+          <tr><td>Правка деталей</td><td>от 180 ₽/деталь</td><td>Восстановление геометрии</td></tr>
         </tbody>
       </table>
     </div>
@@ -68,7 +92,7 @@
   {% for note in site.data.prices.price_notes %}
   <div class="price-note-card">
     <h4>{{ note.title }}</h4>
-    <p>{{ note.body | replace: '1500', site.data.prices.min_order }}</p>
+    <p>{{ note.body }}</p>
   </div>
   {% endfor %}
 </div>

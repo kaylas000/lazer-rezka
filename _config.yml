@@ -1,7 +1,8 @@
 # Конфигурация Jekyll для сайта цеха лазерной резки
+# Версия: 2.0 — Премиум SEO + Geo-таргетинг Москва/МО
 
-title: "Цех лазерной резки и металлообработки"
-description: "Лазерная резка металла в Москве — сталь, нержавейка, алюминий. Точность ±0.01мм, сроки от 1 дня. Гибка, покраска, сварка."
+title: "Цех лазерной резки и металлообработки — Москва и Московская область"
+description: "Лазерная резка металла в Москве и Нахабино: сталь до 20мм, нержавейка до 12мм, алюминий до 10мм. Точность ±0.01мм, сроки от 1 дня. Гибка, порошковая покраска, сварка, пескоструй. Онлайн-калькулятор, приём DXF/DWG."
 baseurl: ""
 url: "https://ceh-lazer-rezka.ru"
 
@@ -16,6 +17,7 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jekyll-sass-converter
 
 # Служебная документация (не в sitemap, noindex для поисковиков)
 defaults:
@@ -44,6 +46,34 @@ defaults:
     values:
       sitemap: false
       tech_doc_noindex: true
+  # Страницы услуг — максимальный приоритет для SEO
+  - scope:
+      path: "pages/services"
+    values:
+      sitemap:
+        priority: 0.9
+        changefreq: "weekly"
+  # Главная — максимальный приоритет
+  - scope:
+      path: "index.html"
+    values:
+      sitemap:
+        priority: 1.0
+        changefreq: "daily"
+  # Блог — контент обновляется регулярно
+  - scope:
+      path: "_posts"
+    values:
+      sitemap:
+        priority: 0.7
+        changefreq: "weekly"
+  # Остальные страницы
+  - scope:
+      path: ""
+    values:
+      sitemap:
+        priority: 0.8
+        changefreq: "monthly"
 
 # Исключения
 exclude:
@@ -53,10 +83,16 @@ exclude:
   - vendor
   - .github
   - README.md
+  - requirements
+  - scripts
+  - technical
+  - tips
+  - docs
+  - AI_KEY_SETUP
 
-# Настройки пагинации
-paginate: 12
-paginate_path: "/blog/page:num/"
+# Пагинация отключена (не используется jekyll-paginate)
+# paginate: 12
+# paginate_path: "/blog/page:num/"
 
 # Данные компании
 company:
@@ -64,11 +100,18 @@ company:
   phone: "+7 (985) 456-37-64"
   email: "info@lasercut.ru"
   address: "Нахабино, ул. Новая, д. 7, Московская область"
-  hours: "Пн-Пт 08:00-18:00"
+  address_short: "Нахабино, ул. Новая 7"
+  hours: "Пн-Пт 09:00-18:00"
+  hours_short: "Пн–Пт 09:00–18:00"
+  region: "Москва и Московская область"
 
 # SEO
-lang: ru
+lang: ru-RU
 author: "Цех лазерной резки"
+geo_region: "RU-MOS"
+geo_placename: "Нахабино, Московская область"
+geo_position: "55.843419;37.143549"
+geo_icbm: "55.843419, 37.143549"
 
 # Social Media
 logo: /assets/images/icon-512.png
@@ -79,10 +122,20 @@ social:
 
 # Open Graph / Twitter Cards
 image: /assets/images/hero.jpg
+twitter:
+  card: summary_large_image
 
 # Настройки производительности
 sass:
   style: compressed
+
+# HTML сжатие
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  blanklines: false
+  profile: false
 
 # Коллекции
 collections:

@@ -1,268 +1,249 @@
 ---
 layout: default
-title: "Калькулятор лазерной резки металла — Онлайн-расчёт"
-description: "Рассчитайте стоимость лазерной резки стали, нержавейки и алюминия онлайн. Выберите материал, толщину и получите цену за 1 минуту."
+title: "Калькулятор стоимости лазерной резки и металлообработки — Онлайн-расчёт | Москва"
+description: "Рассчитайте стоимость лазерной резки, гибки, покраски, сварки и других услуг онлайн. Выберите материал, толщину и получите цену за 1 минуту. Цех в Нахабино."
 permalink: /calculator/
 ---
 
 <section class="page-hero">
   <div class="container">
     <h1>Калькулятор стоимости</h1>
-    <p class="lead">Рассчитайте ориентировочную стоимость лазерной резки</p>
+    <p class="lead">Выберите услугу — рассчитайте цену по актуальным тарифам на 25.05.2026</p>
   </div>
 </section>
 
 <section class="calculator-tabs-section">
   <div class="container">
-    <div class="calc-tabs" role="tablist" aria-label="Калькулятор проекта">
-      <button class="calc-tab-btn" data-tab-target="project-tab">Проект</button>
-      <button class="calc-tab-btn is-active" data-tab-target="sheet-tab">Лист (резка)</button>
-      <button class="calc-tab-btn" data-tab-target="round-tab">Труба круглая</button>
-      <button class="calc-tab-btn" data-tab-target="profile-tab">Труба профильная</button>
-      <button class="calc-tab-btn" data-tab-target="summary-tab">Итог</button>
-      <button class="calc-tab-btn" data-tab-target="price-tab">Прайс</button>
+    <div class="calc-tabs" role="tablist">
+      <button class="calc-tab-btn is-active" data-tab="laser">Резка</button>
+      <button class="calc-tab-btn" data-tab="bend">Гибка</button>
+      <button class="calc-tab-btn" data-tab="powder">Покраска</button>
+      <button class="calc-tab-btn" data-tab="sand">Пескоструй</button>
+      <button class="calc-tab-btn" data-tab="weld">Сварка</button>
+      <button class="calc-tab-btn" data-tab="thread">Резьба</button>
+      <button class="calc-tab-btn" data-tab="summary">Итог</button>
     </div>
   </div>
 </section>
 
-<section class="project-tab-pane calc-tab-pane" id="project-tab">
-  <div class="container">
-    <div class="calculator-note" style="margin-bottom: 16px;">
-      <p><strong>Проект:</strong> собирайте позиции листа и труб в одном расчёте, чтобы получить общий вес, площадь и ориентир по материалу.</p>
-    </div>
-    <div class="project-controls-grid">
-      <div class="form-group">
-        <label for="projectPricePerKg">Цена металла, ₽/кг (если знаете)</label>
-        <input type="number" id="projectPricePerKg" class="calc-input" min="0" step="0.1" placeholder="Например, 95">
-      </div>
-      <div class="form-group project-button-wrap">
-        <button id="addProjectItemBtn" class="btn btn-secondary">Добавить позицию</button>
-      </div>
-    </div>
-    <div id="projectItems" class="project-items"></div>
-    <div class="project-metrics" id="projectMetrics"></div>
-  </div>
-</section>
-
-<section class="calculator-section calc-tab-pane is-active" id="sheet-tab">
+<!-- ===== ЛАЗЕРНАЯ РЕЗКА ===== -->
+<section class="calc-tab-pane is-active" id="tab-laser">
   <div class="container">
     <div class="calculator-wrapper">
       <div class="calculator-form">
+        <h3>Лазерная резка металла</h3>
         <div class="form-group">
-          <label for="material">Материал</label>
-          <select id="material" class="calc-input">
-            <option value="steel">Сталь Ст3</option>
+          <label for="laserMaterial">Материал</label>
+          <select id="laserMaterial" class="calc-input">
+            <option value="steel">Сталь Ст3, 09Г2С</option>
             <option value="stainless">Нержавейка AISI 304</option>
-            <option value="aluminum">Алюминий АД31</option>
+            <option value="stainless_316">Нержавейка AISI 316</option>
+            <option value="aluminum">Алюминий АД31, АМГ</option>
           </select>
         </div>
-
         <div class="form-group">
-          <label for="thickness">Толщина: <span id="thicknessValue">3</span> мм</label>
-          <input type="range" id="thickness" min="1" max="20" value="3" class="calc-slider">
-          <div class="range-labels">
-            <span>1 мм</span>
-            <span>20 мм</span>
-          </div>
+          <label for="laserThickness">Толщина: <span id="laserThicknessVal">3</span> мм</label>
+          <input type="range" id="laserThickness" min="1" max="20" value="3" class="calc-slider">
+          <div class="range-labels"><span>1 мм</span><span>20 мм</span></div>
         </div>
-
         <div class="form-group">
-          <label for="length">Длина реза (погонные метры)</label>
-          <input type="number" id="length" min="0.1" step="0.1" value="10" class="calc-input">
+          <label for="laserLength">Длина реза (пог. м)</label>
+          <input type="number" id="laserLength" min="0.1" step="0.1" value="10" class="calc-input">
         </div>
-
         <div class="form-group">
-          <label for="quantity">Количество деталей</label>
-          <input type="number" id="quantity" min="1" value="1" class="calc-input">
+          <label for="laserQty">Количество деталей</label>
+          <input type="number" id="laserQty" min="1" value="1" class="calc-input">
         </div>
-
-        <div class="form-group">
-          <label>Дополнительные услуги</label>
-          <div class="checkbox-group">
-            <label class="checkbox-label">
-              <input type="checkbox" id="bending" value="bending">
-              <span>Гибка металла (+20%)</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" id="painting" value="painting">
-              <span>Порошковая покраска (+40%)</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" id="sandblasting" value="sandblasting">
-              <span>Пескоструйная обработка (+15%)</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Тип заказа</label>
-          <div class="radio-group">
-            <label class="radio-label">
-              <input type="radio" name="orderType" value="standard" checked>
-              <span>Стандарт (1-3 дня)</span>
-            </label>
-            <label class="radio-label">
-              <input type="radio" name="orderType" value="urgent">
-              <span>Срочно (+30%)</span>
-            </label>
-            <label class="radio-label">
-              <input type="radio" name="orderType" value="series">
-              <span>Серия 50+ (-15%)</span>
-            </label>
-          </div>
-        </div>
-
-        <button id="calculateBtn" class="btn btn-primary btn-block">Рассчитать</button>
-        <button id="addSheetCutToProjectBtn" class="btn btn-secondary btn-block" style="margin-top: 12px;">
-          Добавить расчёт резки в проект
-        </button>
+        <button id="laserCalcBtn" class="btn btn-primary btn-block">Рассчитать</button>
+        <button id="addLaserToSummary" class="btn btn-secondary btn-block" style="margin-top:8px">Добавить в итог</button>
       </div>
-
-      <div class="calculator-result" id="result">
-        <div class="result-placeholder">
-          <div class="result-icon">🧮</div>
-          <p>Заполните параметры и нажмите "Рассчитать"</p>
-        </div>
+      <div class="calculator-result" id="laserResult">
+        <div class="result-placeholder"><div class="result-icon">📐</div><p>Заполните параметры и нажмите «Рассчитать»</p></div>
       </div>
-    </div>
-
-    <div class="calculator-note">
-      <p><strong>Обратите внимание:</strong> Калькулятор даёт ориентировочный расчёт. Точная стоимость определяется после анализа чертежа и зависит от сложности контура, количества отверстий и других факторов.</p>
     </div>
   </div>
 </section>
 
-<section class="calc-tab-pane" id="round-tab">
+<!-- ===== ГИБКА ===== -->
+<section class="calc-tab-pane" id="tab-bend">
   <div class="container">
     <div class="calculator-wrapper">
       <div class="calculator-form">
-        <h3>Труба круглая</h3>
+        <h3>Гибка металла</h3>
         <div class="form-group">
-          <label for="roundPreset">Популярный размер</label>
-          <select id="roundPreset" class="calc-input"></select>
-        </div>
-        <div class="form-group">
-          <label for="roundMaterial">Материал</label>
-          <select id="roundMaterial" class="calc-input">
-            <option value="steel">Сталь</option>
-            <option value="stainless">Нержавейка</option>
-            <option value="aluminum">Алюминий</option>
+          <label for="bendMaterial">Материал</label>
+          <select id="bendMaterial" class="calc-input">
+            <option value="steel">Сталь (до 4 мм)</option>
+            <option value="stainless">Нержавейка (до 3 мм)</option>
+            <option value="aluminum">Алюминий (до 4 мм)</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="roundQuantity">Количество</label>
-          <input type="number" id="roundQuantity" min="1" value="1" class="calc-input">
+          <label for="bendThickness">Толщина металла</label>
+          <select id="bendThickness" class="calc-input">
+            <option value="1">1 мм — 80 ₽/гиб</option>
+            <option value="2">2 мм — 100 ₽/гиб</option>
+            <option value="3" selected>3 мм — 120 ₽/гиб</option>
+            <option value="4">4 мм — 160 ₽/гиб</option>
+          </select>
         </div>
         <div class="form-group">
-          <label for="roundOd">Диаметр, мм</label>
-          <input type="number" id="roundOd" min="1" step="0.1" class="calc-input">
+          <label for="bendCount">Количество гибов</label>
+          <input type="number" id="bendCount" min="1" value="5" class="calc-input">
         </div>
         <div class="form-group">
-          <label for="roundWall">Стенка, мм</label>
-          <input type="number" id="roundWall" min="0.1" step="0.1" class="calc-input">
+          <label for="bendQtyCalc">Количество деталей</label>
+          <input type="number" id="bendQtyCalc" min="1" value="1" class="calc-input">
         </div>
-        <div class="form-group">
-          <label for="roundLength">Длина, м</label>
-          <input type="number" id="roundLength" min="0.01" step="0.01" value="1" class="calc-input">
-        </div>
-        <button id="addRoundToProjectBtn" class="btn btn-primary btn-block">Добавить в проект</button>
+        <button id="bendCalcBtn" class="btn btn-primary btn-block">Рассчитать</button>
+        <button id="addBendToSummary" class="btn btn-secondary btn-block" style="margin-top:8px">Добавить в итог</button>
       </div>
-      <div class="calculator-result" id="roundPreview">
-        <div class="result-placeholder">
-          <div class="result-icon">🧱</div>
-          <p>Выберите размеры трубы и добавьте позицию в проект.</p>
-        </div>
+      <div class="calculator-result" id="bendResult">
+        <div class="result-placeholder"><div class="result-icon">🔧</div><p>Заполните параметры и нажмите «Рассчитать»</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="calc-tab-pane" id="profile-tab">
+<!-- ===== ПОРОШКОВАЯ ПОКРАСКА ===== -->
+<section class="calc-tab-pane" id="tab-powder">
   <div class="container">
     <div class="calculator-wrapper">
       <div class="calculator-form">
-        <h3>Труба профильная</h3>
+        <h3>Порошковая покраска</h3>
         <div class="form-group">
-          <label for="profilePreset">Популярный размер</label>
-          <select id="profilePreset" class="calc-input"></select>
+          <label for="paintArea">Площадь поверхности (м²)</label>
+          <input type="number" id="paintArea" min="0.1" step="0.1" value="1" class="calc-input">
+          <small style="color:var(--text-muted)">Пример: деталь 1×0.5 м с двух сторон = 1 м²</small>
         </div>
         <div class="form-group">
-          <label for="profileMaterial">Материал</label>
-          <select id="profileMaterial" class="calc-input">
-            <option value="steel">Сталь</option>
-            <option value="stainless">Нержавейка</option>
-            <option value="aluminum">Алюминий</option>
+          <label for="paintColor">Тип цвета</label>
+          <select id="paintColor" class="calc-input">
+            <option value="standard">Стандартный RAL — 550 ₽/м²</option>
+            <option value="special">Специальный / металлик — 700 ₽/м²</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="profileQuantity">Количество</label>
-          <input type="number" id="profileQuantity" min="1" value="1" class="calc-input">
+          <label for="paintQty">Количество деталей</label>
+          <input type="number" id="paintQty" min="1" value="1" class="calc-input">
         </div>
-        <div class="form-group">
-          <label for="profileA">Сторона A, мм</label>
-          <input type="number" id="profileA" min="1" step="0.1" class="calc-input">
-        </div>
-        <div class="form-group">
-          <label for="profileB">Сторона B, мм</label>
-          <input type="number" id="profileB" min="1" step="0.1" class="calc-input">
-        </div>
-        <div class="form-group">
-          <label for="profileWall">Стенка, мм</label>
-          <input type="number" id="profileWall" min="0.1" step="0.1" class="calc-input">
-        </div>
-        <div class="form-group">
-          <label for="profileLength">Длина, м</label>
-          <input type="number" id="profileLength" min="0.01" step="0.01" value="1" class="calc-input">
-        </div>
-        <button id="addProfileToProjectBtn" class="btn btn-primary btn-block">Добавить в проект</button>
+        <button id="paintCalcBtn" class="btn btn-primary btn-block">Рассчитать</button>
+        <button id="addPaintToSummary" class="btn btn-secondary btn-block" style="margin-top:8px">Добавить в итог</button>
       </div>
-      <div class="calculator-result" id="profilePreview">
-        <div class="result-placeholder">
-          <div class="result-icon">📐</div>
-          <p>Выберите размеры трубы и добавьте позицию в проект.</p>
+      <div class="calculator-result" id="paintResult">
+        <div class="result-placeholder"><div class="result-icon">🎨</div><p>Заполните параметры и нажмите «Рассчитать»</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ПЕСКОСТРУЙ ===== -->
+<section class="calc-tab-pane" id="tab-sand">
+  <div class="container">
+    <div class="calculator-wrapper">
+      <div class="calculator-form">
+        <h3>Пескоструйная обработка</h3>
+        <div class="form-group">
+          <label for="sandArea">Площадь поверхности (м²)</label>
+          <input type="number" id="sandArea" min="0.1" step="0.1" value="1" class="calc-input">
+        </div>
+        <div class="form-group">
+          <label for="sandQty">Количество деталей</label>
+          <input type="number" id="sandQty" min="1" value="1" class="calc-input">
+        </div>
+        <button id="sandCalcBtn" class="btn btn-primary btn-block">Рассчитать</button>
+        <button id="addSandToSummary" class="btn btn-secondary btn-block" style="margin-top:8px">Добавить в итог</button>
+      </div>
+      <div class="calculator-result" id="sandResult">
+        <div class="result-placeholder"><div class="result-icon">💨</div><p>Заполните параметры и нажмите «Рассчитать»</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== СВАРКА ===== -->
+<section class="calc-tab-pane" id="tab-weld">
+  <div class="container">
+    <div class="calculator-wrapper">
+      <div class="calculator-form">
+        <h3>Сварочные работы</h3>
+        <div class="form-group">
+          <label for="weldType">Тип сварки</label>
+          <select id="weldType" class="calc-input">
+            <option value="tig_steel">TIG сталь — 25 ₽/см</option>
+            <option value="tig_ss">TIG нержавейка — 35 ₽/см</option>
+            <option value="mig">MIG/MAG сталь — 18 ₽/см</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="weldLength">Длина шва (см)</label>
+          <input type="number" id="weldLength" min="1" value="50" class="calc-input">
+        </div>
+        <div class="form-group">
+          <label for="weldQty">Количество деталей</label>
+          <input type="number" id="weldQty" min="1" value="1" class="calc-input">
+        </div>
+        <button id="weldCalcBtn" class="btn btn-primary btn-block">Рассчитать</button>
+        <button id="addWeldToSummary" class="btn btn-secondary btn-block" style="margin-top:8px">Добавить в итог</button>
+      </div>
+      <div class="calculator-result" id="weldResult">
+        <div class="result-placeholder"><div class="result-icon">⚙️</div><p>Заполните параметры и нажмите «Рассчитать»</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== РЕЗЬБА ===== -->
+<section class="calc-tab-pane" id="tab-thread">
+  <div class="container">
+    <div class="calculator-wrapper">
+      <div class="calculator-form">
+        <h3>Нарезание резьбы</h3>
+        <div class="form-group">
+          <label for="threadSize">Размер резьбы</label>
+          <select id="threadSize" class="calc-input">
+            <option value="m3_m6">М3–М6 — 50 ₽/отв</option>
+            <option value="m8_m12">М8–М12 — 80 ₽/отв</option>
+            <option value="m14_m24">М14–М24 — 140 ₽/отв</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="threadCount">Количество отверстий</label>
+          <input type="number" id="threadCount" min="1" value="10" class="calc-input">
+        </div>
+        <button id="threadCalcBtn" class="btn btn-primary btn-block">Рассчитать</button>
+        <button id="addThreadToSummary" class="btn btn-secondary btn-block" style="margin-top:8px">Добавить в итог</button>
+      </div>
+      <div class="calculator-result" id="threadResult">
+        <div class="result-placeholder"><div class="result-icon">🔩</div><p>Заполните параметры и нажмите «Рассчитать»</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ИТОГ ===== -->
+<section class="calc-tab-pane" id="tab-summary">
+  <div class="container">
+    <div class="calculator-wrapper" style="grid-template-columns:1fr">
+      <div class="calculator-form">
+        <h3>Итог по заказу</h3>
+        <div id="summaryItems"><p style="color:var(--text-muted)">Добавьте услуги из вкладок выше — они появятся здесь</p></div>
+        <div id="summaryTotal" style="margin-top:20px;font-size:1.3rem;font-weight:700;display:none"></div>
+        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+          <button id="clearSummaryBtn" class="btn btn-secondary">Очистить</button>
+          <a href="/contacts/" class="btn btn-primary">Отправить заявку</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="calc-tab-pane" id="summary-tab">
-  <div class="container">
-    <div class="calculator-note">
-      <p><strong>Итог по проекту:</strong> проверьте сводку и отправьте её в форму контактов.</p>
-    </div>
-    <div id="projectSummary" class="project-summary"></div>
-    <div class="cta-buttons" style="margin-top: 20px;">
-      <button id="copyProjectCalcBtn" class="btn btn-secondary">Скопировать расчёт</button>
-      <button id="sendProjectCalcBtn" class="btn btn-primary">Отправить расчёт</button>
-    </div>
-  </div>
-</section>
-
-<section class="price-list-section calc-tab-pane" id="price-tab">
-  <div class="container">
-    <div id="price-list"></div>
-    {% include price-list-online.html heading_tag="h2" %}
-  </div>
-</section>
-
-<section class="cta-section">
-  <div class="container">
-    <div class="cta-box">
-      <h2>Нужен точный расчёт?</h2>
-      <p>Отправьте чертёж, и мы рассчитаем стоимость в течение 1 часа</p>
-      <div class="cta-buttons">
-        <a href="/contacts/" class="btn btn-primary">Отправить чертёж</a>
-        <a href="tel:{{ site.company.phone }}" class="btn btn-secondary">Позвонить</a>
-      </div>
-    </div>
-  </div>
+<section class="calculator-note" style="margin:0">
+  <div class="container"><p><strong>Внимание:</strong> калькулятор даёт ориентировочный расчёт. Точная стоимость после анализа чертежа.</p></div>
 </section>
 
 <script>
   window.__PRICES_DATA__ = {{ site.data.prices | jsonify }};
   window.__MIN_ORDER__ = {{ site.data.prices.min_order }};
-  window.__METAL_CALC__ = {{ site.data.metal_calc | jsonify }};
 </script>
-<script src="{{ '/assets/js/calculator.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/project-calculator.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/calculator-v2.js' | relative_url }}"></script>
