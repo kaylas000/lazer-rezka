@@ -3,10 +3,7 @@ const CACHE_NAME = 'lazer-rezka-v2';
 const STATIC_ASSETS = [
   '/',
   '/assets/css/main.css',
-  '/assets/css/chat.css',
   '/assets/js/main.js',
-  '/assets/js/ai-chat.js',
-  '/assets/js/calculator.js',
   '/assets/images/icon-192.png',
   '/assets/images/icon-512.png',
   '/favicon.ico',
