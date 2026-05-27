@@ -138,12 +138,5 @@
   </script>
   <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
   {% comment %}<script src="{{ '/assets/js/ai-chat.js' | relative_url }}" defer></script>{% endcomment %}
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('{{ "/sw.js" | relative_url }}');
-      });
-    }
-  </script>
 </body>
 </html>
