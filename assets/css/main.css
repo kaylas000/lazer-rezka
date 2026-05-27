@@ -1171,6 +1171,8 @@ input:focus, textarea:focus, select:focus {
   .hero-cta .btn {
     width: 100%;
     text-align: center;
+    padding: 14px 24px;
+    font-size: 0.95rem;
   }
   
   .materials-cta {
