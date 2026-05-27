@@ -32,15 +32,19 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  // Пропускаем видео — слишком большие для кеша
+  if (/\.(mp4|webm|mov|avi)$/i.test(event.request.url)) return;
   event.respondWith(
     caches.match(event.request).then((cached) => {
-      const fetchPromise = fetch(event.request).then((response) => {
+      var fetchPromise = fetch(event.request).then((response) => {
         if (response && response.status === 200 && response.type === 'basic') {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          try {
+            var clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          } catch(e) {}
         }
         return response;
-      }).catch(() => cached);
+      }).catch(function() { return cached; });
       return cached || fetchPromise;
     })
   );
