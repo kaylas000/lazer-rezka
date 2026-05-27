@@ -122,6 +122,36 @@ section {
   left: 0;
   right: 0;
   z-index: 100;
+
+/* Иконка-логотип только на мобильных */
+.logo-mobile { display: none; }
+.logo-desktop { display: flex; }
+
+@media (max-width: 900px) {
+  .logo-mobile { display: flex; align-items: center; justify-content: center; }
+  .logo-desktop { display: none; }
+  .nav {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+  .logo-mobile {
+    order: 0;
+    justify-self: start;
+  }
+  .nav-actions {
+    order: 1;
+    justify-self: center;
+  }
+  .nav-toggle {
+    display: flex;
+    order: 2;
+    justify-self: end;
+  }
+  .nav-cta { display: none !important; }
+}
   width: 100%;
   background: rgba(10, 10, 15, 0.95);
   -webkit-backdrop-filter: blur(20px);
