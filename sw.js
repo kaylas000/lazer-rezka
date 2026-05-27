@@ -1,5 +1,5 @@
 // Service Worker — PWA offline support v1.0
-const CACHE_NAME = 'lazer-rezka-v2';
+const CACHE_NAME = 'lazer-rezka-v3';
 const STATIC_ASSETS = [
   '/',
   '/assets/css/main.css',
