@@ -489,14 +489,6 @@ section {
   z-index: 0;
 }
 
-/* На мобильных — скрываем видео, показываем постер */
-@media (max-width: 768px) {
-  .hero-video { display: none; }
-  .hero {
-    background: url('/assets/images/hero.jpg') center/cover no-repeat;
-  }
-}
-
 .hero-overlay {
   position: absolute;
   inset: 0;
