@@ -487,6 +487,13 @@ section {
   object-fit: cover;
   object-position: center;
   z-index: 0;
+  opacity: 0;
+  -webkit-transition: opacity 0.8s ease;
+  transition: opacity 0.8s ease;
+}
+
+.hero-video.loaded {
+  opacity: 1;
 }
 
 .hero-overlay {
