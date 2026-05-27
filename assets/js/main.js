@@ -14,7 +14,7 @@
   if (video.readyState >= 3) { showVideo(); }
   else { video.addEventListener('canplay', showVideo, { once: true }); }
   var playPromise = video.play();
-  if (playPromise !== undefined) { playPromise.catch(function() { video.pause(); }); }
+  if (playPromise !== undefined) { playPromise.catch(function() {}); }
 })();
 
 // Mobile menu
