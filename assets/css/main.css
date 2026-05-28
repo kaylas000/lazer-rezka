@@ -488,6 +488,11 @@ section {
   object-position: center;
   z-index: 0;
 }
+.hero-video-mobile { display: none; }
+@media (max-width: 768px) {
+  .hero-video-desktop { display: none; }
+  .hero-video-mobile { display: block; }
+}
 
 .hero-overlay {
   position: absolute;
