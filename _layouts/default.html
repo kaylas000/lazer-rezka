@@ -49,7 +49,7 @@
   <link rel="canonical" href="{{ page.url | absolute_url }}">
 
   {% include schema-markup.html %}
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.time | date: '%s' }}">
   <link rel="stylesheet" href="{{ '/assets/css/chat.css' | relative_url }}" media="print" onload="this.media='all'">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -138,7 +138,7 @@
   <script>
     window.SITE_AI_WORKER_URL = {{ site.ai_worker_url | default: "" | jsonify }};
   </script>
-  <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/main.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
   {% comment %}<script src="{{ '/assets/js/ai-chat.js' | relative_url }}" defer></script>{% endcomment %}
 </body>
 </html>
