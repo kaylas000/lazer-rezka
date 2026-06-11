@@ -66,7 +66,7 @@ def build_laser_rows(prices: dict) -> list[list[str]]:
 def build_extra_rows(prices: dict) -> list[list[str]]:
     rows = []
     for item in prices.get("additional_services", []):
-        rows.append([item["service"], item["description"], item["surcharge"]])
+        rows.append([item["service"], item["description"], item.get("surcharge", item.get("price", ""))])
     return rows
 
 
