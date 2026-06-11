@@ -3,9 +3,7 @@ layout: default
 title: "Генератор DXF-файлов для лазерной резки — Создать чертёж онлайн | Москва"
 description: "Создайте DXF-файл для лазерной резки металла онлайн. Пластины, фланцы, кронштейны — настройте параметры, скачайте готовый чертёж и получите примерную цену. Цех в Голицыно."
 permalink: /dxf-generator/
-head_extra: |
-  <link rel="preload" href="/assets/js/dxf-generator/core.js" as="script">
-  <link rel="preload" href="/assets/js/dxf-generator/preview.js" as="script">
+head_extra: ""
 ---
 
 <section class="page-hero">
@@ -655,6 +653,25 @@ head_extra: |
   font-size: 0.75rem;
   color: var(--text-muted);
   text-align: center;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .dxf-tab-btn {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    min-height: 40px;
+  }
+  .dxf-tabs { gap: 6px; }
+  .dxf-form-panel { padding: 16px; }
+  .dxf-form-panel h3 { font-size: 1rem; }
+  .dxf-result-panel { position: static; }
+  .dxf-preview-svg { min-height: 220px; }
+  .dxf-field-row { grid-template-columns: 1fr 1fr; }
+  .dxf-holes-table-wrapper { max-height: 150px; }
+  .dxf-instructions details { padding: 12px 14px; }
 }
 </style>
 
