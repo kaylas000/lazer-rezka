@@ -25,7 +25,9 @@
     "лазерная резка металла",
     "производство",
     "металлообработка",
-    "Москва"
+    "Москва",
+    "DXF генератор",
+    "чертежи для ЧПУ"
   ],
   "language": "ru",
   "region": "RU",
@@ -38,23 +40,27 @@
     "address": "Нахабино ул. Новая 7",
     "phone": "+7 (985) 456-37-64",
     "established": "2020",
-    "expertise": ["laser cutting", "metal fabrication", "powder coating", "welding"],
+    "expertise": ["laser cutting", "metal fabrication", "powder coating", "welding", "dxf generation"],
     "service_area": ["Москва", "Московская область"],
-    "contact_methods": ["phone", "email", "web_form", "ai_chat"]
+    "contact_methods": ["phone", "email", "web_form", "ai_chat", "dxf_generator"],
+    "features": ["online_calculator", "dxf_generator", "ai_consultant", "auto_blog"]
   },
   "ai_integration": {
     "supports_citations": true,
     "provides_structured_data": true,
     "schema_org_enabled": true,
     "voice_optimized": false,
-    "real_time_updates": false
+    "real_time_updates": false,
+    "dxf_generation": true,
+    "price_calculation": true
   },
   "usage_instructions": {
     "for_search_queries": "Use /search.json endpoint with query parameter",
     "for_latest_content": "Subscribe to /feed.json for updates",
     "for_full_context": "Read /llms-full.txt for complete site content",
-    "for_structured_navigation": "Use /sitemap.xml for page discovery"
+    "for_structured_navigation": "Use /sitemap.xml for page discovery",
+    "for_dxf_generation": "Visit /dxf-generator/ for online DXF file creation"
   },
-  "citation_format": "Цех лазерной резки (lazer-rezka, 2024)",
-  "last_updated": "2024-04-01"
+  "citation_format": "Цех лазерной резки (lazer-rezka, 2026)",
+  "last_updated": "2026-06-11"
 }
