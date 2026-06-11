@@ -154,12 +154,12 @@
       var h = holes[i];
       var tr = document.createElement('tr');
       tr.innerHTML =
-        '<td style="padding:2px 4px;"><input type="number" value="' + h.cx + '" data-field="cx" data-idx="' + i +
-        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:4px 6px;border-radius:4px;font-size:13px;" step="0.1"></td>' +
-        '<td style="padding:2px 4px;"><input type="number" value="' + h.cy + '" data-field="cy" data-idx="' + i +
-        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:4px 6px;border-radius:4px;font-size:13px;" step="0.1"></td>' +
-        '<td style="padding:2px 4px;"><input type="number" value="' + h.d + '" data-field="d" data-idx="' + i +
-        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:4px 6px;border-radius:4px;font-size:13px;" step="0.1" min="0.5"></td>' +
+        '<td style="padding:2px 4px;"><input type="number" value="' + h.cx.toFixed(2) + '" data-field="cx" data-idx="' + i +
+        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:4px 6px;border-radius:4px;font-size:13px;" step="0.01"></td>' +
+        '<td style="padding:2px 4px;"><input type="number" value="' + h.cy.toFixed(2) + '" data-field="cy" data-idx="' + i +
+        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:4px 6px;border-radius:4px;font-size:13px;" step="0.01"></td>' +
+        '<td style="padding:2px 4px;"><input type="number" value="' + h.d.toFixed(2) + '" data-field="d" data-idx="' + i +
+        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:4px 6px;border-radius:4px;font-size:13px;" step="0.01" min="0.5"></td>' +
         '<td style="padding:2px 4px;text-align:center;"><button class="hole-delete-btn" data-idx="' + i +
         '" style="background:none;border:none;color:var(--error);cursor:pointer;font-size:16px;padding:2px 6px;">&times;</button></td>';
       tbody.appendChild(tr);
@@ -177,7 +177,7 @@
       var field = input.getAttribute('data-field');
       var val = parseFloat(input.value) || 0;
       if (idx >= 0 && idx < holes.length) {
-        holes[idx][field] = Math.round(val * 10) / 10;
+        holes[idx][field] = Math.round(val * 100) / 100;
       }
     });
   }

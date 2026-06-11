@@ -18,7 +18,7 @@
    * Round to 3 decimal places (≈0.001mm — sufficient for laser).
    */
   function r(v) {
-    return Math.round(v * 1000) / 1000;
+    return Math.round(v * 100) / 100;
   }
 
   /**

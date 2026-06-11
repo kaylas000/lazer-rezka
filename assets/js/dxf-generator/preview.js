@@ -251,8 +251,8 @@
       if (!ctm) return;
       var svgPt = pt.matrixTransform(ctm.inverse());
 
-      var cx = Math.round(svgPt.x * 10) / 10;
-      var cy = Math.round(svgPt.y * 10) / 10;
+      var cx = Math.round(svgPt.x * 100) / 100;
+      var cy = Math.round(svgPt.y * 100) / 100;
 
       holes.push({ cx: cx, cy: cy, d: defaultDia });
       renderHoleMarkers(holeLayer, holes);
@@ -322,7 +322,7 @@
       label.setAttribute('fill', '#4a9eff');
       label.setAttribute('font-size', '10');
       label.setAttribute('font-family', 'monospace');
-      label.textContent = (cx >= 0 ? '+' : '') + cx + ', ' + (cy >= 0 ? '+' : '') + cy;
+      label.textContent = (cx >= 0 ? '+' : '') + cx.toFixed(2) + ', ' + (cy >= 0 ? '+' : '') + cy.toFixed(2);
       g.appendChild(label);
 
       // Click to remove
