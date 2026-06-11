@@ -1,4 +1,4 @@
-﻿// Cloudflare Worker — AI-консультант цеха лазерной резки v2.0
+// Cloudflare Worker — AI-консультант цеха лазерной резки v2.0
 // Groq API (llama-3.3-70b-versatile) с шаблонами ответов
 
 export default {

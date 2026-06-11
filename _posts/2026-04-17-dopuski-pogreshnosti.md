@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Допуски при лазерной резке металла — ГОСТ и реальные значения | Москва"
 image: /assets/images/blog/dopuski-pogreshnosti.webp

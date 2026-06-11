@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Скорость лазерной резки металла — от чего зависит и как влияет на цену | Москва"
 image: /assets/images/blog/skorost-rezki.webp

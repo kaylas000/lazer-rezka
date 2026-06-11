@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Подготовка чертежа для лазерной резки металла — DXF/DWG требования | Москва"
 image: /assets/images/blog/podgotovka-chertezha.webp

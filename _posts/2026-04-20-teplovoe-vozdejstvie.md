@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Тепловое воздействие лазера на металл — зона термического влияния | Москва"
 image: /assets/images/blog/teplovoe-vozdejstvie.webp

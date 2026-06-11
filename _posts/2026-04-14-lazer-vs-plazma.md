@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Лазерная vs плазменная резка металла — сравнение технологий | Москва"
 image: /assets/images/blog/lazer-vs-plazma.webp

@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Волоконный лазер vs CO2 лазер — сравнение для резки металла | Москва"
 image: /assets/images/blog/volokonnyj-vs-co2.webp

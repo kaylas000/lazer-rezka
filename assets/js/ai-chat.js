@@ -1,4 +1,4 @@
-﻿// AI Chat - прямая интеграция с Groq API
+// AI Chat - прямая интеграция с Groq API
 // Ключ загружается из отдельного файла api-key.js
 
 const USE_DIRECT_API = false; // true = прямой вызов, false = через Cloudflare Worker

@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Подготовка DXF файла для лазерной резки — полное руководство | Москва"
 image: /assets/images/blog/podgotovka-dxf.webp

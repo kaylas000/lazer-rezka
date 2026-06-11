@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Выбор толщины металла для лазерной резки — практическое руководство | Москва"
 image: /assets/images/blog/vybor-tolshchiny-metalla.webp
