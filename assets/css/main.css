@@ -2132,6 +2132,8 @@ a, button, .card, .service-card, .advantage, .step {
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-default);
   line-height: 1.8;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .post-content h2 {
@@ -6268,6 +6270,9 @@ a:hover {
   width: 100%;
   margin: 24px 0;
   border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .post-content th {
   text-align: left;
@@ -6275,11 +6280,20 @@ a:hover {
   border-bottom: 2px solid rgba(255,107,43,0.3);
   color: var(--accent-orange);
   font-weight: 600;
+  white-space: nowrap;
 }
 .post-content td {
   padding: 10px 14px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
   color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+@media (min-width: 641px) {
+  .post-content td,
+  .post-content th {
+    white-space: normal;
+  }
 }
 
 /* ============================================================
@@ -6302,10 +6316,13 @@ a:hover {
   .delivery-card, .contact-card { padding: 20px !important; margin-bottom: 10px !important; }
   .blog-post { padding: 16px 0 !important; }
   .blog-post h1 { font-size: 1.5rem !important; }
+  .post-content { padding: 20px !important; }
   .post-content h2 { margin-top: 28px !important; margin-bottom: 10px !important; font-size: 1.3rem !important; }
   .post-content h3 { margin-top: 18px !important; margin-bottom: 8px !important; font-size: 1.1rem !important; }
   .post-content p { margin-bottom: 12px !important; }
   .post-content ul, .post-content ol { margin-bottom: 14px !important; }
+  .post-content table { margin: 16px 0 !important; font-size: 0.8rem !important; }
+  .post-content th, .post-content td { padding: 6px 8px !important; }
   .contact-grid { gap: 16px !important; }
   .areas-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
   .location-grid { gap: 16px !important; }
