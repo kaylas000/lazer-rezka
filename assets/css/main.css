@@ -5871,7 +5871,7 @@ select.calc-input option {
   color: var(--accent-orange);
   letter-spacing: 0.08em;
   opacity: 0.7;
-  margin-bottom: 16px;
+  margin-bottom: 4px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
