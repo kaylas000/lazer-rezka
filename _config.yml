@@ -110,8 +110,8 @@ lang: ru-RU
 author: "Цех лазерной резки"
 geo_region: "RU-MOS"
 geo_placename: "Голицыно, Московская область"
-geo_position: "55.614760;36.960248"
-geo_icbm: "55.614760, 36.960248"
+geo_position: "55.615100;36.960248"
+geo_icbm: "55.615100, 36.960248"
 
 # Social Media
 logo: /assets/images/icon-512.png
