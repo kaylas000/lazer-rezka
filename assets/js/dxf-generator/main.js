@@ -203,7 +203,7 @@
     DxfPreview.render('dxf-preview', { type: currentShape, params: currentParams, viewBox: vb });
 
     // Enable visual hole placement
-    var holeDiaEl = document.querySelector('#form-' + currentShape + ' input[id^="holeDiaInput"]');
+    var holeDiaEl = document.querySelector('#form-' + currentShape + ' input[id^="holeDia"]');
     var holeDia = holeDiaEl ? (parseFloat(holeDiaEl.value) || 6) : 6;
     var holes = getCurrentHoles();
     DxfPreview.enableHolePlacement('dxf-preview', holes, holeDia, function(updated) {
