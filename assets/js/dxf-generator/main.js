@@ -216,27 +216,34 @@
   }
 
   function calcViewBox(p, shape) {
-    var margin = 20;
+    var margin = 0.05; // 5% margin — деталь почти вплотную
     if (shape === 'rectangle') {
       var w = (Number(p.width) || 100);
       var h = (Number(p.height) || 100);
-      var size = Math.max(w, h) + margin * 2;
-      return { x: -size / 2, y: -size / 2, w: size, h: size };
+      var size = Math.max(w, h) * (1 + margin * 2);
+      // Keep square viewBox centered
+      var half = size / 2;
+      return { x: -half, y: -half, w: size, h: size };
     } else if (shape === 'circle') {
-      var d = (Number(p.outerDia) || 100) + margin * 2;
-      return { x: -d / 2, y: -d / 2, w: d, h: d };
+      var d = (Number(p.outerDia) || 100);
+      var size = d * (1 + margin * 2);
+      return { x: -size / 2, y: -size / 2, w: size, h: size };
     } else if (shape === 'bracket') {
       if ((p.bracketType || 'L') === 'L') {
-        var l1 = (Number(p.leg1) || 50) + 20 + margin;
-        var l2 = (Number(p.leg2) || 50) + 20 + margin;
-        return { x: -margin - 30, y: -margin - 30, w: l1 + 30 + margin, h: l2 + 30 + margin };
+        var l1 = (Number(p.leg1) || 50);
+        var l2 = (Number(p.leg2) || 50);
+        var maxDim = Math.max(l1 + 10, l2 + 10);
+        var size = maxDim * (1 + margin * 2);
+        return { x: -size * 0.4, y: -size * 0.4, w: size, h: size };
       } else {
-        var bw = (Number(p.width) || 60) + margin * 2;
-        var bh = (Number(p.height) || 40) + margin * 2;
-        return { x: -bw / 2, y: -bh / 2, w: bw, h: bh };
+        var bw = (Number(p.width) || 60);
+        var bh = (Number(p.height) || 40);
+        var maxDim = Math.max(bw, bh);
+        var size = maxDim * (1 + margin * 2);
+        return { x: -size / 2, y: -size / 2, w: size, h: size };
       }
     }
-    return { x: -120, y: -120, w: 240, h: 240 };
+    return { x: -55, y: -55, w: 110, h: 110 };
   }
 
   function updatePrice() {
