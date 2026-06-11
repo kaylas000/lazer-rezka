@@ -29,17 +29,17 @@ def tel_uri(phone: str) -> str:
     return "tel:+" + digits
 
 
-def thickness_prices(node: dict) -> dict[int, int]:
-    out: dict[int, int] = {}
+def thickness_prices(node: dict) -> dict[float, int]:
+    out: dict[float, int] = {}
     mm = (node or {}).get("thickness_mm") or {}
     for k, v in mm.items():
-        out[int(k)] = int(v)
+        out[float(k)] = int(v)
     return out
 
 
 def band_price_range(laser_key: str, from_mm: int, to_mm: int, laser_root: dict) -> tuple[int, int]:
     price_map = thickness_prices(laser_root[laser_key])
-    vals = [price_map[t] for t in range(from_mm, to_mm + 1) if t in price_map]
+    vals = [price_map[t] for t in price_map if from_mm <= t <= to_mm]
     if not vals:
         raise ValueError(f"No prices for {laser_key} in {from_mm}-{to_mm}")
     return min(vals), max(vals)
