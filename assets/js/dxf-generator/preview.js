@@ -11,12 +11,9 @@
     var svg = document.createElementNS(SVG_NS, 'svg');
     svg.setAttribute('xmlns', SVG_NS);
     svg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
-    svg.setAttribute('width', width);
-    svg.setAttribute('height', height);
-    svg.style.maxWidth = '100%';
-    svg.style.height = 'auto';
-    svg.style.background = '#1a1a2e';
-    svg.style.borderRadius = '8px';
+    svg.setAttribute('width', '100%');
+    svg.setAttribute('height', '100%');
+    svg.style.display = 'block';
     return svg;
   }
 

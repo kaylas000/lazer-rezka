@@ -216,34 +216,38 @@
   }
 
   function calcViewBox(p, shape) {
-    var margin = 0.05; // 5% margin — деталь почти вплотную
+    var m = 0.04; // 4% margin
     if (shape === 'rectangle') {
       var w = (Number(p.width) || 100);
       var h = (Number(p.height) || 100);
-      var size = Math.max(w, h) * (1 + margin * 2);
-      // Keep square viewBox centered
-      var half = size / 2;
-      return { x: -half, y: -half, w: size, h: size };
+      var hw = w / 2 * (1 + m);
+      var hh = h / 2 * (1 + m);
+      return { x: -hw, y: -hh, w: hw * 2, h: hh * 2 };
     } else if (shape === 'circle') {
-      var d = (Number(p.outerDia) || 100);
-      var size = d * (1 + margin * 2);
-      return { x: -size / 2, y: -size / 2, w: size, h: size };
+      var d = (Number(p.outerDia) || 100) / 2 * (1 + m);
+      return { x: -d, y: -d, w: d * 2, h: d * 2 };
     } else if (shape === 'bracket') {
-      if ((p.bracketType || 'L') === 'L') {
-        var l1 = (Number(p.leg1) || 50);
-        var l2 = (Number(p.leg2) || 50);
-        var maxDim = Math.max(l1 + 10, l2 + 10);
-        var size = maxDim * (1 + margin * 2);
-        return { x: -size * 0.4, y: -size * 0.4, w: size, h: size };
-      } else {
+      var type = p.bracketType || 'L';
+      var t = Number(p.thickness) || 3;
+      if (type === 'L') {
+        var l1 = (Number(p.leg1) || 50) + t;
+        var l2 = (Number(p.leg2) || 50) + t;
+        var x0 = -t - l1 * m;
+        var y0 = -t - l2 * m;
+        return { x: x0, y: y0, w: l1 * (1 + m * 2) + t, h: l2 * (1 + m * 2) + t };
+      } else if (type === 'P') {
         var bw = (Number(p.width) || 60);
         var bh = (Number(p.height) || 40);
-        var maxDim = Math.max(bw, bh);
-        var size = maxDim * (1 + margin * 2);
-        return { x: -size / 2, y: -size / 2, w: size, h: size };
+        var hbw = bw / 2 * (1 + m);
+        return { x: -hbw, y: -bh * m, w: hbw * 2, h: bh * (1 + m * 2) };
+      } else {
+        var zw = (Number(p.width) || 50);
+        var zh = (Number(p.height) || 40);
+        var tf = Number(p.topFlange) || 15;
+        return { x: -zw * m, y: -zh * m, w: zw * (1 + m * 2), h: zh * (1 + m * 2) };
       }
     }
-    return { x: -55, y: -55, w: 110, h: 110 };
+    return { x: -52, y: -52, w: 104, h: 104 };
   }
 
   function updatePrice() {
