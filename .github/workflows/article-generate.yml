@@ -1,9 +1,9 @@
 name: Generate and Publish Article
 
 on:
-  schedule:
-    # Понедельник, Среда, Пятница в 9:00 UTC+3 (6:00 UTC)
-    - cron: '0 6 * * 1,3,5'
+  # schedule — ОТКЛЮЧЕН (статьи требуют ручной переработки)
+  # # Понедельник, Среда, Пятница в 9:00 UTC+3 (6:00 UTC)
+  # - cron: '0 6 * * 1,3,5'
   workflow_dispatch: # Ручной запуск
 
 jobs:
