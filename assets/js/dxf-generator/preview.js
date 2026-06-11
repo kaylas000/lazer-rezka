@@ -76,33 +76,36 @@
     var svg = createSvg(vb.w, vb.h);
     svg.setAttribute('viewBox', vb.x + ' ' + vb.y + ' ' + vb.w + ' ' + vb.h);
 
-    // Grid — 10mm major, 5mm minor, axes
+    // Grid — 10mm major, 5mm minor, 2mm fine, axes
+    var gridFine = document.createElementNS(SVG_NS, 'g');
     var gridMinor = document.createElementNS(SVG_NS, 'g');
     var gridMajor = document.createElementNS(SVG_NS, 'g');
     var gridAxes = document.createElementNS(SVG_NS, 'g');
 
-    var minorStep = 5;
-    for (var gx = Math.floor(vb.x / minorStep) * minorStep; gx <= vb.x + vb.w; gx += minorStep) {
-      var isMajor = (gx % 10 === 0);
-      var target = isMajor ? gridMajor : gridMinor;
-      var w = isMajor ? 0.35 : 0.15;
-      addLine(target, gx, vb.y, gx, vb.y + vb.h, { stroke: '#ffffff', strokeWidth: w });
+    var fineStep = 2;
+    var startX = Math.floor(vb.x / fineStep) * fineStep;
+    var startY = Math.floor(vb.y / fineStep) * fineStep;
+
+    for (var gx = startX; gx <= vb.x + vb.w; gx += fineStep) {
+      if (gx % 10 === 0) { addLine(gridMajor, gx, vb.y, gx, vb.y + vb.h, { stroke: '#ffffff', strokeWidth: 0.4 }); }
+      else if (gx % 5 === 0) { addLine(gridMinor, gx, vb.y, gx, vb.y + vb.h, { stroke: '#ffffff', strokeWidth: 0.2 }); }
+      else { addLine(gridFine, gx, vb.y, gx, vb.y + vb.h, { stroke: '#ffffff', strokeWidth: 0.1 }); }
     }
-    for (var gy = Math.floor(vb.y / minorStep) * minorStep; gy <= vb.y + vb.h; gy += minorStep) {
-      var isMajor = (gy % 10 === 0);
-      var target = isMajor ? gridMajor : gridMinor;
-      var w = isMajor ? 0.35 : 0.15;
-      addLine(target, vb.x, gy, vb.x + vb.w, gy, { stroke: '#ffffff', strokeWidth: w });
+    for (var gy = startY; gy <= vb.y + vb.h; gy += fineStep) {
+      if (gy % 10 === 0) { addLine(gridMajor, vb.x, gy, vb.x + vb.w, gy, { stroke: '#ffffff', strokeWidth: 0.4 }); }
+      else if (gy % 5 === 0) { addLine(gridMinor, vb.x, gy, vb.x + vb.w, gy, { stroke: '#ffffff', strokeWidth: 0.2 }); }
+      else { addLine(gridFine, vb.x, gy, vb.x + vb.w, gy, { stroke: '#ffffff', strokeWidth: 0.1 }); }
     }
 
-    // Axes (X=0, Y=0)
-    addLine(gridAxes, 0, vb.y, 0, vb.y + vb.h, { stroke: 'rgba(255,107,43,0.4)', strokeWidth: 0.5 });
-    addLine(gridAxes, vb.x, 0, vb.x + vb.w, 0, { stroke: 'rgba(255,107,43,0.4)', strokeWidth: 0.5 });
+    addLine(gridAxes, 0, vb.y, 0, vb.y + vb.h, { stroke: 'rgba(255,107,43,0.5)', strokeWidth: 0.6 });
+    addLine(gridAxes, vb.x, 0, vb.x + vb.w, 0, { stroke: 'rgba(255,107,43,0.5)', strokeWidth: 0.6 });
 
-    gridMinor.style.opacity = '0.12';
+    gridFine.style.opacity = '0.08';
+    gridMinor.style.opacity = '0.15';
     gridMajor.style.opacity = '0.25';
     gridAxes.style.opacity = '0.5';
 
+    svg.appendChild(gridFine);
     svg.appendChild(gridMinor);
     svg.appendChild(gridMajor);
     svg.appendChild(gridAxes);
