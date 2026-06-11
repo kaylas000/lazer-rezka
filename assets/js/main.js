@@ -273,6 +273,26 @@ document.querySelectorAll('form.form').forEach(function(form) {
   });
 })();
 
+// Auto-associate labels with form fields (accessibility)
+(function() {
+  var labels = document.querySelectorAll('label:not([for])');
+  var idCounter = 0;
+  for (var i = 0; i < labels.length; i++) {
+    var label = labels[i];
+    // Find input/select/textarea — child or next sibling
+    var field = label.querySelector('input, select, textarea');
+    if (!field) {
+      var parent = label.parentNode;
+      if (parent) field = parent.querySelector('input, select, textarea');
+    }
+    if (!field) continue;
+    if (!field.id) {
+      field.id = 'field-' + (++idCounter) + '-' + (field.name || field.type || 'input');
+    }
+    label.setAttribute('for', field.id);
+  }
+})();
+
 // Wrap blog post tables in scroll container for mobile
 (function() {
   var tables = document.querySelectorAll('.post-content table');
