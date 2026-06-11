@@ -390,11 +390,12 @@ head_extra: ""
 
 @media (min-width: 901px) {
   .dxf-layout {
-    grid-template-columns: 380px 1fr;
-    gap: 32px;
+    grid-template-columns: 360px 1fr;
+    gap: 24px;
   }
-  .dxf-preview-svg { min-height: 480px; }
-  .dxf-generator-section { padding: 12px 0 64px; }
+  .dxf-preview-svg { min-height: 0; height: calc(100vh - 280px); }
+  .dxf-result-panel { position: static; }
+  .dxf-generator-section { padding: 8px 0 32px; }
 }
 
 /* --- Tabs --- */
