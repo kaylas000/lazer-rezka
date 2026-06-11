@@ -82,7 +82,7 @@ head_extra: ""
             </div>
           </div>
           <p class="dxf-hole-hint" style="font-size:12px;color:var(--text-muted);margin:0 0 8px;">Клик по превью = добавить отверстие. Клик по отверстию = удалить.</p>
-          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow-y:auto;margin-bottom:8px;">
+          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;">
             <table class="dxf-holes-table" id="rectHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;">
               <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">⌀ мм</th><th style="width:30px;border-bottom:1px solid var(--border-default);"></th></tr></thead>
               <tbody></tbody>
@@ -145,7 +145,7 @@ head_extra: ""
             </div>
           </div>
           <p class="dxf-hole-hint" style="font-size:12px;color:var(--text-muted);margin:0 0 8px;">Клик по превью = добавить отверстие. Клик по отверстию = удалить.</p>
-          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow-y:auto;margin-bottom:8px;">
+          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;">
             <table class="dxf-holes-table" id="circleHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;">
               <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">⌀ мм</th><th style="width:30px;border-bottom:1px solid var(--border-default);"></th></tr></thead>
               <tbody></tbody>
@@ -284,7 +284,7 @@ head_extra: ""
             </div>
           </div>
           <p class="dxf-hole-hint" style="font-size:12px;color:var(--text-muted);margin:0 0 8px;">Клик по превью = добавить отверстие. Клик по отверстию = удалить.</p>
-          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow-y:auto;margin-bottom:8px;">
+          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;">
             <table class="dxf-holes-table" id="bracketHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;">
               <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">⌀ мм</th><th style="width:30px;border-bottom:1px solid var(--border-default);"></th></tr></thead>
               <tbody></tbody>
@@ -377,13 +377,15 @@ head_extra: ""
 /* --- Layout (mobile-first) --- */
 .dxf-generator-section {
   padding: 32px 0 64px;
+  overflow-x: hidden;
 }
 
 .dxf-layout {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
   align-items: start;
+  max-width: 100%;
 }
 
 @media (min-width: 901px) {
@@ -442,6 +444,8 @@ head_extra: ""
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 24px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .dxf-form-panel h3 {
@@ -520,6 +524,8 @@ head_extra: ""
 .dxf-result-panel {
   position: sticky;
   top: 90px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .dxf-preview-container {
@@ -665,13 +671,16 @@ head_extra: ""
     min-height: 40px;
   }
   .dxf-tabs { gap: 6px; }
-  .dxf-form-panel { padding: 16px; }
+  .dxf-form-panel { padding: 16px; max-width: 100vw; }
   .dxf-form-panel h3 { font-size: 1rem; }
-  .dxf-result-panel { position: static; }
-  .dxf-preview-svg { min-height: 220px; }
+  .dxf-result-panel { position: static; max-width: 100vw; }
+  .dxf-preview-svg { min-height: 220px; max-width: 100%; }
+  .dxf-preview-svg svg { max-width: 100%; height: auto; }
   .dxf-field-row { grid-template-columns: 1fr 1fr; }
   .dxf-holes-table-wrapper { max-height: 150px; }
   .dxf-instructions details { padding: 12px 14px; }
+  .dxf-tab-btn { flex: 1 1 auto; justify-content: center; padding: 10px 14px; font-size: 0.78rem; min-height: 40px; }
+  .dxf-tabs { gap: 6px; }
 }
 </style>
 
