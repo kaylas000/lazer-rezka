@@ -1,22 +1,3 @@
-// Hero video: skip on slow connection, otherwise just play
-(function() {
-  var video = document.querySelector('.hero-video');
-  if (!video) return;
-
-  var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  if (conn && (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.saveData)) {
-    video.removeAttribute('src');
-    video.querySelectorAll('source').forEach(function(s) { s.removeAttribute('src'); });
-    video.load();
-    return;
-  }
-
-  video.addEventListener('error', function() { video.style.display = 'none'; });
-
-  var playPromise = video.play();
-  if (playPromise !== undefined) { playPromise.catch(function() {}); }
-})();
-
 // Mobile menu
 var navToggle = document.querySelector('.nav-toggle');
 var navMenu = document.querySelector('.nav-menu');

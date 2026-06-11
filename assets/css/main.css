@@ -481,19 +481,13 @@ section {
 
 .hero-video {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
   z-index: 0;
-  opacity: 1;
-  -webkit-transition: opacity 0.8s ease;
-  transition: opacity 0.8s ease;
-}
-
-.hero-video.loaded {
-  opacity: 1;
+  opacity: 0.5;
 }
 
 .hero-overlay {
@@ -1128,11 +1122,6 @@ input:focus, textarea:focus, select:focus {
   .hero {
     min-height: 45vh;
     padding: 20px 0 20px;
-  }
-
-  .hero-video {
-    object-fit: cover;
-    object-position: 40% 25%;
   }
 
   .hero-title {
@@ -5836,9 +5825,6 @@ select.calc-input option {
 
 /* Content visibility animation for perf */
 @media (min-width: 769px) {
-  .hero-video {
-    content-visibility: auto;
-  }
 }
 
 /* ============================================================
