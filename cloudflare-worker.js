@@ -170,7 +170,7 @@ function getSystemPrompt() {
 КОНТАКТЫ:
 - Телефон: +7 (985) 456-37-64
 - Email: info@lasercut.ru
-- Адрес: Голицыно, ул. Новая 7
+- Адрес: Голицыно, Заводской проспект, 34
 - Режим: Пн-Пт 9:00-18:00
 - Онлайн-калькулятор: https://ceh-lazer-rezka.ru/calculator/
 - Контакты/форма: https://ceh-lazer-rezka.ru/contacts/
