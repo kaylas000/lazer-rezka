@@ -15,6 +15,27 @@ head_extra: |
   </div>
 </section>
 
+<section class="dxf-instructions" style="padding:0 0 8px;">
+  <div class="container">
+    <details style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:16px 20px;cursor:pointer;">
+      <summary style="font-weight:600;color:var(--accent-orange);font-size:0.95rem;user-select:none;">📘 Как пользоваться генератором — пошаговая инструкция</summary>
+      <div style="margin-top:12px;font-size:0.9rem;color:var(--text-secondary);line-height:1.7;">
+        <p><strong>1. Выберите тип детали</strong> — пластина, фланец/диск или кронштейн. Для каждого типа своя форма слева.</p>
+        <p><strong>2. Задайте размеры</strong> — ширина, высота, радиус углов. Для фланца — наружный и внутренний диаметр. Для кронштейна — выберите тип (L/П/Z) и размеры.</p>
+        <p><strong>3. Расставьте отверстия</strong> — <span style="color:var(--accent-orange);">кликните мышью по предпросмотру справа</span> где нужно отверстие. Каждое отверстие появится в таблице под формой. Там можно <strong>точно задать координаты X, Y и диаметр</strong> каждого отверстия.</p>
+        <p><strong>4. Чтобы удалить отверстие</strong> — кликните по нему на предпросмотре или нажмите <span style="color:var(--error);">×</span> в таблице.</p>
+        <p><strong>5. Выберите материал, толщину и количество</strong> — цена рассчитается автоматически по длине реза.</p>
+        <p><strong>6. Нажмите «Скачать DXF»</strong> — файл сохранится на компьютер, готовый для загрузки в станок.</p>
+        <p style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border-subtle);font-size:0.8rem;color:var(--text-muted);">
+          ⚠️ Цена примерная — не учитывает точку входа лазера. Точная стоимость после проверки чертежа технологом.<br>
+          ⚠️ Минимальный диаметр отверстия не может быть меньше толщины металла.<br>
+          ⚠️ Центр координат (0,0) — центр детали. Положительные X — вправо, положительные Y — вверх.
+        </p>
+      </div>
+    </details>
+  </div>
+</section>
+
 <section class="dxf-generator-section">
   <div class="container">
     <div class="dxf-tabs" role="tablist">
