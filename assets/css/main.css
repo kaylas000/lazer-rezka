@@ -6322,6 +6322,8 @@ a:hover {
   .post-content ul, .post-content ol { margin-bottom: 14px !important; }
   .post-content table { margin: 16px 0 !important; font-size: 0.8rem !important; }
   .post-content th, .post-content td { padding: 6px 8px !important; }
+  .article-cta { flex-direction: column !important; padding: 20px 16px !important; margin: 28px 0 16px !important; gap: 10px !important; }
+  .article-cta .btn { width: 100% !important; justify-content: center !important; min-height: 48px !important; font-size: 0.95rem !important; }
   .contact-grid { gap: 16px !important; }
   .areas-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
   .location-grid { gap: 16px !important; }
