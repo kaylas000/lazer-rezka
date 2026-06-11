@@ -248,8 +248,137 @@
     }
   }
 
+  /**
+   * Enable interactive hole placement on the preview SVG.
+   * @param {string|Element} container — preview container element or ID
+   * @param {Array} holes — shared array of {cx, cy, d}
+   * @param {number} defaultDia — default hole diameter in mm
+   * @param {function} onChange — callback(holes) when holes change
+   */
+  function enableHolePlacement(container, holes, defaultDia, onChange) {
+    if (typeof container === 'string') container = document.getElementById(container);
+    if (!container) return;
+
+    var svg = container.querySelector('svg');
+    if (!svg) return;
+
+    defaultDia = defaultDia || 6;
+
+    // Remove old listeners — replace SVG to clear
+    var holeLayer = svg.querySelector('#preview-holes-layer');
+    if (!holeLayer) {
+      holeLayer = document.createElementNS(SVG_NS, 'g');
+      holeLayer.setAttribute('id', 'preview-holes-layer');
+      holeLayer.style.cursor = 'crosshair';
+      svg.appendChild(holeLayer);
+    }
+
+    renderHoleMarkers(holeLayer, holes);
+
+    // Click handler — add hole at click position
+    svg.onclick = function(e) {
+      // Ignore clicks on existing holes (those are handled separately)
+      if (e.target.closest('.hole-marker')) return;
+
+      var pt = svg.createSVGPoint();
+      pt.x = e.clientX;
+      pt.y = e.clientY;
+      var ctm = svg.getScreenCTM();
+      if (!ctm) return;
+      var svgPt = pt.matrixTransform(ctm.inverse());
+
+      var cx = Math.round(svgPt.x * 10) / 10;
+      var cy = Math.round(svgPt.y * 10) / 10;
+
+      holes.push({ cx: cx, cy: cy, d: defaultDia });
+      renderHoleMarkers(holeLayer, holes);
+      if (onChange) onChange(holes);
+    };
+
+    // Re-render when holes array changes externally
+    var _push = holes.push;
+    holes.push = function() {
+      var r = _push.apply(this, arguments);
+      renderHoleMarkers(holeLayer, holes);
+      if (onChange) onChange(holes);
+      return r;
+    };
+    holes.removeAt = function(idx) {
+      if (idx >= 0 && idx < this.length) {
+        this.splice(idx, 1);
+        renderHoleMarkers(holeLayer, holes);
+        if (onChange) onChange(holes);
+      }
+    };
+    holes.clear = function() {
+      this.length = 0;
+      renderHoleMarkers(holeLayer, holes);
+      if (onChange) onChange(holes);
+    };
+  }
+
+  function renderHoleMarkers(layer, holes) {
+    // Clear existing markers
+    while (layer.firstChild) layer.removeChild(layer.firstChild);
+
+    for (var i = 0; i < holes.length; i++) {
+      var h = holes[i];
+      var cx = Number(h.cx) || 0;
+      var cy = Number(h.cy) || 0;
+      var r = (Number(h.d) || 6) / 2;
+
+      var g = document.createElementNS(SVG_NS, 'g');
+      g.setAttribute('class', 'hole-marker');
+      g.style.cursor = 'pointer';
+      g.setAttribute('data-index', i);
+
+      // Hole circle
+      var circle = document.createElementNS(SVG_NS, 'circle');
+      circle.setAttribute('cx', cx);
+      circle.setAttribute('cy', cy);
+      circle.setAttribute('r', r);
+      circle.setAttribute('fill', 'rgba(74,158,255,0.15)');
+      circle.setAttribute('stroke', '#4a9eff');
+      circle.setAttribute('stroke-width', '1.5');
+      g.appendChild(circle);
+
+      // Crosshair
+      var cs = r + 4;
+      var cross = document.createElementNS(SVG_NS, 'path');
+      cross.setAttribute('d', 'M' + (cx - cs) + ',' + cy + 'H' + (cx + cs) + 'M' + cx + ',' + (cy - cs) + 'V' + (cy + cs));
+      cross.setAttribute('stroke', '#4a9eff');
+      cross.setAttribute('stroke-width', '0.8');
+      cross.setAttribute('opacity', '0.6');
+      g.appendChild(cross);
+
+      // Coordinate label
+      var label = document.createElementNS(SVG_NS, 'text');
+      label.setAttribute('x', cx + r + 6);
+      label.setAttribute('y', cy - r - 4);
+      label.setAttribute('fill', '#4a9eff');
+      label.setAttribute('font-size', '10');
+      label.setAttribute('font-family', 'monospace');
+      label.textContent = (cx >= 0 ? '+' : '') + cx + ', ' + (cy >= 0 ? '+' : '') + cy;
+      g.appendChild(label);
+
+      // Click to remove
+      g.onclick = function(e) {
+        e.stopPropagation();
+        var idx = parseInt(this.getAttribute('data-index'));
+        holes.removeAt(idx);
+      };
+
+      // Hover effect
+      g.onmouseenter = function() { this.style.opacity = '0.7'; };
+      g.onmouseleave = function() { this.style.opacity = '1'; };
+
+      layer.appendChild(g);
+    }
+  }
+
   global.DxfPreview = {
     render: renderPreview,
-    createSvg: createSvg
+    createSvg: createSvg,
+    enableHolePlacement: enableHolePlacement
   };
 })(typeof window !== 'undefined' ? window : global);

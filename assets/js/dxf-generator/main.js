@@ -10,6 +10,17 @@
   var currentCutLength = 0;
   var currentDxf = null;
 
+  // Visual hole arrays (shared with preview)
+  var rectangleHoles = [];
+  var circleHoles = [];
+  var bracketHoles = [];
+
+  function getCurrentHoles() {
+    if (currentShape === 'rectangle') return rectangleHoles;
+    if (currentShape === 'circle') return circleHoles;
+    return bracketHoles;
+  }
+
   // ===== INIT =====
   document.addEventListener('DOMContentLoaded', function () {
     initTabs();
@@ -47,6 +58,24 @@
       input.addEventListener('change', debounce(updateAll, 200));
     });
   }
+
+  // ===== CLEAR HOLES BUTTON =====
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('clear-holes-btn') || e.target.closest('.clear-holes-btn')) {
+      var holes = getCurrentHoles();
+      holes.length = 0;
+      var holeLayer = document.querySelector('#preview-holes-layer');
+      if (holeLayer) while (holeLayer.firstChild) holeLayer.removeChild(holeLayer.firstChild);
+      updateAll();
+    }
+    // Update hole diameter when input changes
+    if (e.target.id && e.target.id.startsWith('holeDiaInput')) {
+      var holes = getCurrentHoles();
+      var newDia = parseFloat(e.target.value) || 6;
+      // Update default diameter — existing holes keep their diameters
+      updateAll();
+    }
+  });
 
   // ===== ACTION BUTTONS =====
   function initActionButtons() {
@@ -88,25 +117,13 @@
       p[input.name] = val;
     });
 
-    // Parse hole positions if present
-    var holesText = p.holes || '';
-    if (holesText && typeof holesText === 'string') {
-      p.holes = parseHoles(holesText);
-    } else {
-      p.holes = null;
-    }
-
-    // Parse extraHolesStr for circle (format: "angle,dist,d; angle,dist,d")
-    if (currentShape === 'circle' && p.extraHolesStr && typeof p.extraHolesStr === 'string') {
-      p.extraHoles = parseExtraHoles(p.extraHolesStr);
-    } else {
-      p.extraHoles = null;
-    }
+    // Holes are managed visually via preview clicks — set in generateAndPreview()
+    p.holes = null;
+    p.extraHoles = null;
 
     // Bracket: use materialThickness for price, thickness for geometry
     if (currentShape === 'bracket') {
       p.type = p.bracketType || 'L';
-      // materialThickness → used as thickness for price calc (renamed below)
     }
 
     return p;
@@ -149,8 +166,18 @@
 
   function generateAndPreview() {
     currentDxf = new DxfDocument();
-    var result = { cutLengthMeters: 0 };
 
+    // Attach visual holes to params
+    var holes = getCurrentHoles();
+    if (currentShape === 'rectangle') {
+      currentParams.holes = holes.length > 0 ? holes : null;
+    } else if (currentShape === 'circle') {
+      currentParams.extraHoles = holes.length > 0 ? holes : null;
+    } else if (currentShape === 'bracket') {
+      currentParams.holes = holes.length > 0 ? holes : null;
+    }
+
+    var result = { cutLengthMeters: 0 };
     if (currentShape === 'rectangle') {
       result = generateRectangle(currentDxf, currentParams);
     } else if (currentShape === 'circle') {
@@ -164,6 +191,13 @@
     // Auto-calculate viewBox
     var vb = calcViewBox(currentParams, currentShape);
     DxfPreview.render('dxf-preview', { type: currentShape, params: currentParams, viewBox: vb });
+
+    // Enable visual hole placement — use visible hole diameter input
+    var holeDiaEl = document.querySelector('#form-' + currentShape + ' input[id^="holeDiaInput"]');
+    var holeDia = holeDiaEl ? (parseFloat(holeDiaEl.value) || 6) : 6;
+    DxfPreview.enableHolePlacement('dxf-preview', holes, holeDia, function(updated) {
+      updatePrice();
+    });
   }
 
   function calcViewBox(p, shape) {
