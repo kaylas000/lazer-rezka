@@ -6270,9 +6270,6 @@ a:hover {
   width: 100%;
   margin: 24px 0;
   border-collapse: collapse;
-  display: block;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 .post-content th {
   text-align: left;
@@ -6280,19 +6277,19 @@ a:hover {
   border-bottom: 2px solid rgba(255,107,43,0.3);
   color: var(--accent-orange);
   font-weight: 600;
-  white-space: nowrap;
 }
 .post-content td {
   padding: 10px 14px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
   color: var(--text-secondary);
-  white-space: nowrap;
 }
 
-@media (min-width: 641px) {
-  .post-content td,
-  .post-content th {
-    white-space: normal;
+@media (max-width: 640px) {
+  .post-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
   }
 }
 
