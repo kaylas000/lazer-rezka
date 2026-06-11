@@ -76,17 +76,36 @@
     var svg = createSvg(vb.w, vb.h);
     svg.setAttribute('viewBox', vb.x + ' ' + vb.y + ' ' + vb.w + ' ' + vb.h);
 
-    // Grid
-    var grid = document.createElementNS(SVG_NS, 'g');
-    grid.style.opacity = '0.1';
-    var gridStep = 10;
-    for (var gx = Math.floor(vb.x / gridStep) * gridStep; gx <= vb.x + vb.w; gx += gridStep) {
-      addLine(grid, gx, vb.y, gx, vb.y + vb.h, { stroke: '#ffffff', strokeWidth: 0.3 });
+    // Grid — 10mm major, 5mm minor, axes
+    var gridMinor = document.createElementNS(SVG_NS, 'g');
+    var gridMajor = document.createElementNS(SVG_NS, 'g');
+    var gridAxes = document.createElementNS(SVG_NS, 'g');
+
+    var minorStep = 5;
+    for (var gx = Math.floor(vb.x / minorStep) * minorStep; gx <= vb.x + vb.w; gx += minorStep) {
+      var isMajor = (gx % 10 === 0);
+      var target = isMajor ? gridMajor : gridMinor;
+      var w = isMajor ? 0.35 : 0.15;
+      addLine(target, gx, vb.y, gx, vb.y + vb.h, { stroke: '#ffffff', strokeWidth: w });
     }
-    for (var gy = Math.floor(vb.y / gridStep) * gridStep; gy <= vb.y + vb.h; gy += gridStep) {
-      addLine(grid, vb.x, gy, vb.x + vb.w, gy, { stroke: '#ffffff', strokeWidth: 0.3 });
+    for (var gy = Math.floor(vb.y / minorStep) * minorStep; gy <= vb.y + vb.h; gy += minorStep) {
+      var isMajor = (gy % 10 === 0);
+      var target = isMajor ? gridMajor : gridMinor;
+      var w = isMajor ? 0.35 : 0.15;
+      addLine(target, vb.x, gy, vb.x + vb.w, gy, { stroke: '#ffffff', strokeWidth: w });
     }
-    svg.appendChild(grid);
+
+    // Axes (X=0, Y=0)
+    addLine(gridAxes, 0, vb.y, 0, vb.y + vb.h, { stroke: 'rgba(255,107,43,0.4)', strokeWidth: 0.5 });
+    addLine(gridAxes, vb.x, 0, vb.x + vb.w, 0, { stroke: 'rgba(255,107,43,0.4)', strokeWidth: 0.5 });
+
+    gridMinor.style.opacity = '0.12';
+    gridMajor.style.opacity = '0.25';
+    gridAxes.style.opacity = '0.5';
+
+    svg.appendChild(gridMinor);
+    svg.appendChild(gridMajor);
+    svg.appendChild(gridAxes);
 
     // Cut layer (orange)
     var cut = document.createElementNS(SVG_NS, 'g');
