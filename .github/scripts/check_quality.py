@@ -75,25 +75,46 @@ def check_article(filepath):
     if 'generated' in front_matter and front_matter['generated'] == True:
         warnings.append("Поле generated=True — рекомендуется generated: false")
 
+    # Проверка image в front matter
+    if 'image' not in front_matter:
+        warnings.append("Отсутствует image в front matter")
+
     # Проверка контента
     word_count = len(article_content.split())
-    if word_count < 400:
-        errors.append(f"Статья слишком короткая: {word_count} слов (минимум 400)")
+    if word_count < 700:
+        errors.append(f"Статья слишком короткая: {word_count} слов (минимум 700)")
+    elif word_count < 800:
+        warnings.append(f"Статья коротковата: {word_count} слов (рекомендуется 800+)")
     elif word_count > 3000:
         warnings.append(f"Статья очень длинная: {word_count} слов")
 
     # Проверка заголовков H2
     h2_count = len(re.findall(r'^## ', article_content, re.MULTILINE))
-    if h2_count < 3:
-        errors.append(f"Недостаточно заголовков H2: {h2_count} (минимум 3)")
+    if h2_count < 4:
+        errors.append(f"Недостаточно заголовков H2: {h2_count} (минимум 4)")
 
     # Проверка FAQ секции
     if 'FAQ' not in article_content and 'Часто задаваемые вопросы' not in article_content:
-        warnings.append("Отсутствует FAQ секция")
+        errors.append("Отсутствует FAQ секция")
+
+    # Проверка количества FAQ вопросов (ищем жирный текст после FAQ заголовка)
+    faq_questions = len(re.findall(r'\*\*[^*]+\?\*\*', article_content))
+    if faq_questions < 4:
+        warnings.append(f"Мало FAQ вопросов: {faq_questions} (рекомендуется 6)")
 
     # Проверка CTA блока
     if 'article-cta' not in article_content:
         errors.append("Отсутствует CTA-блок (article-cta)")
+
+    # Проверка таблиц
+    table_count = len(re.findall(r'^\|.*\|$', article_content, re.MULTILINE))
+    if table_count < 3:
+        warnings.append(f"Мало таблиц: {table_count} строк (рекомендуется хотя бы одна таблица)")
+
+    # Проверка жирного форматирования
+    bold_count = len(re.findall(r'\*\*[^*]+\*\*', article_content))
+    if bold_count < 5:
+        warnings.append(f"Мало жирного текста: {bold_count} (рекомендуется 5+)")
 
     # Проверка ключевых слов
     keywords = ['лазерная резка', 'металл', 'Москва', 'Голицыно']
@@ -103,8 +124,13 @@ def check_article(filepath):
 
     # Проверка внутренних ссылок
     internal_links = len(re.findall(r'\[.+?\]\(/services/|/calculator/|/contacts/|/blog/', article_content))
-    if internal_links < 2:
-        warnings.append(f"Мало внутренних ссылок: {internal_links} (минимум 2)")
+    if internal_links < 3:
+        warnings.append(f"Мало внутренних ссылок: {internal_links} (минимум 3)")
+
+    # Проверка практических советов
+    tips_count = len(re.findall(r'^\d+\.\s\*\*', article_content, re.MULTILINE))
+    if tips_count < 5:
+        warnings.append(f"Мало форматированных советов: {tips_count} (рекомендуется 10)")
 
     is_valid = len(errors) == 0
 
