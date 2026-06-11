@@ -486,6 +486,7 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   z-index: 0;
   opacity: 0.5;
 }
@@ -1124,10 +1125,14 @@ input:focus, textarea:focus, select:focus {
     padding: 20px 0 20px;
   }
 
+  .hero-video {
+    object-position: 40% 25%;
+  }
+
   .hero-title {
     font-size: clamp(1.6rem, 8vw, 2.4rem);
   }
-  
+
   .hero-subtitle {
     font-size: 1rem;
   }
