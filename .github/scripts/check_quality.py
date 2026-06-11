@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 Бот-контролёр качества: проверяет сгенерированные статьи
 Версия 2.0 — новые пороги, проверка автора и CTA
@@ -96,10 +96,10 @@ def check_article(filepath):
         errors.append("Отсутствует CTA-блок (article-cta)")
 
     # Проверка ключевых слов
-    keywords = ['лазерная резка', 'металл', 'Москва', 'Нахабино']
+    keywords = ['лазерная резка', 'металл', 'Москва', 'Голицыно']
     found_keywords = sum(1 for kw in keywords if kw.lower() in article_content.lower())
     if found_keywords < 3:
-        warnings.append(f"Мало ключевых слов: {found_keywords}/4 (лазерная резка, металл, Москва, Нахабино)")
+        warnings.append(f"Мало ключевых слов: {found_keywords}/4 (лазерная резка, металл, Москва, Голицыно)")
 
     # Проверка внутренних ссылок
     internal_links = len(re.findall(r'\[.+?\]\(/services/|/calculator/|/contacts/|/blog/', article_content))

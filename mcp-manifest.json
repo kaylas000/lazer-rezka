@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "lazer-rezka",
   "version": "1.0.0",
   "description": "Цех лазерной резки — профессиональная лазерная резка металла в Москве. API для AI-агентов.",
@@ -36,8 +36,8 @@
   "cors_enabled": true,
   "metadata": {
     "organization": "Цех лазерной резки",
-    "location": "Нахабино, Московская область",
-    "address": "Нахабино ул. Новая 7",
+    "location": "Голицыно, Московская область",
+    "address": "Голицыно, Заводской пр-т, 34",
     "phone": "+7 (985) 456-37-64",
     "established": "2020",
     "expertise": ["laser cutting", "metal fabrication", "powder coating", "welding", "dxf generation"],
