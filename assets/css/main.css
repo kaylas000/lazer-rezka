@@ -6284,13 +6284,15 @@ a:hover {
   color: var(--text-secondary);
 }
 
-@media (max-width: 640px) {
-  .post-content table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
-  }
+/* Table scroll wrapper (added by JS) */
+.post-content .table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 24px 0;
+}
+.post-content .table-scroll table {
+  margin: 0;
+  min-width: 600px;
 }
 
 /* ============================================================

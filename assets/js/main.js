@@ -272,3 +272,16 @@ document.querySelectorAll('form.form').forEach(function(form) {
     });
   });
 })();
+
+// Wrap blog post tables in scroll container for mobile
+(function() {
+  var tables = document.querySelectorAll('.post-content table');
+  for (var i = 0; i < tables.length; i++) {
+    var table = tables[i];
+    if (table.parentNode.classList.contains('table-scroll')) continue;
+    var wrapper = document.createElement('div');
+    wrapper.className = 'table-scroll';
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  }
+})();
