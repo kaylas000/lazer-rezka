@@ -139,33 +139,7 @@
       addPolyline(g, [[x, y], [x + w, y], [x + w, y + h], [x, y + h]], true, { stroke: '#ff6b2b' });
     }
 
-    // Center hole
-    var ch = Number(p.centerHoleDia) || 0;
-    if (ch > 0) {
-      addCircle(g, 0, 0, ch / 2, { stroke: '#4a9eff' });
-    }
-
-    // Bolt circle
-    var bcDia = Number(p.boltCircleDia) || 0;
-    var bcCount = Number(p.boltCount) || 0;
-    var bcHoleDia = Number(p.boltHoleDia) || 0;
-    if (bcDia > 0 && bcCount >= 3 && bcHoleDia > 0) {
-      var br = bcDia / 2;
-      // bolt circle reference (dashed)
-      addCircle(g, 0, 0, br, { stroke: '#ffffff', strokeWidth: 0.3 });
-      for (var i = 0; i < bcCount; i++) {
-        var angle = (Math.PI * 2 * i) / bcCount - Math.PI / 2;
-        addCircle(g, br * Math.cos(angle), br * Math.sin(angle), bcHoleDia / 2, { stroke: '#4a9eff' });
-      }
-    }
-
-    // Custom holes
-    if (p.holes && p.holes.length) {
-      for (var j = 0; j < p.holes.length; j++) {
-        var hole = p.holes[j];
-        addCircle(g, Number(hole.cx) || 0, Number(hole.cy) || 0, (Number(hole.d) || 5) / 2, { stroke: '#4a9eff' });
-      }
-    }
+    // All holes drawn by visual editor — enableHolePlacement handles markers
   }
 
   function renderCirclePreview(g, p) {
@@ -178,17 +152,7 @@
       addCircle(g, 0, 0, innerD / 2, { stroke: '#4a9eff' });
     }
 
-    var bcDia = Number(p.boltCircleDia) || 0;
-    var bcCount = Number(p.boltCount) || 0;
-    var bcHoleDia = Number(p.boltHoleDia) || 0;
-    if (bcDia > 0 && bcCount >= 3 && bcHoleDia > 0) {
-      var br = bcDia / 2;
-      addCircle(g, 0, 0, br, { stroke: '#ffffff', strokeWidth: 0.3 });
-      for (var i = 0; i < bcCount; i++) {
-        var angle = (Math.PI * 2 * i) / bcCount - Math.PI / 2;
-        addCircle(g, br * Math.cos(angle), br * Math.sin(angle), bcHoleDia / 2, { stroke: '#4a9eff' });
-      }
-    }
+    // Holes from visual editor are drawn by enableHolePlacement
   }
 
   function renderBracketPreview(g, p) {

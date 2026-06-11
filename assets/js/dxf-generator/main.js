@@ -1,6 +1,6 @@
 /**
- * DXF Generator Main Controller
- * Ties together UI, shape generators, preview, calculator, and download.
+ * DXF Generator Main Controller v3
+ * Visual hole editor: click preview to place, table to edit precisely.
  */
 (function () {
   'use strict';
@@ -10,7 +10,7 @@
   var currentCutLength = 0;
   var currentDxf = null;
 
-  // Visual hole arrays (shared with preview)
+  // Hole arrays: each hole = {cx, cy, d}
   var rectangleHoles = [];
   var circleHoles = [];
   var bracketHoles = [];
@@ -27,7 +27,6 @@
     initFormListeners();
     initActionButtons();
     initBracketTypeSwitch();
-    // Generate initial preview
     updateAll();
   });
 
@@ -39,12 +38,9 @@
         tabs.forEach(function (b) { b.classList.remove('is-active'); });
         btn.classList.add('is-active');
         currentShape = btn.dataset.shape;
-
-        // Show/hide forms
         document.querySelectorAll('.dxf-shape-form').forEach(function (f) { f.classList.remove('is-visible'); });
         var formEl = document.getElementById('form-' + currentShape);
         if (formEl) formEl.classList.add('is-visible');
-
         updateAll();
       });
     });
@@ -52,27 +48,41 @@
 
   // ===== FORM LISTENERS =====
   function initFormListeners() {
-    // Any input change → update preview + price
     document.querySelectorAll('.dxf-shape-form input, .dxf-shape-form select').forEach(function (input) {
+      // Skip hole table inputs — handled separately
+      if (input.closest('.dxf-holes-table')) return;
       input.addEventListener('input', debounce(updateAll, 200));
       input.addEventListener('change', debounce(updateAll, 200));
     });
   }
 
-  // ===== CLEAR HOLES BUTTON =====
+  // ===== CLEAR HOLES + HOLE TABLE EDIT =====
   document.addEventListener('click', function(e) {
+    // Clear button
     if (e.target.classList.contains('clear-holes-btn') || e.target.closest('.clear-holes-btn')) {
       var holes = getCurrentHoles();
       holes.length = 0;
-      var holeLayer = document.querySelector('#preview-holes-layer');
-      if (holeLayer) while (holeLayer.firstChild) holeLayer.removeChild(holeLayer.firstChild);
+      syncHoleTable(holes);
       updateAll();
     }
-    // Update hole diameter when input changes
-    if (e.target.id && e.target.id.startsWith('holeDiaInput')) {
+    // Delete hole from table
+    if (e.target.classList.contains('hole-delete-btn') || e.target.closest('.hole-delete-btn')) {
+      var btn = e.target.closest('.hole-delete-btn');
+      var idx = parseInt(btn.getAttribute('data-idx'));
+      if (idx >= 0) {
+        var holes = getCurrentHoles();
+        holes.splice(idx, 1);
+        syncHoleTable(holes);
+        updateAll();
+      }
+    }
+  });
+
+  // Hole table input changes
+  document.addEventListener('input', function(e) {
+    if (e.target.closest('.dxf-holes-table')) {
       var holes = getCurrentHoles();
-      var newDia = parseFloat(e.target.value) || 6;
-      // Update default diameter — existing holes keep their diameters
+      readHoleTable(holes);
       updateAll();
     }
   });
@@ -82,19 +92,13 @@
     var downloadBtn = document.getElementById('dxf-download-btn');
     if (downloadBtn) {
       downloadBtn.addEventListener('click', function () {
-        if (!currentDxf) {
-          alert('Сначала настройте параметры детали');
-          return;
-        }
-        var filename = 'detail-' + currentShape + '-' + Date.now() + '.dxf';
-        currentDxf.download(filename);
+        if (!currentDxf) { alert('Сначала настройте параметры детали'); return; }
+        currentDxf.download('detail-' + currentShape + '-' + Date.now() + '.dxf');
       });
     }
 
     var calcBtn = document.getElementById('dxf-calc-btn');
-    if (calcBtn) {
-      calcBtn.addEventListener('click', updateAll);
-    }
+    if (calcBtn) calcBtn.addEventListener('click', updateAll);
   }
 
   // ===== COLLECT PARAMS =====
@@ -106,55 +110,76 @@
     var inputs = form.querySelectorAll('input, select');
     inputs.forEach(function (input) {
       if (!input.name) return;
-      // Skip hidden subform fields (different bracket types)
-      var subform = input.closest('.dxf-bracket-fields');
-      if (subform && !subform.classList.contains('is-visible')) return;
-
+      if (input.closest('.dxf-holes-table')) return; // skip hole table
+      if (input.closest('.dxf-bracket-fields') && !input.closest('.dxf-bracket-fields').classList.contains('is-visible')) return;
       var val = input.value;
-      if (input.type === 'number' || input.type === 'range') {
-        val = parseFloat(val) || 0;
-      }
+      if (input.type === 'number' || input.type === 'range') val = parseFloat(val) || 0;
       p[input.name] = val;
     });
 
-    // Holes are managed visually via preview clicks — set in generateAndPreview()
-    p.holes = null;
+    // Holes from visual array (with individual diameters)
+    var holes = getCurrentHoles();
+    p.holes = holes.length > 0 ? holes.slice() : null;
     p.extraHoles = null;
 
-    // Bracket: use materialThickness for price, thickness for geometry
-    if (currentShape === 'bracket') {
-      p.type = p.bracketType || 'L';
-    }
+    if (currentShape === 'bracket') p.type = p.bracketType || 'L';
 
     return p;
   }
 
-  function parseExtraHoles(text) {
-    // Format: "angle,dist,d; angle,dist,d"
-    if (!text || !text.trim()) return null;
-    var holes = [];
-    var parts = text.split(';');
-    for (var i = 0; i < parts.length; i++) {
-      var vals = parts[i].split(',').map(function (v) { return parseFloat(v.trim()) || 0; });
-      if (vals.length >= 3) {
-        holes.push({ angle: vals[0], dist: vals[1], d: vals[2] });
-      }
-    }
-    return holes.length > 0 ? holes : null;
+  // ===== HOLE TABLE SYNC =====
+  function getHoleTableId() {
+    if (currentShape === 'rectangle') return 'rectHolesTable';
+    if (currentShape === 'circle') return 'circleHolesTable';
+    return 'bracketHolesTable';
   }
 
-  function parseHoles(text) {
-    // Format: "cx,cy,d; cx,cy,d" — semicolon-separated, comma-separated values
-    if (!text || !text.trim()) return null;
-    var holes = [];
-    var parts = text.split(';');
-    for (var i = 0; i < parts.length; i++) {
-      var vals = parts[i].split(',').map(function (v) { return parseFloat(v.trim()) || 0; });
-      if (vals.length >= 3) {
-        holes.push({ cx: vals[0], cy: vals[1], d: vals[2] });
-      }
+  function getHoleCountId() {
+    if (currentShape === 'rectangle') return 'rectHoleCount';
+    if (currentShape === 'circle') return 'circleHoleCount';
+    return 'bracketHoleCount';
+  }
+
+  function syncHoleTable(holes) {
+    var table = document.getElementById(getHoleTableId());
+    var countEl = document.getElementById(getHoleCountId());
+    if (!table) return;
+
+    var tbody = table.querySelector('tbody');
+    if (!tbody) { tbody = document.createElement('tbody'); table.appendChild(tbody); }
+
+    tbody.innerHTML = '';
+
+    for (var i = 0; i < holes.length; i++) {
+      var h = holes[i];
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td style="padding:2px 4px;"><input type="number" value="' + h.cx + '" data-field="cx" data-idx="' + i +
+        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:4px 6px;border-radius:4px;font-size:13px;" step="0.1"></td>' +
+        '<td style="padding:2px 4px;"><input type="number" value="' + h.cy + '" data-field="cy" data-idx="' + i +
+        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:4px 6px;border-radius:4px;font-size:13px;" step="0.1"></td>' +
+        '<td style="padding:2px 4px;"><input type="number" value="' + h.d + '" data-field="d" data-idx="' + i +
+        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:4px 6px;border-radius:4px;font-size:13px;" step="0.1" min="0.5"></td>' +
+        '<td style="padding:2px 4px;text-align:center;"><button class="hole-delete-btn" data-idx="' + i +
+        '" style="background:none;border:none;color:var(--error);cursor:pointer;font-size:16px;padding:2px 6px;">&times;</button></td>';
+      tbody.appendChild(tr);
     }
-    return holes.length > 0 ? holes : null;
+
+    if (countEl) countEl.textContent = holes.length;
+  }
+
+  function readHoleTable(holes) {
+    var table = document.getElementById(getHoleTableId());
+    if (!table) return;
+    var inputs = table.querySelectorAll('input[data-idx]');
+    inputs.forEach(function (input) {
+      var idx = parseInt(input.getAttribute('data-idx'));
+      var field = input.getAttribute('data-field');
+      var val = parseFloat(input.value) || 0;
+      if (idx >= 0 && idx < holes.length) {
+        holes[idx][field] = Math.round(val * 10) / 10;
+      }
+    });
   }
 
   // ===== UPDATE ALL =====
@@ -167,37 +192,27 @@
   function generateAndPreview() {
     currentDxf = new DxfDocument();
 
-    // Attach visual holes to params
-    var holes = getCurrentHoles();
-    if (currentShape === 'rectangle') {
-      currentParams.holes = holes.length > 0 ? holes : null;
-    } else if (currentShape === 'circle') {
-      currentParams.extraHoles = holes.length > 0 ? holes : null;
-    } else if (currentShape === 'bracket') {
-      currentParams.holes = holes.length > 0 ? holes : null;
-    }
-
     var result = { cutLengthMeters: 0 };
-    if (currentShape === 'rectangle') {
-      result = generateRectangle(currentDxf, currentParams);
-    } else if (currentShape === 'circle') {
-      result = generateCircle(currentDxf, currentParams);
-    } else if (currentShape === 'bracket') {
-      result = generateBracket(currentDxf, currentParams);
-    }
+    if (currentShape === 'rectangle') result = generateRectangle(currentDxf, currentParams);
+    else if (currentShape === 'circle') result = generateCircle(currentDxf, currentParams);
+    else if (currentShape === 'bracket') result = generateBracket(currentDxf, currentParams);
 
     currentCutLength = result.cutLengthMeters;
 
-    // Auto-calculate viewBox
     var vb = calcViewBox(currentParams, currentShape);
     DxfPreview.render('dxf-preview', { type: currentShape, params: currentParams, viewBox: vb });
 
-    // Enable visual hole placement — use visible hole diameter input
+    // Enable visual hole placement
     var holeDiaEl = document.querySelector('#form-' + currentShape + ' input[id^="holeDiaInput"]');
     var holeDia = holeDiaEl ? (parseFloat(holeDiaEl.value) || 6) : 6;
+    var holes = getCurrentHoles();
     DxfPreview.enableHolePlacement('dxf-preview', holes, holeDia, function(updated) {
+      syncHoleTable(holes);
       updatePrice();
     });
+
+    // Sync table after preview render
+    syncHoleTable(holes);
   }
 
   function calcViewBox(p, shape) {
@@ -211,7 +226,7 @@
       var d = (Number(p.outerDia) || 100) + margin * 2;
       return { x: -d / 2, y: -d / 2, w: d, h: d };
     } else if (shape === 'bracket') {
-      if (p.bracketType === 'L' || !p.bracketType) {
+      if ((p.bracketType || 'L') === 'L') {
         var l1 = (Number(p.leg1) || 50) + 20 + margin;
         var l2 = (Number(p.leg2) || 50) + 20 + margin;
         return { x: -margin - 30, y: -margin - 30, w: l1 + 30 + margin, h: l2 + 30 + margin };
@@ -227,44 +242,33 @@
   function updatePrice() {
     var container = document.getElementById('dxf-price-estimate');
     if (!container) return;
-
     var material = currentParams.material || 'steel';
-    // Bracket: materialThickness for pricing, thickness for geometry
     var thickness = Number(currentParams.materialThickness || currentParams.thickness) || 3;
     var qty = Number(currentParams.qty) || 1;
-
     if (currentCutLength <= 0) {
-      container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:16px;">Настройте параметры детали</p>';
+      container.innerHTML = '<p class="dxf-placeholder">Настройте параметры детали</p>';
       return;
     }
-
     var est = DxfCalculator.estimatePrice(currentCutLength, material, thickness, qty);
     container.innerHTML = DxfCalculator.formatEstimateHtml(est);
-
-    // Store estimate data for the order button
     window.__LAST_ESTIMATE__ = est;
   }
 
-  // ===== BRACKET TYPE SWITCH =====
   function initBracketTypeSwitch() {
     var typeSelect = document.querySelector('#form-bracket select[name="bracketType"]');
     if (!typeSelect) return;
-
     typeSelect.addEventListener('change', function () {
-      var val = this.value;
       document.querySelectorAll('.dxf-bracket-fields').forEach(function (f) {
-        f.classList.toggle('is-visible', f.dataset.type === val);
-      });
+        f.classList.toggle('is-visible', f.dataset.type === this.value);
+      }.bind(this));
       updateAll();
     });
   }
 
-  // ===== UTILS =====
   function debounce(fn, delay) {
     var timer;
     return function () {
-      var ctx = this;
-      var args = arguments;
+      var ctx = this, args = arguments;
       clearTimeout(timer);
       timer = setTimeout(function () { fn.apply(ctx, args); }, delay);
     };

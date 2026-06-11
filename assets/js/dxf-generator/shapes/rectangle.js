@@ -26,13 +26,7 @@
     var y = -h / 2;
     doc.rectangle(x, y, w, h, cr);
 
-    // 2. Central hole
-    var ch = Number(p.centerHoleDia) || 0;
-    if (ch > 0) {
-      doc.circle(0, 0, ch / 2);
-    }
-
-    // 3. Custom holes
+    // 2. Holes from visual editor — each with its own cx, cy, d
     if (p.holes && p.holes.length) {
       for (var i = 0; i < p.holes.length; i++) {
         var hole = p.holes[i];
@@ -45,18 +39,8 @@
       }
     }
 
-    // 4. Bolt circle pattern
-    var bcDia = Number(p.boltCircleDia) || 0;
-    var bcCount = Number(p.boltCount) || 0;
-    var bcHoleDia = Number(p.boltHoleDia) || 5;
-    if (bcDia > 0 && bcCount >= 3) {
-      doc.boltCircle(0, 0, bcDia, bcHoleDia, bcCount);
-    }
-
     // Calculate cut length
-    var cutLen = DxfDocument.cutLength.rectangleOutline(w, h, cr) / 1000; // mm → m
-    cutLen += DxfDocument.cutLength.holePerimeter(ch, ch > 0 ? 1 : 0) / 1000;
-    cutLen += DxfDocument.cutLength.holePerimeter(bcHoleDia, bcCount * (bcDia > 0 ? 1 : 0)) / 1000;
+    var cutLen = DxfDocument.cutLength.rectangleOutline(w, h, cr) / 1000;
     if (p.holes && p.holes.length) {
       for (var j = 0; j < p.holes.length; j++) {
         cutLen += DxfDocument.cutLength.holePerimeter(Number(p.holes[j].d) || 0, 1) / 1000;

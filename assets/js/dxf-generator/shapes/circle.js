@@ -22,7 +22,7 @@
       doc.circle(0, 0, innerD / 2);
     }
 
-    // 3. Bolt circle pattern
+    // 3. Bolt circle pattern (programmatic use, not exposed in UI)
     var bcDia = Number(p.boltCircleDia) || 0;
     var bcCount = Number(p.boltCount) || 0;
     var bcHoleDia = Number(p.boltHoleDia) || 0;
@@ -30,18 +30,13 @@
       doc.boltCircle(0, 0, bcDia, bcHoleDia, bcCount);
     }
 
-    // 4. Extra holes at specific angles
-    if (p.extraHoles && p.extraHoles.length) {
-      for (var i = 0; i < p.extraHoles.length; i++) {
-        var h = p.extraHoles[i];
-        var dist = Number(h.dist) || 0;
-        var angleDeg = Number(h.angle) || 0;
-        var dia = Number(h.d) || 5;
-        if (dia > 0) {
-          var angleRad = (angleDeg - 90) * Math.PI / 180; // 0° = top
-          var hx = dist * Math.cos(angleRad);
-          var hy = dist * Math.sin(angleRad);
-          doc.circle(hx, hy, dia / 2);
+    // 4. Holes from visual editor — each with its own cx, cy, d
+    if (p.holes && p.holes.length) {
+      for (var i = 0; i < p.holes.length; i++) {
+        var h = p.holes[i];
+        var hd = Number(h.d) || 5;
+        if (hd > 0) {
+          doc.circle(Number(h.cx) || 0, Number(h.cy) || 0, hd / 2);
         }
       }
     }
@@ -50,9 +45,9 @@
     var cutLen = DxfDocument.cutLength.circleOutline(outerD) / 1000;
     if (innerD > 0) cutLen += DxfDocument.cutLength.circleOutline(innerD) / 1000;
     cutLen += DxfDocument.cutLength.holePerimeter(bcHoleDia, bcCount * (bcDia > 0 ? 1 : 0)) / 1000;
-    if (p.extraHoles && p.extraHoles.length) {
-      for (var j = 0; j < p.extraHoles.length; j++) {
-        cutLen += DxfDocument.cutLength.holePerimeter(Number(p.extraHoles[j].d) || 0, 1) / 1000;
+    if (p.holes && p.holes.length) {
+      for (var j = 0; j < p.holes.length; j++) {
+        cutLen += DxfDocument.cutLength.holePerimeter(Number(p.holes[j].d) || 0, 1) / 1000;
       }
     }
 
