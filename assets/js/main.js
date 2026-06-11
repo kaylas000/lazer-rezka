@@ -1,7 +1,9 @@
-// Hero video: fast load + iOS / Android fallback
+// Hero video: fast load + mobile (iOS/Android) fallback
 (function() {
   var video = document.querySelector('.hero-video');
   if (!video) return;
+
+  // Skip video on slow connections — keep poster visible
   var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   if (conn && (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.saveData)) {
     video.removeAttribute('src');
@@ -9,10 +11,31 @@
     video.load();
     return;
   }
-  video.addEventListener('error', function() { video.style.display = 'none'; });
+
+  video.addEventListener('error', function() {
+    // Keep poster visible on error — don't hide
+    video.classList.add('loaded');
+  });
+
   function showVideo() { video.classList.add('loaded'); }
-  if (video.readyState >= 3) { showVideo(); }
+
+  // Already buffered → show immediately
+  if (video.readyState >= 2) { showVideo(); }
+  // canplay = enough data to start playing
   else { video.addEventListener('canplay', showVideo, { once: true }); }
+
+  // Mobile fallback: browsers block preload, canplay may never fire.
+  // loadedmetadata fires with dimensions + duration — show at least poster.
+  video.addEventListener('loadedmetadata', function() {
+    if (!video.classList.contains('loaded')) showVideo();
+  }, { once: true });
+
+  // Hard timeout: if nothing fired after 2s, show poster
+  setTimeout(function() {
+    if (!video.classList.contains('loaded')) showVideo();
+  }, 2000);
+
+  // Try to play (muted autoplay works on mobile)
   var playPromise = video.play();
   if (playPromise !== undefined) { playPromise.catch(function() {}); }
 })();
