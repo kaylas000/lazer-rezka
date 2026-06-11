@@ -216,38 +216,27 @@
   }
 
   function calcViewBox(p, shape) {
-    var m = 0.04; // 4% margin
+    var m = 0.08; // 8% margin around detail in the square
+    var size;
     if (shape === 'rectangle') {
       var w = (Number(p.width) || 100);
       var h = (Number(p.height) || 100);
-      var hw = w / 2 * (1 + m);
-      var hh = h / 2 * (1 + m);
-      return { x: -hw, y: -hh, w: hw * 2, h: hh * 2 };
+      size = Math.max(w, h) * (1 + m);
     } else if (shape === 'circle') {
-      var d = (Number(p.outerDia) || 100) / 2 * (1 + m);
-      return { x: -d, y: -d, w: d * 2, h: d * 2 };
+      size = (Number(p.outerDia) || 100) * (1 + m);
     } else if (shape === 'bracket') {
       var type = p.bracketType || 'L';
       var t = Number(p.thickness) || 3;
       if (type === 'L') {
-        var l1 = (Number(p.leg1) || 50) + t;
-        var l2 = (Number(p.leg2) || 50) + t;
-        var x0 = -t - l1 * m;
-        var y0 = -t - l2 * m;
-        return { x: x0, y: y0, w: l1 * (1 + m * 2) + t, h: l2 * (1 + m * 2) + t };
-      } else if (type === 'P') {
-        var bw = (Number(p.width) || 60);
-        var bh = (Number(p.height) || 40);
-        var hbw = bw / 2 * (1 + m);
-        return { x: -hbw, y: -bh * m, w: hbw * 2, h: bh * (1 + m * 2) };
+        size = Math.max((Number(p.leg1) || 50) + t, (Number(p.leg2) || 50) + t) * (1 + m);
       } else {
-        var zw = (Number(p.width) || 50);
-        var zh = (Number(p.height) || 40);
-        var tf = Number(p.topFlange) || 15;
-        return { x: -zw * m, y: -zh * m, w: zw * (1 + m * 2), h: zh * (1 + m * 2) };
+        size = Math.max((Number(p.width) || 60), (Number(p.height) || 40)) * (1 + m);
       }
+    } else {
+      size = 110;
     }
-    return { x: -52, y: -52, w: 104, h: 104 };
+    var half = size / 2;
+    return { x: -half, y: -half, w: size, h: size };
   }
 
   function updatePrice() {
