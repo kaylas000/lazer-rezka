@@ -232,7 +232,15 @@
       if (type === 'L') {
         size = Math.max((Number(p.leg1) || 50) + t, (Number(p.leg2) || 50) + t) * (1 + m);
       } else if (type === 'T') {
-        size = Math.max((Number(p.stemHeight) || 60) + (Number(p.thickness) || 3), (Number(p.barWidth) || 80)) * (1 + m);
+        // T-bracket extends asymmetrically: stem goes down, bar goes up
+        var tStemH = (Number(p.stemHeight) || 60);
+        var tBarW = (Number(p.barWidth) || 80);
+        var tThick = (Number(p.thickness) || 3);
+        var topExtent = tThick;       // bar top
+        var botExtent = tStemH;       // stem bottom
+        var horExtent = tBarW / 2;    // left or right of center
+        var maxExtent = Math.max(horExtent, Math.max(topExtent, botExtent));
+        size = maxExtent * 2 * (1 + m);
       } else {
         size = Math.max((Number(p.width) || 60), (Number(p.height) || 40)) * (1 + m);
       }
