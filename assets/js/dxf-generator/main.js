@@ -13,12 +13,10 @@
   // Hole arrays: each hole = {cx, cy, d}
   var rectangleHoles = [];
   var circleHoles = [];
-  var bracketHoles = [];
 
   function getCurrentHoles() {
     if (currentShape === 'rectangle') return rectangleHoles;
-    if (currentShape === 'circle') return circleHoles;
-    return bracketHoles;
+    return circleHoles;
   }
 
   // ===== INIT =====
@@ -26,7 +24,6 @@
     initTabs();
     initFormListeners();
     initActionButtons();
-    initBracketTypeSwitch();
     updateAll();
   });
 
@@ -111,7 +108,6 @@
     inputs.forEach(function (input) {
       if (!input.name) return;
       if (input.closest('.dxf-holes-table')) return; // skip hole table
-      if (input.closest('.dxf-bracket-fields') && !input.closest('.dxf-bracket-fields').classList.contains('is-visible')) return;
       var val = input.value;
       if (input.type === 'number' || input.type === 'range') val = parseFloat(val) || 0;
       p[input.name] = val;
@@ -122,22 +118,18 @@
     p.holes = holes.length > 0 ? holes.slice() : null;
     p.extraHoles = null;
 
-    if (currentShape === 'bracket') p.type = p.bracketType || 'L';
-
     return p;
   }
 
   // ===== HOLE TABLE SYNC =====
   function getHoleTableId() {
     if (currentShape === 'rectangle') return 'rectHolesTable';
-    if (currentShape === 'circle') return 'circleHolesTable';
-    return 'bracketHolesTable';
+    return 'circleHolesTable';
   }
 
   function getHoleCountId() {
     if (currentShape === 'rectangle') return 'rectHoleCount';
-    if (currentShape === 'circle') return 'circleHoleCount';
-    return 'bracketHoleCount';
+    return 'circleHoleCount';
   }
 
   function syncHoleTable(holes) {
@@ -195,7 +187,6 @@
     var result = { cutLengthMeters: 0 };
     if (currentShape === 'rectangle') result = generateRectangle(currentDxf, currentParams);
     else if (currentShape === 'circle') result = generateCircle(currentDxf, currentParams);
-    else if (currentShape === 'bracket') result = generateBracket(currentDxf, currentParams);
 
     currentCutLength = result.cutLengthMeters;
 
@@ -226,24 +217,6 @@
       size = Math.max(w, h) * (1 + m);
     } else if (shape === 'circle') {
       size = (Number(p.outerDia) || 100) * (1 + m);
-    } else if (shape === 'bracket') {
-      var type = p.bracketType || 'L';
-      var t = Number(p.thickness) || 3;
-      if (type === 'L') {
-        size = Math.max((Number(p.leg1) || 50) + t, (Number(p.leg2) || 50) + t) * (1 + m);
-      } else if (type === 'T') {
-        // T-bracket extends asymmetrically: stem goes down, bar goes up
-        var tStemH = (Number(p.stemHeight) || 60);
-        var tBarW = (Number(p.barWidth) || 80);
-        var tThick = (Number(p.thickness) || 3);
-        var topExtent = tThick;       // bar top
-        var botExtent = tStemH;       // stem bottom
-        var horExtent = tBarW / 2;    // left or right of center
-        var maxExtent = Math.max(horExtent, Math.max(topExtent, botExtent));
-        size = maxExtent * 2 * (1 + m);
-      } else {
-        size = Math.max((Number(p.width) || 60), (Number(p.height) || 40)) * (1 + m);
-      }
     } else {
       size = 110;
     }
@@ -264,17 +237,6 @@
     var est = DxfCalculator.estimatePrice(currentCutLength, material, thickness, qty);
     container.innerHTML = DxfCalculator.formatEstimateHtml(est);
     window.__LAST_ESTIMATE__ = est;
-  }
-
-  function initBracketTypeSwitch() {
-    var typeSelect = document.querySelector('#form-bracket select[name="bracketType"]');
-    if (!typeSelect) return;
-    typeSelect.addEventListener('change', function () {
-      document.querySelectorAll('.dxf-bracket-fields').forEach(function (f) {
-        f.classList.toggle('is-visible', f.dataset.type === this.value);
-      }.bind(this));
-      updateAll();
-    });
   }
 
   function debounce(fn, delay) {

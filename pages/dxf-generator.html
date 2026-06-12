@@ -45,10 +45,6 @@ head_extra: ""
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/></svg>
         Фланец / Диск
       </button>
-      <button class="dxf-tab-btn" data-shape="bracket">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 16V4h6l2 4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Кронштейн
-      </button>
     </div>
 
     <div class="dxf-layout">
@@ -190,168 +186,6 @@ head_extra: ""
                 <option value="12">12 мм</option>
                 <option value="15">15 мм</option>
                 <option value="20">20 мм</option>
-              </select>
-            </div>
-            <div class="dxf-field">
-              <label>Количество (шт)</label>
-              <input type="number" name="qty" value="1" min="1" max="1000" step="1">
-            </div>
-          </div>
-        </div>
-
-        <!-- BRACKET FORM -->
-        <div class="dxf-shape-form" id="form-bracket">
-          <h3>Кронштейн</h3>
-
-          <div class="dxf-field">
-            <label>Тип кронштейна</label>
-            <select name="bracketType">
-              <option value="L">L-образный (уголок)</option>
-              <option value="P">П-образный (швеллер)</option>
-              <option value="Z">Z-образный</option>
-              <option value="T">T-образный</option>
-            </select>
-          </div>
-
-          <div id="bracket-subform">
-            <!-- L-bracket fields (default) -->
-            <div class="dxf-bracket-fields is-visible" data-type="L">
-              <div class="dxf-field-row">
-                <div class="dxf-field">
-                  <label>Длина полки 1 (мм)</label>
-                  <input type="number" name="leg1" value="50" min="10" max="1000" step="1">
-                </div>
-                <div class="dxf-field">
-                  <label>Длина полки 2 (мм)</label>
-                  <input type="number" name="leg2" value="50" min="10" max="1000" step="1">
-                </div>
-                <div class="dxf-field">
-                  <label>Ширина (мм)</label>
-                  <input type="number" name="width" value="30" min="5" max="500" step="1">
-                </div>
-              </div>
-            </div>
-            <!-- P-bracket fields -->
-            <div class="dxf-bracket-fields" data-type="P">
-              <div class="dxf-field-row">
-                <div class="dxf-field">
-                  <label>Ширина (мм)</label>
-                  <input type="number" name="width" value="60" min="10" max="1000" step="1">
-                </div>
-                <div class="dxf-field">
-                  <label>Высота (мм)</label>
-                  <input type="number" name="height" value="40" min="10" max="500" step="1">
-                </div>
-              </div>
-              <div class="dxf-field-row">
-                <div class="dxf-field">
-                  <label>Полка верхняя (мм)</label>
-                  <input type="number" name="flange1" value="15" min="5" max="200" step="1">
-                </div>
-                <div class="dxf-field">
-                  <label>Полка нижняя (мм)</label>
-                  <input type="number" name="flange2" value="15" min="5" max="200" step="1">
-                </div>
-              </div>
-            </div>
-            <!-- Z-bracket fields -->
-            <!-- T-bracket fields -->
-            <div class="dxf-bracket-fields" data-type="T">
-              <div class="dxf-field-row">
-                <div class="dxf-field">
-                  <label>Высота стойки (мм)</label>
-                  <input type="number" name="stemHeight" value="60" min="10" max="1000" step="1">
-                </div>
-                <div class="dxf-field">
-                  <label>Ширина стойки (мм)</label>
-                  <input type="number" name="stemWidth" value="30" min="5" max="500" step="1">
-                </div>
-              </div>
-              <div class="dxf-field-row">
-                <div class="dxf-field">
-                  <label>Ширина перекладины (мм)</label>
-                  <input type="number" name="barWidth" value="80" min="10" max="1000" step="1">
-                </div>
-              </div>
-            </div>
-            <div class="dxf-bracket-fields" data-type="Z">
-              <div class="dxf-field-row">
-                <div class="dxf-field">
-                  <label>Ширина (мм)</label>
-                  <input type="number" name="width" value="50" min="10" max="1000" step="1">
-                </div>
-                <div class="dxf-field">
-                  <label>Высота (мм)</label>
-                  <input type="number" name="height" value="40" min="10" max="500" step="1">
-                </div>
-              </div>
-              <div class="dxf-field-row">
-                <div class="dxf-field">
-                  <label>Верхняя полка (мм)</label>
-                  <input type="number" name="topFlange" value="15" min="5" max="200" step="1">
-                </div>
-                <div class="dxf-field">
-                  <label>Нижняя полка (мм)</label>
-                  <input type="number" name="bottomFlange" value="15" min="5" max="200" step="1">
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="dxf-field">
-            <label>Толщина металла (мм)</label>
-            <input type="number" name="thickness" value="3" min="1" max="20" step="0.5">
-          </div>
-
-          <h4>Отверстия</h4>
-          <div class="dxf-field-row">
-            <div class="dxf-field">
-              <label>Диаметр (мм)</label>
-              <input type="number" id="holeDiaBracket" value="6" min="0.5" max="500" step="0.1">
-            </div>
-            <div class="dxf-field" style="display:flex;align-items:flex-end;gap:8px;">
-              <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">
-                <input type="checkbox" checked style="width:auto;min-height:auto;accent-color:var(--accent-orange);"> Привязка 5 мм
-              </label>
-            </div>
-            <div class="dxf-field">
-              <button type="button" class="clear-holes-btn btn btn-sm" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-default);color:var(--text-muted);border-radius:6px;padding:6px 8px;cursor:pointer;min-height:34px;">Очистить все</button>
-            </div>
-          </div>
-          <p class="dxf-hole-hint" style="font-size:11px;color:var(--text-muted);margin:0 0 6px;">Клик по превью = отверстие. Клик по отв. = выделить. Двойной клик = удалить.</p>
-          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;width:100%;">
-            <table class="dxf-holes-table" id="bracketHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;">
-              <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">⌀ мм</th><th style="width:10%;border-bottom:1px solid var(--border-default);"></th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-          <p class="dxf-hole-hint" style="font-size:11px;color:var(--text-muted);margin-top:0;">Отверстий: <span id="bracketHoleCount">0</span>. Меняйте X/Y/⌀ прямо в таблице.</p>
-
-          <h4>Материал и количество</h4>
-          <div class="dxf-field-row">
-            <div class="dxf-field">
-              <label>Материал</label>
-              <select name="material">
-                <option value="steel">Сталь Ст3, 09Г2С</option>
-                <option value="stainless">Нержавейка AISI 304</option>
-                <option value="stainless_316">Нержавейка AISI 316</option>
-                <option value="aluminum">Алюминий АД31, АМГ</option>
-              </select>
-            </div>
-            <div class="dxf-field">
-              <label>Толщина</label>
-              <select name="materialThickness">
-                <option value="1">1 мм</option>
-                <option value="1.5">1.5 мм</option>
-                <option value="2">2 мм</option>
-                <option value="2.5">2.5 мм</option>
-                <option value="3" selected>3 мм</option>
-                <option value="4">4 мм</option>
-                <option value="5">5 мм</option>
-                <option value="6">6 мм</option>
-                <option value="8">8 мм</option>
-                <option value="10">10 мм</option>
-                <option value="12">12 мм</option>
               </select>
             </div>
             <div class="dxf-field">
@@ -761,7 +595,6 @@ head_extra: ""
 <script src="{{ '/assets/js/dxf-generator/core.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/dxf-generator/shapes/rectangle.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/dxf-generator/shapes/circle.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/dxf-generator/shapes/bracket.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/dxf-generator/preview.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/dxf-generator/calculator-bridge.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/dxf-generator/main.js' | relative_url }}"></script>

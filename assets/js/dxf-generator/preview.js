@@ -126,8 +126,6 @@
       renderRectanglePreview(shapeG, shapeData.params);
     } else if (shapeData.type === 'circle') {
       renderCirclePreview(shapeG, shapeData.params);
-    } else if (shapeData.type === 'bracket') {
-      renderBracketPreview(shapeG, shapeData.params);
     }
 
     svg.appendChild(holes);
