@@ -238,6 +238,8 @@
    * @param {number} defaultDia — default hole diameter in mm
    * @param {function} onChange — callback(holes) when holes change
    */
+  var selectedHoleIndex = -1;
+
   function enableHolePlacement(container, holes, defaultDia, onChange, snapGrid) {
     if (typeof container === 'string') container = document.getElementById(container);
     if (!container) return;
@@ -246,9 +248,9 @@
     if (!svg) return;
 
     defaultDia = defaultDia || 6;
-    snapGrid = (snapGrid !== false); // default ON
+    snapGrid = (snapGrid !== false);
+    selectedHoleIndex = -1;
 
-    // Remove old listeners — replace SVG to clear
     var holeLayer = svg.querySelector('#preview-holes-layer');
     if (!holeLayer) {
       holeLayer = document.createElementNS(SVG_NS, 'g');
@@ -257,11 +259,10 @@
       svg.appendChild(holeLayer);
     }
 
-    renderHoleMarkers(holeLayer, holes);
+    renderHoleMarkers(holeLayer, holes, -1);
 
-    // Click handler — add hole at click position
+    // Click on empty space → add hole
     svg.onclick = function(e) {
-      // Ignore clicks on existing holes (those are handled separately)
       if (e.target.closest('.hole-marker')) return;
 
       var pt = svg.createSVGPoint();
@@ -274,14 +275,14 @@
       var cx = Math.round(svgPt.x * 100) / 100;
       var cy = Math.round(svgPt.y * 100) / 100;
 
-      // Snap to grid (5mm)
       if (snapGrid) {
         cx = Math.round(cx / 5) * 5;
         cy = Math.round(cy / 5) * 5;
       }
 
       holes.push({ cx: cx, cy: cy, d: defaultDia });
-      renderHoleMarkers(holeLayer, holes);
+      selectedHoleIndex = holes.length - 1;
+      renderHoleMarkers(holeLayer, holes, selectedHoleIndex);
       if (onChange) onChange(holes);
     };
 
@@ -289,26 +290,27 @@
     var _push = holes.push;
     holes.push = function() {
       var r = _push.apply(this, arguments);
-      renderHoleMarkers(holeLayer, holes);
+      renderHoleMarkers(holeLayer, holes, selectedHoleIndex);
       if (onChange) onChange(holes);
       return r;
     };
     holes.removeAt = function(idx) {
       if (idx >= 0 && idx < this.length) {
         this.splice(idx, 1);
-        renderHoleMarkers(holeLayer, holes);
+        selectedHoleIndex = -1;
+        renderHoleMarkers(holeLayer, holes, -1);
         if (onChange) onChange(holes);
       }
     };
     holes.clear = function() {
       this.length = 0;
-      renderHoleMarkers(holeLayer, holes);
+      selectedHoleIndex = -1;
+      renderHoleMarkers(holeLayer, holes, -1);
       if (onChange) onChange(holes);
     };
   }
 
-  function renderHoleMarkers(layer, holes) {
-    // Clear existing markers
+  function renderHoleMarkers(layer, holes, selectedIdx) {
     while (layer.firstChild) layer.removeChild(layer.firstChild);
 
     for (var i = 0; i < holes.length; i++) {
@@ -316,6 +318,7 @@
       var cx = Number(h.cx) || 0;
       var cy = Number(h.cy) || 0;
       var r = (Number(h.d) || 6) / 2;
+      var isSelected = (i === selectedIdx);
 
       var g = document.createElementNS(SVG_NS, 'g');
       g.setAttribute('class', 'hole-marker');
@@ -327,39 +330,56 @@
       circle.setAttribute('cx', cx);
       circle.setAttribute('cy', cy);
       circle.setAttribute('r', r);
-      circle.setAttribute('fill', 'rgba(74,158,255,0.15)');
-      circle.setAttribute('stroke', '#4a9eff');
-      circle.setAttribute('stroke-width', '1.5');
+      circle.setAttribute('fill', isSelected ? 'rgba(74,158,255,0.35)' : 'rgba(74,158,255,0.12)');
+      circle.setAttribute('stroke', isSelected ? '#fff' : '#4a9eff');
+      circle.setAttribute('stroke-width', isSelected ? '2.5' : '1.5');
       g.appendChild(circle);
 
       // Crosshair
       var cs = r + 4;
       var cross = document.createElementNS(SVG_NS, 'path');
       cross.setAttribute('d', 'M' + (cx - cs) + ',' + cy + 'H' + (cx + cs) + 'M' + cx + ',' + (cy - cs) + 'V' + (cy + cs));
-      cross.setAttribute('stroke', '#4a9eff');
-      cross.setAttribute('stroke-width', '0.8');
-      cross.setAttribute('opacity', '0.6');
+      cross.setAttribute('stroke', isSelected ? '#fff' : '#4a9eff');
+      cross.setAttribute('stroke-width', isSelected ? '1.2' : '0.8');
+      cross.setAttribute('opacity', isSelected ? '0.9' : '0.5');
       g.appendChild(cross);
 
       // Coordinate label
       var label = document.createElementNS(SVG_NS, 'text');
       label.setAttribute('x', cx + r + 6);
       label.setAttribute('y', cy - r - 4);
-      label.setAttribute('fill', '#4a9eff');
-      label.setAttribute('font-size', '10');
+      label.setAttribute('fill', isSelected ? '#fff' : '#4a9eff');
+      label.setAttribute('font-size', isSelected ? '11' : '9');
       label.setAttribute('font-family', 'monospace');
-      label.textContent = (cx >= 0 ? '+' : '') + cx.toFixed(2) + ', ' + (cy >= 0 ? '+' : '') + cy.toFixed(2);
+      label.setAttribute('font-weight', isSelected ? 'bold' : 'normal');
+      label.textContent = '⌀' + h.d + ' (' + (cx >= 0 ? '+' : '') + cx.toFixed(1) + ', ' + (cy >= 0 ? '+' : '') + cy.toFixed(1) + ')';
       g.appendChild(label);
 
-      // Click to remove
+      // Click → select
       g.onclick = function(e) {
         e.stopPropagation();
         var idx = parseInt(this.getAttribute('data-index'));
-        holes.removeAt(idx);
+        selectedHoleIndex = (selectedHoleIndex === idx) ? -1 : idx;
+        renderHoleMarkers(layer, holes, selectedHoleIndex);
+        if (onChange) onChange(holes);
       };
 
-      // Hover effect
-      g.onmouseenter = function() { this.style.opacity = '0.7'; };
+      // Double-click → delete
+      g.ondblclick = function(e) {
+        e.stopPropagation();
+        var idx = parseInt(this.getAttribute('data-index'));
+        holes.splice(idx, 1);
+        selectedHoleIndex = -1;
+        renderHoleMarkers(layer, holes, -1);
+        if (onChange) onChange(holes);
+      };
+
+      // Hover
+      g.onmouseenter = function() {
+        if (parseInt(this.getAttribute('data-index')) !== selectedHoleIndex) {
+          this.style.opacity = '0.7';
+        }
+      };
       g.onmouseleave = function() { this.style.opacity = '1'; };
 
       layer.appendChild(g);
