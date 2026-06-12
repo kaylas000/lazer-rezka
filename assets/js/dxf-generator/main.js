@@ -231,6 +231,8 @@
       var t = Number(p.thickness) || 3;
       if (type === 'L') {
         size = Math.max((Number(p.leg1) || 50) + t, (Number(p.leg2) || 50) + t) * (1 + m);
+      } else if (type === 'T') {
+        size = Math.max((Number(p.stemHeight) || 60) + (Number(p.thickness) || 3), (Number(p.barWidth) || 80)) * (1 + m);
       } else {
         size = Math.max((Number(p.width) || 60), (Number(p.height) || 40)) * (1 + m);
       }

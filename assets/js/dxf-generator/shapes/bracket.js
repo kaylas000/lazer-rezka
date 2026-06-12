@@ -29,13 +29,10 @@
   function generateBracket(doc, p) {
     var type = p.type || 'L';
 
-    if (type === 'L') {
-      return buildLBracket(doc, p);
-    } else if (type === 'P') {
-      return buildPBracket(doc, p);
-    } else if (type === 'Z') {
-      return buildZBracket(doc, p);
-    }
+    if (type === 'L') return buildLBracket(doc, p);
+    if (type === 'P') return buildPBracket(doc, p);
+    if (type === 'Z') return buildZBracket(doc, p);
+    if (type === 'T') return buildTBracket(doc, p);
     return { cutLengthMeters: 0 };
   }
 
@@ -193,6 +190,52 @@
     }
 
     var perim = 2 * w + 2 * h + topFlange + bottomFlange;
+    return { cutLengthMeters: perim / 1000 };
+  }
+
+  /**
+   * T-bracket: vertical stem + horizontal top bar.
+   * Origin at center of stem/bar intersection.
+   */
+  function buildTBracket(doc, p) {
+    var stemH = Number(p.stemHeight) || 60;
+    var stemW = Number(p.stemWidth) || 30;
+    var barW = Number(p.barWidth) || 80;
+    var t = Number(p.thickness) || 3;
+
+    var hsw = stemW / 2;
+    var hbw = barW / 2;
+
+    // Outer contour — clockwise from bottom-left
+    var pts = [
+      [-hsw, -stemH],       // bottom-left stem
+      [hsw, -stemH],         // bottom-right stem
+      [hsw, 0],              // right stem top (inner)
+      [hbw, 0],              // right bar inner
+      [hbw, t],              // right bar top
+      [-hbw, t],             // left bar top
+      [-hbw, 0],             // left bar inner
+      [-hsw, 0]              // left stem top (inner)
+    ];
+    doc.polyline(pts, { closed: true });
+
+    // Holes from visual editor
+    if (p.holes && p.holes.length) {
+      for (var i = 0; i < p.holes.length; i++) {
+        var h = p.holes[i];
+        var hd = Number(h.d) || 5;
+        if (hd > 0) {
+          doc.circle(Number(h.cx) || 0, Number(h.cy) || 0, hd / 2);
+        }
+      }
+    } else {
+      // Default holes: one on bar left, one on bar right, one at stem bottom
+      doc.circle(-hbw / 2, t / 2, 5);
+      doc.circle(hbw / 2, t / 2, 5);
+      doc.circle(0, -stemH / 2, 5);
+    }
+
+    var perim = 2 * stemH + 2 * stemW + 2 * barW + 2 * t;
     return { cutLengthMeters: perim / 1000 };
   }
 

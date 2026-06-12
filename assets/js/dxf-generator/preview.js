@@ -220,6 +220,18 @@
         [0, h], [topFlange, h], [topFlange, h - t], [w, h - t],
         [w, 0], [w - bottomFlange, 0], [w - bottomFlange, t], [0, t]
       ], true, { stroke: stroke });
+    } else if (type === 'T') {
+      var stemH = Number(p.stemHeight) || 60;
+      var stemW = Number(p.stemWidth) || 30;
+      var barW = Number(p.barWidth) || 80;
+      var t = Number(p.thickness) || 3;
+      var hsw = stemW / 2;
+      var hbw = barW / 2;
+
+      addPolyline(g, [
+        [-hsw, -stemH], [hsw, -stemH], [hsw, 0],
+        [hbw, 0], [hbw, t], [-hbw, t], [-hbw, 0], [-hsw, 0]
+      ], true, { stroke: stroke });
     }
 
     // Custom holes
