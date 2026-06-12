@@ -206,10 +206,12 @@
     var holeDiaEl = document.querySelector('#form-' + currentShape + ' input[id^="holeDia"]');
     var holeDia = holeDiaEl ? (parseFloat(holeDiaEl.value) || 6) : 6;
     var holes = getCurrentHoles();
+    var snapCb = document.querySelector('#form-' + currentShape + ' input[type=checkbox]');
+    var snapOn = !snapCb || snapCb.checked;
     DxfPreview.enableHolePlacement('dxf-preview', holes, holeDia, function(updated) {
       syncHoleTable(holes);
       updatePrice();
-    });
+    }, snapOn);
 
     // Sync table after preview render
     syncHoleTable(holes);

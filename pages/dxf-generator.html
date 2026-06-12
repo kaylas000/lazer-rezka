@@ -74,14 +74,19 @@ head_extra: ""
           <h4>Отверстия</h4>
           <div class="dxf-field-row">
             <div class="dxf-field">
-              <label>Диаметр для новых отверстий (мм)</label>
+              <label>Диаметр (мм)</label>
               <input type="number" id="holeDiaRect" value="6" min="0.5" max="500" step="0.1">
+            </div>
+            <div class="dxf-field" style="display:flex;align-items:flex-end;gap:8px;">
+              <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">
+                <input type="checkbox" id="snapToggle" checked style="width:auto;min-height:auto;accent-color:var(--accent-orange);"> Привязка 5 мм
+              </label>
             </div>
             <div class="dxf-field">
               <button type="button" class="clear-holes-btn btn btn-sm" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-default);color:var(--text-muted);border-radius:6px;padding:6px 8px;cursor:pointer;min-height:34px;">Очистить все</button>
             </div>
           </div>
-          <p class="dxf-hole-hint" style="font-size:12px;color:var(--text-muted);margin:0 0 8px;">Клик по превью = добавить отверстие. Клик по отверстию = удалить.</p>
+          <p class="dxf-hole-hint" style="font-size:11px;color:var(--text-muted);margin:0 0 6px;">Клик по превью = отверстие. Клик по отверстию = удалить.</p>
           <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;width:100%;">
             <table class="dxf-holes-table" id="rectHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;table-layout:fixed;">
               <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">⌀ мм</th><th style="width:10%;border-bottom:1px solid var(--border-default);"></th></tr></thead>
@@ -137,14 +142,19 @@ head_extra: ""
           <h4>Отверстия</h4>
           <div class="dxf-field-row">
             <div class="dxf-field">
-              <label>Диаметр для новых отверстий (мм)</label>
+              <label>Диаметр (мм)</label>
               <input type="number" id="holeDiaCircle" value="6" min="0.5" max="500" step="0.1">
+            </div>
+            <div class="dxf-field" style="display:flex;align-items:flex-end;gap:8px;">
+              <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">
+                <input type="checkbox" checked style="width:auto;min-height:auto;accent-color:var(--accent-orange);"> Привязка 5 мм
+              </label>
             </div>
             <div class="dxf-field">
               <button type="button" class="clear-holes-btn btn btn-sm" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-default);color:var(--text-muted);border-radius:6px;padding:6px 8px;cursor:pointer;min-height:34px;">Очистить все</button>
             </div>
           </div>
-          <p class="dxf-hole-hint" style="font-size:12px;color:var(--text-muted);margin:0 0 8px;">Клик по превью = добавить отверстие. Клик по отверстию = удалить.</p>
+          <p class="dxf-hole-hint" style="font-size:11px;color:var(--text-muted);margin:0 0 6px;">Клик по превью = отверстие. Клик по отверстию = удалить.</p>
           <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;width:100%;">
             <table class="dxf-holes-table" id="circleHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;">
               <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">⌀ мм</th><th style="width:10%;border-bottom:1px solid var(--border-default);"></th></tr></thead>
@@ -276,14 +286,19 @@ head_extra: ""
           <h4>Отверстия</h4>
           <div class="dxf-field-row">
             <div class="dxf-field">
-              <label>Диаметр для новых отверстий (мм)</label>
+              <label>Диаметр (мм)</label>
               <input type="number" id="holeDiaBracket" value="6" min="0.5" max="500" step="0.1">
+            </div>
+            <div class="dxf-field" style="display:flex;align-items:flex-end;gap:8px;">
+              <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">
+                <input type="checkbox" checked style="width:auto;min-height:auto;accent-color:var(--accent-orange);"> Привязка 5 мм
+              </label>
             </div>
             <div class="dxf-field">
               <button type="button" class="clear-holes-btn btn btn-sm" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-default);color:var(--text-muted);border-radius:6px;padding:6px 8px;cursor:pointer;min-height:34px;">Очистить все</button>
             </div>
           </div>
-          <p class="dxf-hole-hint" style="font-size:12px;color:var(--text-muted);margin:0 0 8px;">Клик по превью = добавить отверстие. Клик по отверстию = удалить.</p>
+          <p class="dxf-hole-hint" style="font-size:11px;color:var(--text-muted);margin:0 0 6px;">Клик по превью = отверстие. Клик по отверстию = удалить.</p>
           <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;width:100%;">
             <table class="dxf-holes-table" id="bracketHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;">
               <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">⌀ мм</th><th style="width:10%;border-bottom:1px solid var(--border-default);"></th></tr></thead>

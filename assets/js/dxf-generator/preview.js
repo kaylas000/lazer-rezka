@@ -238,7 +238,7 @@
    * @param {number} defaultDia — default hole diameter in mm
    * @param {function} onChange — callback(holes) when holes change
    */
-  function enableHolePlacement(container, holes, defaultDia, onChange) {
+  function enableHolePlacement(container, holes, defaultDia, onChange, snapGrid) {
     if (typeof container === 'string') container = document.getElementById(container);
     if (!container) return;
 
@@ -246,6 +246,7 @@
     if (!svg) return;
 
     defaultDia = defaultDia || 6;
+    snapGrid = (snapGrid !== false); // default ON
 
     // Remove old listeners — replace SVG to clear
     var holeLayer = svg.querySelector('#preview-holes-layer');
@@ -272,6 +273,12 @@
 
       var cx = Math.round(svgPt.x * 100) / 100;
       var cy = Math.round(svgPt.y * 100) / 100;
+
+      // Snap to grid (5mm)
+      if (snapGrid) {
+        cx = Math.round(cx / 5) * 5;
+        cy = Math.round(cy / 5) * 5;
+      }
 
       holes.push({ cx: cx, cy: cy, d: defaultDia });
       renderHoleMarkers(holeLayer, holes);
