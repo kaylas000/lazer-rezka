@@ -6299,10 +6299,10 @@ a:hover {
    INNER PAGES — reduced mobile spacing
    ============================================================ */
 @media (max-width: 640px) {
-  .page-hero { min-height: auto !important; padding: 24px 0 12px !important; }
-  .page-hero h1 { font-size: 1.5rem !important; margin-bottom: 6px !important; }
-  .page-hero .lead { font-size: 0.95rem !important; margin-bottom: 0 !important; }
-  section:not(.hero):not(.price-banner) { padding: 24px 0 !important; }
+  .page-hero { min-height: auto !important; padding: 12px 0 4px !important; }
+  .page-hero h1 { font-size: 1.25rem !important; margin-bottom: 4px !important; }
+  .page-hero .lead { font-size: 0.85rem !important; margin-bottom: 0 !important; }
+  section:not(.hero):not(.price-banner) { padding: 16px 0 !important; }
   .service-detail { padding: 20px 0 !important; }
   .service-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
   .service-content h2 { margin-top: 24px !important; margin-bottom: 8px !important; font-size: 1.3rem !important; }

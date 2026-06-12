@@ -77,14 +77,14 @@ head_extra: ""
               <label>Диаметр для новых отверстий (мм)</label>
               <input type="number" id="holeDiaRect" value="6" min="0.5" max="500" step="0.1">
             </div>
-            <div class="dxf-field" style="display:flex;align-items:flex-end;">
-              <button type="button" class="clear-holes-btn btn btn-sm" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-default);color:var(--text-muted);border-radius:6px;padding:10px;cursor:pointer;min-height:44px;">Очистить все</button>
+            <div class="dxf-field">
+              <button type="button" class="clear-holes-btn btn btn-sm" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-default);color:var(--text-muted);border-radius:6px;padding:6px 8px;cursor:pointer;min-height:34px;">Очистить все</button>
             </div>
           </div>
           <p class="dxf-hole-hint" style="font-size:12px;color:var(--text-muted);margin:0 0 8px;">Клик по превью = добавить отверстие. Клик по отверстию = удалить.</p>
-          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;">
-            <table class="dxf-holes-table" id="rectHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;">
-              <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">⌀ мм</th><th style="width:30px;border-bottom:1px solid var(--border-default);"></th></tr></thead>
+          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;width:100%;">
+            <table class="dxf-holes-table" id="rectHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;table-layout:fixed;">
+              <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">⌀ мм</th><th style="width:10%;border-bottom:1px solid var(--border-default);"></th></tr></thead>
               <tbody></tbody>
             </table>
           </div>
@@ -140,14 +140,14 @@ head_extra: ""
               <label>Диаметр для новых отверстий (мм)</label>
               <input type="number" id="holeDiaCircle" value="6" min="0.5" max="500" step="0.1">
             </div>
-            <div class="dxf-field" style="display:flex;align-items:flex-end;">
-              <button type="button" class="clear-holes-btn btn btn-sm" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-default);color:var(--text-muted);border-radius:6px;padding:10px;cursor:pointer;min-height:44px;">Очистить все</button>
+            <div class="dxf-field">
+              <button type="button" class="clear-holes-btn btn btn-sm" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-default);color:var(--text-muted);border-radius:6px;padding:6px 8px;cursor:pointer;min-height:34px;">Очистить все</button>
             </div>
           </div>
           <p class="dxf-hole-hint" style="font-size:12px;color:var(--text-muted);margin:0 0 8px;">Клик по превью = добавить отверстие. Клик по отверстию = удалить.</p>
-          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;">
+          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;width:100%;">
             <table class="dxf-holes-table" id="circleHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;">
-              <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">⌀ мм</th><th style="width:30px;border-bottom:1px solid var(--border-default);"></th></tr></thead>
+              <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">⌀ мм</th><th style="width:10%;border-bottom:1px solid var(--border-default);"></th></tr></thead>
               <tbody></tbody>
             </table>
           </div>
@@ -279,14 +279,14 @@ head_extra: ""
               <label>Диаметр для новых отверстий (мм)</label>
               <input type="number" id="holeDiaBracket" value="6" min="0.5" max="500" step="0.1">
             </div>
-            <div class="dxf-field" style="display:flex;align-items:flex-end;">
-              <button type="button" class="clear-holes-btn btn btn-sm" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-default);color:var(--text-muted);border-radius:6px;padding:10px;cursor:pointer;min-height:44px;">Очистить все</button>
+            <div class="dxf-field">
+              <button type="button" class="clear-holes-btn btn btn-sm" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-default);color:var(--text-muted);border-radius:6px;padding:6px 8px;cursor:pointer;min-height:34px;">Очистить все</button>
             </div>
           </div>
           <p class="dxf-hole-hint" style="font-size:12px;color:var(--text-muted);margin:0 0 8px;">Клик по превью = добавить отверстие. Клик по отверстию = удалить.</p>
-          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;">
+          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow:auto;margin-bottom:8px;width:100%;">
             <table class="dxf-holes-table" id="bracketHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;">
-              <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);">⌀ мм</th><th style="width:30px;border-bottom:1px solid var(--border-default);"></th></tr></thead>
+              <thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">X мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">Y мм</th><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-default);color:var(--text-muted);width:30%;">⌀ мм</th><th style="width:10%;border-bottom:1px solid var(--border-default);"></th></tr></thead>
               <tbody></tbody>
             </table>
           </div>
@@ -556,18 +556,18 @@ head_extra: ""
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
+  padding: 6px 12px;
   background: var(--bg-surface);
   border-bottom: 1px solid var(--border-subtle);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   font-family: var(--font-base);
 }
 
 .dxf-preview-legend {
   display: flex;
-  gap: 16px;
-  font-size: 0.75rem;
+  gap: 12px;
+  font-size: 0.7rem;
 }
 
 .legend-cut { color: var(--accent-orange); }
@@ -595,10 +595,10 @@ head_extra: ""
 }
 
 .dxf-price-header {
-  padding: 10px 16px;
+  padding: 6px 12px;
   background: rgba(255,255,255,0.03);
   border-bottom: 1px solid var(--border-subtle);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -607,7 +607,7 @@ head_extra: ""
 }
 
 .dxf-estimate {
-  padding: 16px;
+  padding: 12px;
 }
 
 .dxf-estimate-row {
@@ -686,21 +686,27 @@ head_extra: ""
   .dxf-tab-btn {
     flex: 1 1 auto;
     justify-content: center;
-    padding: 10px 14px;
-    font-size: 0.78rem;
-    min-height: 40px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    min-height: 36px;
+    gap: 4px;
   }
-  .dxf-tabs { gap: 6px; }
-  .dxf-form-panel { padding: 16px; max-width: 100vw; }
-  .dxf-form-panel h3 { font-size: 1rem; }
+  .dxf-tab-btn svg { width: 16px; height: 16px; }
+  .dxf-tabs { gap: 4px; margin-bottom: 12px; }
+  .dxf-form-panel { padding: 12px; max-width: 100vw; }
+  .dxf-form-panel h3 { font-size: 0.95rem; margin-bottom: 10px; }
+  .dxf-form-panel h4 { font-size: 0.7rem; margin: 12px 0 6px; padding-top: 8px; }
+  .dxf-field { margin-bottom: 6px; }
+  .dxf-field label { font-size: 0.7rem; margin-bottom: 2px; }
+  .dxf-field input, .dxf-field select { padding: 6px 8px; font-size: 0.8rem; min-height: 34px; }
   .dxf-result-panel { position: static; max-width: 100vw; }
-  .dxf-preview-svg { min-height: 220px; max-width: 100%; }
+  .dxf-preview-svg { min-height: 280px; max-width: 100%; padding: 4px; }
   .dxf-preview-svg svg { max-width: 100%; height: auto; }
-  .dxf-field-row { grid-template-columns: 1fr 1fr; }
-  .dxf-holes-table-wrapper { max-height: 150px; }
-  .dxf-instructions details { padding: 12px 14px; }
-  .dxf-tab-btn { flex: 1 1 auto; justify-content: center; padding: 10px 14px; font-size: 0.78rem; min-height: 40px; }
-  .dxf-tabs { gap: 6px; }
+  .dxf-field-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .dxf-holes-table-wrapper { max-height: 140px; overflow: auto; }
+  .dxf-instructions details { padding: 8px 10px; font-size: 0.8rem; }
+  .dxf-actions { flex-direction: column; gap: 8px; }
+  .dxf-generator-section { padding: 8px 0 16px !important; }
 }
 </style>
 
