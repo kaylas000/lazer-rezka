@@ -378,7 +378,7 @@
       }
 
       // Crosshair
-      var cs = Math.max(r, hw) + 4;
+      var cs = r + 4;
       var cross = document.createElementNS(SVG_NS, 'path');
       cross.setAttribute('d', 'M' + (cx - cs) + ',' + cy + 'H' + (cx + cs) + 'M' + cx + ',' + (cy - cs) + 'V' + (cy + cs));
       cross.setAttribute('stroke', sColor);
