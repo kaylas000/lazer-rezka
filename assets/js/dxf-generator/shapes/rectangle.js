@@ -26,14 +26,19 @@
     var y = -h / 2;
     doc.rectangle(x, y, w, h, cr);
 
-    // 2. Holes from visual editor — each with its own cx, cy, d
+    // 2. Holes from visual editor — circle or slot
     if (p.holes && p.holes.length) {
       for (var i = 0; i < p.holes.length; i++) {
         var hole = p.holes[i];
         var hx = Number(hole.cx) || 0;
         var hy = Number(hole.cy) || 0;
         var hd = Number(hole.d) || 5;
-        if (hd > 0) {
+        if (hd <= 0) continue;
+        if (hole.shape === 'slot') {
+          var sl = Number(hole.slotLen) || hd * 3;
+          var so = hole.slotOri || 'h';
+          doc.slot(hx, hy, sl, hd, so);
+        } else {
           doc.circle(hx, hy, hd / 2);
         }
       }

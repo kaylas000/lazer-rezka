@@ -139,21 +139,38 @@
 
     var tbody = table.querySelector('tbody');
     if (!tbody) { tbody = document.createElement('tbody'); table.appendChild(tbody); }
-
     tbody.innerHTML = '';
 
     for (var i = 0; i < holes.length; i++) {
       var h = holes[i];
+      var shape = h.shape || 'circle';
+      var isSlot = shape === 'slot';
       var tr = document.createElement('tr');
+      var slotLen = h.slotLen || h.d * 3 || 18;
+      var slotOri = h.slotOri || 'h';
       tr.innerHTML =
-        '<td style="padding:2px 4px;"><input type="number" value="' + h.cx.toFixed(2) + '" data-field="cx" data-idx="' + i +
-        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:4px 6px;border-radius:4px;font-size:13px;" step="0.01"></td>' +
-        '<td style="padding:2px 4px;"><input type="number" value="' + h.cy.toFixed(2) + '" data-field="cy" data-idx="' + i +
-        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:4px 6px;border-radius:4px;font-size:13px;" step="0.01"></td>' +
-        '<td style="padding:2px 4px;"><input type="number" value="' + h.d.toFixed(2) + '" data-field="d" data-idx="' + i +
-        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:4px 6px;border-radius:4px;font-size:13px;" step="0.01" min="0.5"></td>' +
-        '<td style="padding:2px 4px;text-align:center;"><button class="hole-delete-btn" data-idx="' + i +
-        '" style="background:none;border:none;color:var(--error);cursor:pointer;font-size:16px;padding:2px 6px;">&times;</button></td>';
+        '<td style="padding:2px 3px;"><input type="number" value="' + h.cx.toFixed(1) + '" data-field="cx" data-idx="' + i +
+        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:3px 4px;border-radius:3px;font-size:12px;" step="0.1"></td>' +
+        '<td style="padding:2px 3px;"><input type="number" value="' + h.cy.toFixed(1) + '" data-field="cy" data-idx="' + i +
+        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:3px 4px;border-radius:3px;font-size:12px;" step="0.1"></td>' +
+        '<td style="padding:2px 3px;"><input type="number" value="' + h.d.toFixed(1) + '" data-field="d" data-idx="' + i +
+        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:3px 4px;border-radius:3px;font-size:12px;" step="0.1" min="0.5"></td>' +
+        '<td style="padding:2px 3px;"><select data-field="shape" data-idx="' + i +
+        '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:3px 2px;border-radius:3px;font-size:11px;">' +
+        '<option value="circle"' + (shape==='circle'?' selected':'') + '>●</option>' +
+        '<option value="slot"' + (isSlot?' selected':'') + '>▬</option>' +
+        '</select></td>' +
+        (isSlot
+          ? '<td style="padding:2px 3px;"><input type="number" value="' + slotLen.toFixed(1) + '" data-field="slotLen" data-idx="' + i +
+            '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:3px 4px;border-radius:3px;font-size:12px;" step="0.1" min="1" title="Длина паза">' +
+            '<select data-field="slotOri" data-idx="' + i +
+            '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:3px 2px;border-radius:3px;font-size:11px;margin-top:2px;">' +
+            '<option value="h"' + (slotOri==='h'?' selected':'') + '>—</option>' +
+            '<option value="v"' + (slotOri==='v'?' selected':'') + '>|</option>' +
+            '</select></td>'
+          : '<td style="padding:2px 3px;"></td>') +
+        '<td style="padding:2px 3px;text-align:center;"><button class="hole-delete-btn" data-idx="' + i +
+        '" style="background:none;border:none;color:var(--error);cursor:pointer;font-size:14px;padding:1px 4px;">&times;</button></td>';
       tbody.appendChild(tr);
     }
 
@@ -163,13 +180,21 @@
   function readHoleTable(holes) {
     var table = document.getElementById(getHoleTableId());
     if (!table) return;
-    var inputs = table.querySelectorAll('input[data-idx]');
-    inputs.forEach(function (input) {
+    // Read number inputs
+    table.querySelectorAll('input[data-idx]').forEach(function (input) {
       var idx = parseInt(input.getAttribute('data-idx'));
       var field = input.getAttribute('data-field');
       var val = parseFloat(input.value) || 0;
       if (idx >= 0 && idx < holes.length) {
         holes[idx][field] = Math.round(val * 100) / 100;
+      }
+    });
+    // Read selects
+    table.querySelectorAll('select[data-idx]').forEach(function (sel) {
+      var idx = parseInt(sel.getAttribute('data-idx'));
+      var field = sel.getAttribute('data-field');
+      if (idx >= 0 && idx < holes.length) {
+        holes[idx][field] = sel.value;
       }
     });
   }

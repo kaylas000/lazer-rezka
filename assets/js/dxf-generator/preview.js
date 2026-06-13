@@ -290,7 +290,7 @@
         cy = Math.round(cy / 5) * 5;
       }
 
-      holes.push({ cx: cx, cy: cy, d: defaultDia });
+      holes.push({ cx: cx, cy: cy, d: defaultDia, shape: 'circle' });
       selectedHoleIndex = holes.length - 1;
       renderHoleMarkers(holeLayer, holes, selectedHoleIndex);
       if (onChange) onChange(holes);
@@ -335,34 +335,66 @@
       g.style.cursor = 'pointer';
       g.setAttribute('data-index', i);
 
-      // Hole circle
-      var circle = document.createElementNS(SVG_NS, 'circle');
-      circle.setAttribute('cx', cx);
-      circle.setAttribute('cy', cy);
-      circle.setAttribute('r', r);
-      circle.setAttribute('fill', isSelected ? 'rgba(74,158,255,0.35)' : 'rgba(74,158,255,0.12)');
-      circle.setAttribute('stroke', isSelected ? '#fff' : '#4a9eff');
-      circle.setAttribute('stroke-width', isSelected ? '2.5' : '1.5');
-      g.appendChild(circle);
+      var isSlot = (h.shape === 'slot');
+      var slotLen = Number(h.slotLen) || h.d * 3;
+      var slotOri = h.slotOri || 'h';
+      var sColor = isSelected ? '#fff' : '#4a9eff';
+      var sWidth = isSelected ? '2.5' : '1.5';
+      var sFill = isSelected ? 'rgba(74,158,255,0.35)' : 'rgba(74,158,255,0.12)';
+
+      if (isSlot) {
+        // Slot — rounded rectangle
+        var hw = h.d / 2;
+        var halfLen = slotLen / 2 - hw;
+        var rx, ry, rw, rh;
+        if (slotOri === 'v') {
+          rx = cx - hw; ry = cy - halfLen - hw;
+          rw = h.d; rh = slotLen;
+        } else {
+          rx = cx - halfLen - hw; ry = cy - hw;
+          rw = slotLen; rh = h.d;
+        }
+        var slotRect = document.createElementNS(SVG_NS, 'rect');
+        slotRect.setAttribute('x', rx);
+        slotRect.setAttribute('y', ry);
+        slotRect.setAttribute('width', rw);
+        slotRect.setAttribute('height', rh);
+        slotRect.setAttribute('rx', hw);
+        slotRect.setAttribute('ry', hw);
+        slotRect.setAttribute('fill', sFill);
+        slotRect.setAttribute('stroke', sColor);
+        slotRect.setAttribute('stroke-width', sWidth);
+        g.appendChild(slotRect);
+      } else {
+        // Circle
+        var circle = document.createElementNS(SVG_NS, 'circle');
+        circle.setAttribute('cx', cx);
+        circle.setAttribute('cy', cy);
+        circle.setAttribute('r', r);
+        circle.setAttribute('fill', sFill);
+        circle.setAttribute('stroke', sColor);
+        circle.setAttribute('stroke-width', sWidth);
+        g.appendChild(circle);
+      }
 
       // Crosshair
-      var cs = r + 4;
+      var cs = Math.max(r, hw) + 4;
       var cross = document.createElementNS(SVG_NS, 'path');
       cross.setAttribute('d', 'M' + (cx - cs) + ',' + cy + 'H' + (cx + cs) + 'M' + cx + ',' + (cy - cs) + 'V' + (cy + cs));
-      cross.setAttribute('stroke', isSelected ? '#fff' : '#4a9eff');
-      cross.setAttribute('stroke-width', isSelected ? '1.2' : '0.8');
-      cross.setAttribute('opacity', isSelected ? '0.9' : '0.5');
+      cross.setAttribute('stroke', sColor);
+      cross.setAttribute('stroke-width', isSelected ? '1.2' : '0.6');
+      cross.setAttribute('opacity', isSelected ? '0.9' : '0.4');
       g.appendChild(cross);
 
-      // Coordinate label
+      // Label
       var label = document.createElementNS(SVG_NS, 'text');
-      label.setAttribute('x', cx + r + 6);
-      label.setAttribute('y', cy - r - 4);
-      label.setAttribute('fill', isSelected ? '#fff' : '#4a9eff');
+      label.setAttribute('x', cx + cs + 2);
+      label.setAttribute('y', cy - cs);
+      label.setAttribute('fill', sColor);
       label.setAttribute('font-size', isSelected ? '11' : '9');
       label.setAttribute('font-family', 'monospace');
       label.setAttribute('font-weight', isSelected ? 'bold' : 'normal');
-      label.textContent = '⌀' + h.d + ' (' + (cx >= 0 ? '+' : '') + cx.toFixed(1) + ', ' + (cy >= 0 ? '+' : '') + cy.toFixed(1) + ')';
+      label.textContent = (isSlot ? '▬' + h.d + '×' + slotLen : '⌀' + h.d) + ' (' + (cx >= 0 ? '+' : '') + cx.toFixed(1) + ',' + (cy >= 0 ? '+' : '') + cy.toFixed(1) + ')';
       g.appendChild(label);
 
       // Click → select

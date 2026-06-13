@@ -30,13 +30,20 @@
       doc.boltCircle(0, 0, bcDia, bcHoleDia, bcCount);
     }
 
-    // 4. Holes from visual editor — each with its own cx, cy, d
+    // 4. Holes from visual editor — circle or slot
     if (p.holes && p.holes.length) {
       for (var i = 0; i < p.holes.length; i++) {
         var h = p.holes[i];
         var hd = Number(h.d) || 5;
-        if (hd > 0) {
-          doc.circle(Number(h.cx) || 0, Number(h.cy) || 0, hd / 2);
+        var hx = Number(h.cx) || 0;
+        var hy = Number(h.cy) || 0;
+        if (hd <= 0) continue;
+        if (h.shape === 'slot') {
+          var sl = Number(h.slotLen) || hd * 3;
+          var so = h.slotOri || 'h';
+          doc.slot(hx, hy, sl, hd, so);
+        } else {
+          doc.circle(hx, hy, hd / 2);
         }
       }
     }
