@@ -574,7 +574,9 @@ head_extra: ""
   .dxf-field-row { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
   .dxf-field-row .dxf-field:last-child { grid-column: auto; }
   .dxf-holes-table-wrapper { max-height: 140px; overflow: auto; }
-  .dxf-holes-table { table-layout: fixed; width: 100%; font-size: 13px; border-collapse: collapse; }
+  .dxf-holes-table { table-layout: auto; width: 100%; font-size: 11px; border-collapse: collapse; }
+  .dxf-holes-table td, .dxf-holes-table th { padding: 2px 3px; white-space: nowrap; }
+  .dxf-holes-table input, .dxf-holes-table select { font-size: 11px; padding: 2px 3px; min-height: auto; }
   .dxf-instructions details { padding: 8px 10px; font-size: 0.8rem; }
   .dxf-actions { flex-direction: column; gap: 8px; }
   .dxf-generator-section { padding: 8px 0 16px !important; }
