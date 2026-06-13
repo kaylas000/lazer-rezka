@@ -165,8 +165,8 @@
             '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:3px 4px;border-radius:3px;font-size:12px;" step="0.1" min="1" title="Длина паза">' +
             '<select data-field="slotOri" data-idx="' + i +
             '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:3px 2px;border-radius:3px;font-size:11px;margin-top:2px;">' +
-            '<option value="h"' + (slotOri==='h'?' selected':'') + '>—</option>' +
-            '<option value="v"' + (slotOri==='v'?' selected':'') + '>|</option>' +
+            '<option value="h"' + (slotOri==='h'?' selected':'') + '>Гор</option>' +
+            '<option value="v"' + (slotOri==='v'?' selected':'') + '>Верт</option>' +
             '</select></td>'
           : '<td style="padding:2px 3px;"></td>') +
         '<td style="padding:2px 3px;text-align:center;"><button class="hole-delete-btn" data-idx="' + i +
