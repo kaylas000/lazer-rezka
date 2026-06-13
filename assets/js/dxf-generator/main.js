@@ -1,6 +1,7 @@
 /**
- * DXF Generator Main Controller v3
+ * DXF Generator Main Controller v4 — slot support
  * Visual hole editor: click preview to place, table to edit precisely.
+ * Build: SLOT-20260612
  */
 (function () {
   'use strict';
