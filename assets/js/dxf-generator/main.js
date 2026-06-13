@@ -157,8 +157,8 @@
         '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:3px 4px;border-radius:3px;font-size:12px;" step="0.1" min="0.5"></td>' +
         '<td style="padding:2px 3px;"><select data-field="shape" data-idx="' + i +
         '" style="width:100%;background:var(--bg-primary);border:1px solid var(--border-default);color:var(--text-primary);padding:3px 2px;border-radius:3px;font-size:11px;">' +
-        '<option value="circle"' + (shape==='circle'?' selected':'') + '>●</option>' +
-        '<option value="slot"' + (isSlot?' selected':'') + '>▬</option>' +
+        '<option value="circle"' + (shape==='circle'?' selected':'') + '>Круг</option>' +
+        '<option value="slot"' + (isSlot?' selected':'') + '>Паз</option>' +
         '</select></td>' +
         (isSlot
           ? '<td style="padding:2px 3px;"><input type="number" value="' + slotLen.toFixed(1) + '" data-field="slotLen" data-idx="' + i +
