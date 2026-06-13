@@ -593,9 +593,9 @@ head_extra: ""
   window.__MIN_ORDER__ = 3000;
 </script>
 
-<script src="{{ '/assets/js/dxf-generator/core.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/dxf-generator/shapes/rectangle.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/dxf-generator/shapes/circle.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/dxf-generator/preview.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/dxf-generator/calculator-bridge.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/dxf-generator/main.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/dxf-generator/core.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+<script src="{{ '/assets/js/dxf-generator/shapes/rectangle.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+<script src="{{ '/assets/js/dxf-generator/shapes/circle.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+<script src="{{ '/assets/js/dxf-generator/preview.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+<script src="{{ '/assets/js/dxf-generator/calculator-bridge.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+<script src="{{ '/assets/js/dxf-generator/main.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
