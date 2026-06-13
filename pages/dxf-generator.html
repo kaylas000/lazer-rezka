@@ -86,9 +86,9 @@ head_extra: |
             </div>
           </div>
           <p class="dxf-hole-hint" style="font-size:11px;color:var(--text-muted);margin:0 0 6px;">Клик по превью = отверстие. Клик по отв. = выделить. Двойной клик = удалить.</p>
-          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow-y:auto;overflow-x:visible;margin-bottom:8px;width:100%;">
-            <table class="dxf-holes-table" id="rectHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;table-layout:fixed;">
-              <thead><tr><th style="text-align:left;padding:1px 2px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:65px;">X</th><th style="text-align:left;padding:1px 2px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:65px;">Y</th><th style="text-align:left;padding:1px 2px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:50px;">⌀</th><th style="text-align:left;padding:1px 2px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:60px;">Форма</th><th style="text-align:left;padding:1px 2px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:55px;">Паз</th><th style="width:25px;border-bottom:1px solid var(--border-default);"></th></tr></thead>
+          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow-y:auto;margin-bottom:8px;width:100%;max-width:340px;">
+            <table class="dxf-holes-table" id="rectHolesTable">
+              <thead><tr><th style="text-align:center;padding:1px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:18%;">X</th><th style="text-align:center;padding:1px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:18%;">Y</th><th style="text-align:center;padding:1px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:14%;">⌀</th><th style="text-align:center;padding:1px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:22%;">Форма</th><th style="text-align:center;padding:1px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:22%;">Паз</th><th style="width:6%;border-bottom:1px solid var(--border-default);"></th></tr></thead>
               <tbody></tbody>
             </table>
           </div>
@@ -154,9 +154,9 @@ head_extra: |
             </div>
           </div>
           <p class="dxf-hole-hint" style="font-size:11px;color:var(--text-muted);margin:0 0 6px;">Клик по превью = отверстие. Клик по отв. = выделить. Двойной клик = удалить.</p>
-          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow-y:auto;overflow-x:visible;margin-bottom:8px;width:100%;">
+          <div class="dxf-holes-table-wrapper" style="max-height:200px;overflow-y:auto;margin-bottom:8px;width:100%;max-width:340px;">
             <table class="dxf-holes-table" id="circleHolesTable" style="width:100%;font-size:13px;border-collapse:collapse;">
-              <thead><tr><th style="text-align:left;padding:1px 2px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:65px;">X</th><th style="text-align:left;padding:1px 2px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:65px;">Y</th><th style="text-align:left;padding:1px 2px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:50px;">⌀</th><th style="text-align:left;padding:1px 2px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:60px;">Форма</th><th style="text-align:left;padding:1px 2px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:55px;">Паз</th><th style="width:25px;border-bottom:1px solid var(--border-default);"></th></tr></thead>
+              <thead><tr><th style="text-align:center;padding:1px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:18%;">X</th><th style="text-align:center;padding:1px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:18%;">Y</th><th style="text-align:center;padding:1px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:14%;">⌀</th><th style="text-align:center;padding:1px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:22%;">Форма</th><th style="text-align:center;padding:1px;border-bottom:1px solid var(--border-default);color:var(--text-muted);font-size:10px;width:22%;">Паз</th><th style="width:6%;border-bottom:1px solid var(--border-default);"></th></tr></thead>
               <tbody></tbody>
             </table>
           </div>
@@ -577,9 +577,10 @@ head_extra: |
   .dxf-field-row { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
   .dxf-field-row .dxf-field:last-child { grid-column: auto; }
   .dxf-holes-table-wrapper { max-height: 140px; overflow: auto; }
-  .dxf-holes-table { table-layout: fixed; width: 320px !important; font-size: 10px; border-collapse: collapse; }
+  .dxf-holes-table { font-size: 10px; border-collapse: collapse; }
   .dxf-holes-table td, .dxf-holes-table th { padding: 0px 1px; white-space: nowrap; overflow: hidden; }
   .dxf-holes-table input, .dxf-holes-table select { font-size: 10px; padding: 0px 2px; min-height: 22px; width: 100%; box-sizing: border-box; }
+  .dxf-holes-table-wrapper { max-width: 100%; }
   .dxf-instructions details { padding: 8px 10px; font-size: 0.8rem; }
   .dxf-actions { flex-direction: column; gap: 8px; }
   .dxf-generator-section { padding: 8px 0 16px !important; }
