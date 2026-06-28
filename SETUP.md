@@ -314,7 +314,7 @@ Telegram уведомление
 ## 🤝 Поддержка
 
 Для вопросов и предложений:
-- Email: info@lasercut.ru
+- Email: iisn99@mail.ru
 - Telegram: @lasercut_support
 - GitHub Issues: [создать issue](https://github.com/your-repo/issues)
 
