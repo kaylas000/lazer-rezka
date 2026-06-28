@@ -132,8 +132,67 @@
   {% endunless %}
 
   {% include footer.html %}
-  <!-- AI-чат временно отключён -->
-  {% comment %}{% include ai-chat-widget.html %}{% endcomment %}
+
+  <!-- Плавающая кнопка "Оставить заявку" -->
+  <div class="floating-cta" id="floatingCta">
+    <button class="floating-cta-btn" onclick="document.getElementById('floatingModal').classList.add('active')" aria-label="Оставить заявку">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Заявка</span>
+    </button>
+  </div>
+
+  <!-- Модалка быстрой заявки -->
+  <div class="floating-modal" id="floatingModal">
+    <div class="floating-modal-overlay" onclick="document.getElementById('floatingModal').classList.remove('active')"></div>
+    <div class="floating-modal-content">
+      <button class="floating-modal-close" onclick="document.getElementById('floatingModal').classList.remove('active')" aria-label="Закрыть">&times;</button>
+      <h3>Оставить заявку</h3>
+      <p>Мы перезвоним в течение 1 часа</p>
+      <form class="form" action="https://formsubmit.co/iisn99@mail.ru" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_next" value="https://ceh-lazer-rezka.ru/thanks/">
+        <input type="hidden" name="_subject" value="Заявка с сайта">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <div class="form-group">
+          <input type="text" name="Имя" placeholder="Ваше имя" required minlength="2">
+        </div>
+        <div class="form-group">
+          <input type="tel" name="Телефон" placeholder="Телефон" required>
+        </div>
+        <div class="form-group">
+          <textarea name="Сообщение" rows="3" placeholder="Опишите задачу (материал, толщина, количество)"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-file-label">
+            <input type="file" name="Чертёж" accept=".dxf,.dwg,.pdf,.svg,.png,.jpg">
+            <span>Прикрепить чертёж</span>
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Отправить</button>
+      </form>
+    </div>
+  </div>
+
+  <style>
+    .floating-cta{position:fixed;bottom:24px;right:24px;z-index:1000}
+    .floating-cta-btn{display:flex;align-items:center;gap:8px;background:#FF6B2B;color:#fff;border:none;padding:14px 24px;border-radius:50px;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(255,107,43,0.4);transition:all .3s}
+    .floating-cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(255,107,43,0.5)}
+    .floating-modal{display:none;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center}
+    .floating-modal.active{display:flex}
+    .floating-modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px)}
+    .floating-modal-content{position:relative;background:#1a1a2e;border:1px solid rgba(255,107,43,0.2);border-radius:20px;padding:32px;max-width:420px;width:90%;max-height:90vh;overflow-y:auto}
+    .floating-modal-close{position:absolute;top:12px;right:16px;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;line-height:1}
+    .floating-modal-content h3{margin:0 0 4px;font-size:22px;color:#fff}
+    .floating-modal-content>p{margin:0 0 20px;color:rgba(255,255,255,0.6);font-size:14px}
+    .floating-modal .form-group{margin-bottom:12px}
+    .floating-modal input,.floating-modal textarea{width:100%;padding:12px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-size:15px;box-sizing:border-box}
+    .floating-modal input:focus,.floating-modal textarea:focus{outline:none;border-color:#FF6B2B}
+    .floating-modal textarea{resize:vertical;min-height:70px}
+    .floating-modal .btn-block{width:100%;margin-top:8px}
+    .form-file-label{display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(255,255,255,0.05);border:1px dashed rgba(255,255,255,0.2);border-radius:10px;cursor:pointer;color:rgba(255,255,255,0.5);font-size:14px}
+    .form-file-label input[type=file]{display:none}
+    @media(max-width:600px){.floating-cta-btn span{display:none}.floating-cta-btn{padding:14px;border-radius:50%}}
+  </style>
 
   <script>
     window.SITE_AI_WORKER_URL = {{ site.ai_worker_url | default: "" | jsonify }};
