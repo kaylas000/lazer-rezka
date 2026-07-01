@@ -138,24 +138,22 @@ for (var b = lwStart; b < bulgeLines.length - 1; b++) {
   if (bulgeLines[b] === '42') { bulgeValues.push(parseFloat(bulgeLines[b + 1])); }
 }
 
-assert(vertexCount === 12, 'Bulge test: vertex count must be 12 (got ' + vertexCount + ')');
-assert(bulgeValues.length === 12, 'Bulge test: must have 12 bulge values (got ' + bulgeValues.length + ')');
+assert(vertexCount === 8, 'Bulge test: vertex count must be 8 (got ' + vertexCount + ')');
+assert(bulgeValues.length === 8, 'Bulge test: must have 8 bulge values (got ' + bulgeValues.length + ')');
 
-// Positive bulgeVal means arc curves to the right of the segment direction.
-// For a clockwise polygon, positive bulge = outward arc = correct fillet.
-// The 4 corners should have bulge at indices: 1, 5, 7, 11
-var expectedBulgeIdx = [1, 5, 7, 11];
-var bulgeVal = Math.tan(Math.PI / 8);
-for (var b = 0; b < 12; b++) {
+// Negative bulge = CW arc = outward fillet for clockwise polygon.
+// Corners at indices: 1, 3, 5, 7
+var expectedBulgeIdx = [1, 3, 5, 7];
+var bulgeVal = -Math.tan(Math.PI / 8);
+for (var b = 0; b < 8; b++) {
   var isCorner = expectedBulgeIdx.indexOf(b) >= 0;
   if (isCorner) {
     var diff = Math.abs(bulgeValues[b] - bulgeVal);
     assert(diff < 0.01,
-      'Bulge test: index ' + b + ' must be bulgeVal ~' + bulgeVal.toFixed(4) +
+      'Bulge test: index ' + b + ' must be ~' + bulgeVal.toFixed(4) +
       ' (got ' + bulgeValues[b].toFixed(4) + ')');
-    // Positive bulge = outward curve (correct for clockwise fillet)
-    assert(bulgeValues[b] > 0,
-      'Bulge test: index ' + b + ' bulge must be positive (got ' + bulgeValues[b] + ')');
+    assert(bulgeValues[b] < 0,
+      'Bulge test: index ' + b + ' bulge must be negative (got ' + bulgeValues[b] + ')');
   } else {
     assert(Math.abs(bulgeValues[b]) < 0.001,
       'Bulge test: index ' + b + ' must be 0 (got ' + bulgeValues[b].toFixed(4) + ')');

@@ -105,19 +105,18 @@
 
     if (cornerRadius && cornerRadius > 0) {
       var cr = Math.min(cornerRadius, w / 2, h / 2);
-      // 8 vertices for filleted rectangle (arc approximated — 2 lines per corner)
+      var bulgeVal = -Math.tan(Math.PI / 8); // negative = CW = outward
       pts = [
-        [x + cr, y],           [x + w - cr, y],
-        [x + w, y],            [x + w, y + cr],
-        [x + w, y + h - cr],   [x + w, y + h],
-        [x + w - cr, y + h],   [x + cr, y + h],
-        [x, y + h],            [x, y + h - cr],
-        [x, y + cr],           [x, y]
+        [x + cr, y],       // 0: bottom edge start
+        [x + w - cr, y],   // 1: bottom-right corner start
+        [x + w, y + cr],   // 2: right edge bottom
+        [x + w, y + h - cr], // 3: top-right corner start
+        [x + w - cr, y + h], // 4: top edge right
+        [x + cr, y + h],   // 5: top-left corner start
+        [x, y + h - cr],   // 6: left edge top
+        [x, y + cr]        // 7: bottom-left corner start
       ];
-      // bulges for arc corners — bulgeVal at indices 1, 5, 7, 11
-      // (arc FROM vertex i TO vertex i+1)
-      var bulgeVal = Math.tan(Math.PI / 8);
-      var bulges = [0, bulgeVal, 0, 0, 0, bulgeVal, 0, bulgeVal, 0, 0, 0, bulgeVal];
+      var bulges = [0, bulgeVal, 0, bulgeVal, 0, bulgeVal, 0, bulgeVal];
       this.polyline(pts, { closed: true, bulges: bulges });
     } else {
       pts = [[x, y], [x + w, y], [x + w, y + h], [x, y + h]];
@@ -150,7 +149,7 @@
       return;
     }
 
-    // Single polyline with bulges for semicircular ends (positive = outward)
+    // Single polyline with bulges for semicircular ends (negative = CW = outward)
     var pts, bulges;
     if (orientation === 'v') {
       pts = [
@@ -159,7 +158,7 @@
         [cx + hw, cy + hl],  // 2: top-right
         [cx + hw, cy - hl]   // 3: bottom-right
       ];
-      bulges = [1, 0, 1, 0];
+      bulges = [-1, 0, -1, 0];
     } else {
       pts = [
         [cx - hl, cy - hw],  // 0: left-bottom
@@ -167,7 +166,7 @@
         [cx + hl, cy + hw],  // 2: right-top
         [cx - hl, cy + hw]   // 3: left-top
       ];
-      bulges = [0, 1, 0, 1];
+      bulges = [0, -1, 0, -1];
     }
     this.polyline(pts, { closed: true, bulges: bulges });
   };
