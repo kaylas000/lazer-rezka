@@ -144,34 +144,32 @@
   DxfDocument.prototype.slot = function (cx, cy, length, width, orientation) {
     var hw = width / 2;
     var hl = length / 2 - hw; // straight part half-length
-    var pts;
 
-    if (orientation === 'v') {
-      if (hl <= 0) {
-        this.circle(cx, cy, hw);
-      } else {
-        pts = [
-          [cx - hw, cy - hl], [cx - hw, cy + hl],
-          [cx + hw, cy + hl], [cx + hw, cy - hl]
-        ];
-        this.polyline(pts, { closed: true });
-        // end arcs
-        this.arc(cx, cy + hl, hw, 180, 360);
-        this.arc(cx, cy - hl, hw, 0, 180);
-      }
-    } else {
-      if (hl <= 0) {
-        this.circle(cx, cy, hw);
-      } else {
-        pts = [
-          [cx - hl, cy - hw], [cx + hl, cy - hw],
-          [cx + hl, cy + hw], [cx - hl, cy + hw]
-        ];
-        this.polyline(pts, { closed: true });
-        this.arc(cx + hl, cy, hw, 90, 270);
-        this.arc(cx - hl, cy, hw, 270, 90);
-      }
+    if (hl <= 0) {
+      this.circle(cx, cy, hw);
+      return;
     }
+
+    // Single polyline with bulges for semicircular ends (positive = outward)
+    var pts, bulges;
+    if (orientation === 'v') {
+      pts = [
+        [cx - hw, cy - hl],  // 0: bottom-left
+        [cx - hw, cy + hl],  // 1: top-left
+        [cx + hw, cy + hl],  // 2: top-right
+        [cx + hw, cy - hl]   // 3: bottom-right
+      ];
+      bulges = [1, 0, 1, 0];
+    } else {
+      pts = [
+        [cx - hl, cy - hw],  // 0: left-bottom
+        [cx + hl, cy - hw],  // 1: right-bottom
+        [cx + hl, cy + hw],  // 2: right-top
+        [cx - hl, cy + hw]   // 3: left-top
+      ];
+      bulges = [0, 1, 0, 1];
+    }
+    this.polyline(pts, { closed: true, bulges: bulges });
   };
 
   /**
