@@ -223,3 +223,103 @@
   "sameAs": {{ site.data.business.sameAs | jsonify }}
 }
 </script>
+
+<!-- FAQPage Schema (FAQ page only) -->
+{% if page.url == '/faq/' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Сколько стоит лазерная резка металла?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Стоимость зависит от материала и толщины. Сталь Ст3: от 56 ₽/пог.м (1 мм) до 520 ₽/пог.м (20 мм). Нержавейка AISI 304: от 73 ₽/пог.м. Алюминий: от 70 ₽/пог.м. Точную цену считаем по чертежу за 1 час."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какой минимальный заказ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Минимальная сумма заказа — 3000 рублей. При серийном заказе от 50 деталей — скидка 15%. Для постоянных клиентов действует накопительная система скидок."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какая точность лазерной резки?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Точность позиционирования лазерной головки — ±0.01 мм. Реальный допуск на детали: для стали до 6 мм — ±0.05 мм на размерах до 100 мм. Для стали 6–12 мм — ±0.1 мм."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какие форматы файлов принимаете?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Принимаем DXF (предпочтительный), DWG, AI, CDR, SVG и векторный PDF. Контуры должны быть замкнутыми, толщина линий — Hairline, масштаб 1:1, единицы — миллиметры."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какие сроки изготовления?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Стандартный заказ — 1–3 рабочих дня. Срочный — в день обращения (до 16:00). Крупная серия — 3–7 рабочих дней."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Где находится цех?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Цех расположен в Голицыно, Московская область, Заводской проспект, 34. Работаем Пн–Пт 09:00–18:00. Бесплатная парковка."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какие металлы режете?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Сталь конструкционная (Ст3, 09Г2С) — до 20 мм. Нержавейка AISI 304, 316 — до 12 мм. Алюминий АД31, АМГ — до 10 мм. Также оцинкованная сталь."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Как оформить заказ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "1) Подготовьте файл DXF/DWG. 2) Отправьте через форму на сайте или на email. 3) Получите расчёт в течение 1 часа. 4) После согласования запускаем в производство."
+      }
+    }
+  ]
+}
+</script>
+{% endif %}
+
+<!-- Product Schema (calculator page) -->
+{% if page.url == '/calculator/' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Лазерная резка металла — калькулятор стоимости",
+  "description": "Онлайн-калькулятор для расчёта стоимости лазерной резки металла. Автоматический расчёт по актуальным тарифам.",
+  "brand": {
+    "@type": "Organization",
+    "name": "{{ site.data.business.name }}"
+  },
+  "offers": {
+    "@type": "AggregateOffer",
+    "lowPrice": "56",
+    "highPrice": "520",
+    "priceCurrency": "RUB",
+    "offerCount": "6",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
+{% endif %}
