@@ -114,9 +114,10 @@
         [x, y + h],            [x, y + h - cr],
         [x, y + cr],           [x, y]
       ];
-      // bulges for arc corners
-      var bulgeVal = Math.tan(Math.PI / 8); // approx for 90° arc with 2 segments
-      var bulges = [0, bulgeVal, 0, 0, 0, bulgeVal, 0, 0, 0, bulgeVal, 0, 0, 0, bulgeVal, 0, 0];
+      // bulges for arc corners — bulgeVal at indices 1, 5, 7, 11
+      // (arc FROM vertex i TO vertex i+1)
+      var bulgeVal = Math.tan(Math.PI / 8);
+      var bulges = [0, bulgeVal, 0, 0, 0, bulgeVal, 0, bulgeVal, 0, 0, 0, bulgeVal];
       this.polyline(pts, { closed: true, bulges: bulges });
     } else {
       pts = [[x, y], [x + w, y], [x + w, y + h], [x, y + h]];

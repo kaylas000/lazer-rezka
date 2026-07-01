@@ -110,6 +110,62 @@ var n5 = validateDxf(dxf5, 'Z-bracket');
 console.log('  Entities: ' + n5 + ', Cut length: ' + r5.cutLengthMeters.toFixed(3) + ' m');
 assert(n5 >= 1, 'Z-bracket: must have at least outline');
 
+// ===== TEST 5b: Rectangle corner bulges =====
+console.log('--- Test 5b: Rectangle corner bulges ---');
+var docBulge = new DxfDocument();
+generateRectangle(docBulge, {
+  width: 200, height: 100, cornerRadius: 15,
+  centerHoleDia: 0, boltCircleDia: 0, boltCount: 0, boltHoleDia: 0
+});
+var dxfBulge = docBulge.toString();
+// Extract the LWPOLYLINE entity
+var bulgeLines = dxfBulge.split('\n');
+// Find LWPOLYLINE
+var lwStart = -1;
+for (var b = 0; b < bulgeLines.length; b++) {
+  if (bulgeLines[b] === 'LWPOLYLINE' && bulgeLines[b - 1] === '0') {
+    lwStart = b;
+    break;
+  }
+}
+assert(lwStart > 0, 'Bulge test: must find LWPOLYLINE');
+
+// Parse vertex count (group code 90) and extract bulge values (group code 42)
+var vertexCount = 0;
+var bulgeValues = [];
+for (var b = lwStart; b < bulgeLines.length - 1; b++) {
+  if (bulgeLines[b] === '90') { vertexCount = parseInt(bulgeLines[b + 1]); }
+  if (bulgeLines[b] === '42') { bulgeValues.push(parseFloat(bulgeLines[b + 1])); }
+}
+
+assert(vertexCount === 12, 'Bulge test: vertex count must be 12 (got ' + vertexCount + ')');
+assert(bulgeValues.length === 12, 'Bulge test: must have 12 bulge values (got ' + bulgeValues.length + ')');
+
+// Positive bulgeVal means arc curves to the right of the segment direction.
+// For a clockwise polygon, positive bulge = outward arc = correct fillet.
+// The 4 corners should have bulge at indices: 1, 5, 7, 11
+var expectedBulgeIdx = [1, 5, 7, 11];
+var bulgeVal = Math.tan(Math.PI / 8);
+for (var b = 0; b < 12; b++) {
+  var isCorner = expectedBulgeIdx.indexOf(b) >= 0;
+  if (isCorner) {
+    var diff = Math.abs(bulgeValues[b] - bulgeVal);
+    assert(diff < 0.01,
+      'Bulge test: index ' + b + ' must be bulgeVal ~' + bulgeVal.toFixed(4) +
+      ' (got ' + bulgeValues[b].toFixed(4) + ')');
+    // Positive bulge = outward curve (correct for clockwise fillet)
+    assert(bulgeValues[b] > 0,
+      'Bulge test: index ' + b + ' bulge must be positive (got ' + bulgeValues[b] + ')');
+  } else {
+    assert(Math.abs(bulgeValues[b]) < 0.001,
+      'Bulge test: index ' + b + ' must be 0 (got ' + bulgeValues[b].toFixed(4) + ')');
+  }
+}
+console.log('  Vertices: ' + vertexCount + ', Bulges: ' + bulgeValues.length);
+console.log('  Corner bulge values: ' + bulgeValues.map(function(v,i) {
+  return i + ':' + v.toFixed(4);
+}).join(' '));
+
 // ===== TEST 6: Edge cases =====
 console.log('--- Test 6: Edge cases ---');
 var doc6 = new DxfDocument();
