@@ -100,6 +100,34 @@
 
 <!-- BreadcrumbList Schema (all pages except home) -->
 {% if page.url != '/' %}
+{% assign bc_name = page.title %}
+{% case page.url %}
+{% when '/calculator/' %}{% assign bc_name = 'Калькулятор' %}
+{% when '/prices/' %}{% assign bc_name = 'Прайс-лист' %}
+{% when '/portfolio/' %}{% assign bc_name = 'Портфолио' %}
+{% when '/blog/' %}{% assign bc_name = 'Блог' %}
+{% when '/faq/' %}{% assign bc_name = 'FAQ' %}
+{% when '/contacts/' %}{% assign bc_name = 'Контакты' %}
+{% when '/materials/' %}{% assign bc_name = 'Материалы' %}
+{% when '/reviews/' %}{% assign bc_name = 'Отзывы' %}
+{% when '/delivery/' %}{% assign bc_name = 'Доставка' %}
+{% when '/dxf-generator/' %}{% assign bc_name = 'Генератор DXF' %}
+{% when '/services/metal/' %}{% assign bc_name = 'Лазерная резка' %}
+{% when '/services/bending/' %}{% assign bc_name = 'Гибка металла' %}
+{% when '/services/powder-coating/' %}{% assign bc_name = 'Покраска' %}
+{% when '/services/sandblasting/' %}{% assign bc_name = 'Пескоструй' %}
+{% when '/services/welding/' %}{% assign bc_name = 'Сварка' %}
+{% when '/services/locksmith/' %}{% assign bc_name = 'Слесарные работы' %}
+{% when '/moscow/' %}{% assign bc_name = 'Москва' %}
+{% when '/golitsyno/' %}{% assign bc_name = 'Голицыно' %}
+{% when '/odintcovo/' %}{% assign bc_name = 'Одинцово' %}
+{% when '/krasnogorsk/' %}{% assign bc_name = 'Красногорск' %}
+{% when '/khimki/' %}{% assign bc_name = 'Химки' %}
+{% when '/zelenograd/' %}{% assign bc_name = 'Зеленоград' %}
+{% when '/zvenigorod/' %}{% assign bc_name = 'Звенигород' %}
+{% when '/istra/' %}{% assign bc_name = 'Истра' %}
+{% when '/mozhaisk/' %}{% assign bc_name = 'Можайск' %}
+{% endcase %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -121,7 +149,7 @@
     ,{
       "@type": "ListItem",
       "position": 3,
-      "name": "{{ page.title | escape }}",
+      "name": "{{ bc_name | escape }}",
       "item": "{{ page.url | absolute_url }}"
     }
     {% elsif page.url contains '/services/' and page.url != '/services/' %}
@@ -134,14 +162,14 @@
     ,{
       "@type": "ListItem",
       "position": 3,
-      "name": "{{ page.title | escape }}",
+      "name": "{{ bc_name | escape }}",
       "item": "{{ page.url | absolute_url }}"
     }
     {% else %}
     ,{
       "@type": "ListItem",
       "position": 2,
-      "name": "{{ page.title | escape }}",
+      "name": "{{ bc_name | escape }}",
       "item": "{{ page.url | absolute_url }}"
     }
     {% endif %}
@@ -182,9 +210,9 @@
   "datePublished": "{{ page.date | date_to_xmlschema }}",
   "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
   "author": {
-    "@type": "Organization",
-    "name": "{{ site.data.business.name }}",
-    "url": "{{ site.data.business.url }}"
+    "@type": "Person",
+    "name": "{{ page.author_name | default: 'Алексей Морозов' }}",
+    "jobTitle": "{{ page.author_title | default: 'Инженер-технолог' }}"
   },
   "publisher": {
     "@type": "Organization",
@@ -224,7 +252,51 @@
 }
 </script>
 
-<!-- FAQPage Schema (FAQ page only) -->
+<!-- FAQPage Schema (homepage — 4 short questions) -->
+{% if page.url == '/' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Сколько стоит лазерная резка металла?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Сталь от 56 ₽/пог.м, нержавейка от 73 ₽/пог.м, алюминий от 70 ₽/пог.м. Точный расчёт — по чертежу за 1 час. Минимальный заказ 3000 ₽."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какие сроки изготовления?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Стандартный заказ — 1–3 рабочих дня. Срочный — в день обращения (до 16:00). Крупная серия — 3–7 дней."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какие материалы режете?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Сталь Ст3 до 20 мм, нержавейка AISI 304/316 до 12 мм, алюминий АД31/АМГ до 10 мм. Также оцинкованная сталь."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Где находится цех и как забрать заказ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Голицыно, Заводской проспект, 34 (Московская область). Самовывоз — бесплатно. Доставка по Москве от 500 ₽."
+      }
+    }
+  ]
+}
+</script>
+{% endif %}
+
+<!-- FAQPage Schema (FAQ page — full list) -->
 {% if page.url == '/faq/' %}
 <script type="application/ld+json">
 {

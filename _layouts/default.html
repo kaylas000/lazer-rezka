@@ -16,23 +16,16 @@
   <link rel="dns-prefetch" href="https://mc.yandex.ru">
   {% if page.head_extra %}{{ page.head_extra }}{% endif %}
 
-  <!-- Open Graph дополнительные поля -->
+  <!-- Open Graph -->
   <meta property="og:image" content="{{ '/assets/images/hero.jpg' | absolute_url }}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Цех лазерной резки металла — Москва и Московская область">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="{{ site.company.name }}">
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  <meta name="twitter:image" content="{{ '/assets/images/hero.jpg' | absolute_url }}">
-
-  <!-- Telegram -->
-  <meta property="telegram:channel" content="@lasercut">
+  <!-- Мессенджеры -->
+  <meta property="telegram:channel" content="@S_N_IV">
+  <meta property="whatsapp:phone" content="+79854563764">
 
   <!-- Keywords (local SEO) -->
   {% if page.keywords %}<meta name="keywords" content="{{ page.keywords }}">{% endif %}
@@ -44,9 +37,6 @@
   <meta name="ICBM" content="{{ site.geo_icbm }}">
   <meta name="language" content="ru">
   <link rel="alternate" hreflang="ru-RU" href="{{ page.url | absolute_url }}">
-
-  <!-- Canonical URL -->
-  <link rel="canonical" href="{{ page.url | absolute_url }}">
 
   {% include schema-markup.html %}
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.time | date: '%s' }}">
