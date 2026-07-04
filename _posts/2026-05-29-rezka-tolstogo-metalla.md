@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Лазерная резка толстого металла 10-20 мм — режимы и ограничения | Москва"
 image: /assets/images/blog/rezka-tolstogo-metalla.webp

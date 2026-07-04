@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Лазерная резка vs плазменная — сравнение технологий | Москва"
 image: /assets/images/blog/lazer-vs-plazma.webp

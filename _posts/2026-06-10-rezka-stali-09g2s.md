@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Лазерная резка стали 09Г2С — режимы, допуски, стоимость | Москва"
 image: /assets/images/blog/rezka-stali-09g2s.webp

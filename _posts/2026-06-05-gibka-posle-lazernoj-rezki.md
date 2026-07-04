@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Гибка металла после лазерной резки — допуски, радиусы, нюансы | Москва"
 image: /assets/images/blog/gibka-posle-lazernoj-rezki.webp

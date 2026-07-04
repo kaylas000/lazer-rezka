@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Выбор толщины металла для лазерной резки — таблица возможностей | Москва"
 image: /assets/images/blog/vybor-tolshchiny-metalla.webp

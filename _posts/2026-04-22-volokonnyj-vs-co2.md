@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Волоконный лазер vs CO2 — сравнение технологий резки металла | Москва"
 image: /assets/images/blog/volokonnyj-vs-co2.webp

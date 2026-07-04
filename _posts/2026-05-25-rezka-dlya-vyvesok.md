@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Лазерная резка для вывесок и декора — буквы, логотипы, таблички | Москва"
 image: /assets/images/blog/rezka-dlya-vyvesok.webp

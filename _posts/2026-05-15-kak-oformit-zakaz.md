@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Как оформить заказ на лазерную резку — пошаговая инструкция | Москва"
 image: /assets/images/blog/kak-oformit-zakaz.webp

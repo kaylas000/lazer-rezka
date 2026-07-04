@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Качество торца при лазерной резке — от чего зависит и как улучшить | Москва"
 image: /assets/images/blog/kachestvo-tortsa.webp

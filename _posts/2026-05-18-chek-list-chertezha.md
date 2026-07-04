@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Чек-лист чертежа для лазерной резки — 12 пунктов проверки | Москва"
 image: /assets/images/blog/chek-list-chertezha.webp

@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Тепловое воздействие при лазерной резке — зона влияния и деформации | Москва"
 image: /assets/images/blog/teplovoe-vozdejstvie.webp

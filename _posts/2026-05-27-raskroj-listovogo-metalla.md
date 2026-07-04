@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Раскрой листового металла — как сэкономить до 30% материала | Москва"
 image: /assets/images/blog/raskroj-listovogo-metalla.webp

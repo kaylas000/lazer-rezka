@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Как снизить стоимость лазерной резки — 10 проверенных способов | Москва"
 image: /assets/images/blog/kak-snizit-stoimost.webp

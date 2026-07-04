@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Отверстия в металле — лазерная резка vs сверловка | Москва"
 image: /assets/images/blog/otverstiya-lazer-vs-sverlovka.webp

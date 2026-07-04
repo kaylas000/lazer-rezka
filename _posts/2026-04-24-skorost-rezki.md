@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Скорость лазерной резки металла — от чего зависит и как ускорить | Москва"
 image: /assets/images/blog/skorost-rezki.webp

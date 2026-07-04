@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Конусность реза при лазерной резке — причины, нормы, решения | Москва"
 image: /assets/images/blog/konusnost-reza.webp

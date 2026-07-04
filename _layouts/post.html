@@ -41,6 +41,14 @@ layout: default
       {{ content }}
     </div>
 
+    <div class="post-author">
+      <div class="author-avatar">{{ page.author_name | slice: 0, 1 }}</div>
+      <div class="author-info">
+        <div class="author-name">{{ page.author_name | default: 'Сергей Иванов' }}</div>
+        <div class="author-title">{{ page.author_title | default: 'Инженер-технолог' }}</div>
+      </div>
+    </div>
+
     <div class="post-footer">
       <div class="post-tags">
         {% if page.tags %}

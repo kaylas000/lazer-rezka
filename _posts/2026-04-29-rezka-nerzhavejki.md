@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Лазерная резка нержавейки AISI 304 и 316 — режимы, цены | Москва"
 image: /assets/images/blog/rezka-nerzhavejki.webp

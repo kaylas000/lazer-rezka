@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Газы для лазерной резки — азот, кислород, воздух — что выбрать | Москва"
 image: /assets/images/blog/gazy-pri-lazernoj-rezke.webp

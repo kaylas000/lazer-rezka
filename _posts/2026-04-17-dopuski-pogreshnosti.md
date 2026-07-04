@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Допуски и погрешности при лазерной резке — классы точности | Москва"
 image: /assets/images/blog/dopuski-pogreshnosti.webp

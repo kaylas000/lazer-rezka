@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Подготовка чертежа для лазерной резки металла — DXF/DWG требования | Москва"
 image: /assets/images/blog/podgotovka-chertezha.webp

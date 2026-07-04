@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Типичные ошибки при заказе лазерной резки — как избежать брака | Москва"
 image: /assets/images/blog/tipichnye-oshibki.webp

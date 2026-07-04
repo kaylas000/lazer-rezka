@@ -1,4 +1,6 @@
 ---
+author_name: Сергей Иванов
+author_title: Инженер-технолог
 layout: post
 title: "Подготовка DXF для лазерной резки — требования к файлу | Москва"
 image: /assets/images/blog/podgotovka-dxf.webp
