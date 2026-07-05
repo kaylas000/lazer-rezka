@@ -101,25 +101,20 @@
    */
   DxfDocument.prototype.rectangle = function (x, y, w, h, cornerRadius) {
     x = r(x); y = r(y); w = r(w); h = r(h);
-    var pts;
 
     if (cornerRadius && cornerRadius > 0) {
       var cr = Math.min(cornerRadius, w / 2, h / 2);
-      var bulgeVal = -Math.tan(Math.PI / 8); // negative = CW = outward
-      pts = [
-        [x + cr, y],       // 0: bottom edge start
-        [x + w - cr, y],   // 1: bottom-right corner start
-        [x + w, y + cr],   // 2: right edge bottom
-        [x + w, y + h - cr], // 3: top-right corner start
-        [x + w - cr, y + h], // 4: top edge right
-        [x + cr, y + h],   // 5: top-left corner start
-        [x, y + h - cr],   // 6: left edge top
-        [x, y + cr]        // 7: bottom-left corner start
-      ];
-      var bulges = [0, bulgeVal, 0, bulgeVal, 0, bulgeVal, 0, bulgeVal];
-      this.polyline(pts, { closed: true, bulges: bulges });
+      // 4 straight lines + 4 quarter-circle arcs
+      this.line(x + cr, y, x + w - cr, y);             // bottom
+      this.line(x + w, y + cr, x + w, y + h - cr);     // right
+      this.line(x + w - cr, y + h, x + cr, y + h);     // top
+      this.line(x, y + h - cr, x, y + cr);              // left
+      this.arc(x + w - cr, y + cr, cr, 270, 360);       // bottom-right
+      this.arc(x + w - cr, y + h - cr, cr, 0, 90);     // top-right
+      this.arc(x + cr, y + h - cr, cr, 90, 180);        // top-left
+      this.arc(x + cr, y + cr, cr, 180, 270);           // bottom-left
     } else {
-      pts = [[x, y], [x + w, y], [x + w, y + h], [x, y + h]];
+      var pts = [[x, y], [x + w, y], [x + w, y + h], [x, y + h]];
       this.polyline(pts, { closed: true });
     }
   };

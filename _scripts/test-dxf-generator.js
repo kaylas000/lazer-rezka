@@ -110,59 +110,25 @@ var n5 = validateDxf(dxf5, 'Z-bracket');
 console.log('  Entities: ' + n5 + ', Cut length: ' + r5.cutLengthMeters.toFixed(3) + ' m');
 assert(n5 >= 1, 'Z-bracket: must have at least outline');
 
-// ===== TEST 5b: Rectangle corner bulges =====
-console.log('--- Test 5b: Rectangle corner bulges ---');
+// ===== TEST 5b: Rectangle corners as LINE+ARC =====
+console.log('--- Test 5b: Rectangle rounded corners (LINE+ARC) ---');
 var docBulge = new DxfDocument();
 generateRectangle(docBulge, {
   width: 200, height: 100, cornerRadius: 15,
   centerHoleDia: 0, boltCircleDia: 0, boltCount: 0, boltHoleDia: 0
 });
 var dxfBulge = docBulge.toString();
-// Extract the LWPOLYLINE entity
 var bulgeLines = dxfBulge.split('\n');
-// Find LWPOLYLINE
-var lwStart = -1;
+
+// Count LINE and ARC entities
+var lineCount = 0, arcCount = 0;
 for (var b = 0; b < bulgeLines.length; b++) {
-  if (bulgeLines[b] === 'LWPOLYLINE' && bulgeLines[b - 1] === '0') {
-    lwStart = b;
-    break;
-  }
+  if (bulgeLines[b] === 'LINE' && bulgeLines[b - 1] === '0') lineCount++;
+  if (bulgeLines[b] === 'ARC' && bulgeLines[b - 1] === '0') arcCount++;
 }
-assert(lwStart > 0, 'Bulge test: must find LWPOLYLINE');
-
-// Parse vertex count (group code 90) and extract bulge values (group code 42)
-var vertexCount = 0;
-var bulgeValues = [];
-for (var b = lwStart; b < bulgeLines.length - 1; b++) {
-  if (bulgeLines[b] === '90') { vertexCount = parseInt(bulgeLines[b + 1]); }
-  if (bulgeLines[b] === '42') { bulgeValues.push(parseFloat(bulgeLines[b + 1])); }
-}
-
-assert(vertexCount === 8, 'Bulge test: vertex count must be 8 (got ' + vertexCount + ')');
-assert(bulgeValues.length === 8, 'Bulge test: must have 8 bulge values (got ' + bulgeValues.length + ')');
-
-// Negative bulge = CW arc = outward fillet for clockwise polygon.
-// Corners at indices: 1, 3, 5, 7
-var expectedBulgeIdx = [1, 3, 5, 7];
-var bulgeVal = -Math.tan(Math.PI / 8);
-for (var b = 0; b < 8; b++) {
-  var isCorner = expectedBulgeIdx.indexOf(b) >= 0;
-  if (isCorner) {
-    var diff = Math.abs(bulgeValues[b] - bulgeVal);
-    assert(diff < 0.01,
-      'Bulge test: index ' + b + ' must be ~' + bulgeVal.toFixed(4) +
-      ' (got ' + bulgeValues[b].toFixed(4) + ')');
-    assert(bulgeValues[b] < 0,
-      'Bulge test: index ' + b + ' bulge must be negative (got ' + bulgeValues[b] + ')');
-  } else {
-    assert(Math.abs(bulgeValues[b]) < 0.001,
-      'Bulge test: index ' + b + ' must be 0 (got ' + bulgeValues[b].toFixed(4) + ')');
-  }
-}
-console.log('  Vertices: ' + vertexCount + ', Bulges: ' + bulgeValues.length);
-console.log('  Corner bulge values: ' + bulgeValues.map(function(v,i) {
-  return i + ':' + v.toFixed(4);
-}).join(' '));
+assert(lineCount === 4, 'Rounded rect: must have 4 LINE entities (got ' + lineCount + ')');
+assert(arcCount === 4, 'Rounded rect: must have 4 ARC entities (got ' + arcCount + ')');
+console.log('  Lines: ' + lineCount + ', Arcs: ' + arcCount);
 
 // ===== TEST 6: Edge cases =====
 console.log('--- Test 6: Edge cases ---');
