@@ -208,11 +208,28 @@
     for (var i = 0; i < this.entities.length; i++) {
       var ent = this.entities[i];
       lines.push('0', ent.type);
+      var isArc = ent.type === 'ARC';
       for (var j = 0; j < ent.data.length; j++) {
         var code = ent.data[j][0];
         var val = ent.data[j][1];
-        // Flip Y-axis: group codes 20, 21 are Y coords. DXF Y-up, SVG Y-down.
+        // Flip Y-axis: DXF Y-up, SVG Y-down.
+        // Group codes 20, 21 = Y coordinates → negate.
         if (code === 20 || code === 21) val = -val;
+        // ARC angles reverse when Y is flipped: new_start = 360 - old_end, new_end = 360 - old_start.
+        if (isArc && code === 50) {
+          var endAngle = null;
+          for (var k = j + 1; k < ent.data.length; k++) {
+            if (ent.data[k][0] === 51) { endAngle = ent.data[k][1]; break; }
+          }
+          if (endAngle !== null) val = 360 - endAngle;
+        }
+        if (isArc && code === 51) {
+          var startAngle = null;
+          for (var k = j - 1; k >= 0; k--) {
+            if (ent.data[k][0] === 50) { startAngle = ent.data[k][1]; break; }
+          }
+          if (startAngle !== null) val = 360 - startAngle;
+        }
         lines.push(code.toString(), val.toString());
       }
     }
