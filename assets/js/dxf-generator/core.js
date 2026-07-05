@@ -149,7 +149,8 @@
       return;
     }
 
-    // Single polyline with bulges for semicircular ends (negative = CW = outward)
+    // Single polyline with bulges for semicircular ends.
+    // Each end: one bulge +1 (CCW) and one -1 (CW), both curving outward.
     var pts, bulges;
     if (orientation === 'v') {
       pts = [
@@ -158,7 +159,7 @@
         [cx + hw, cy + hl],  // 2: top-right
         [cx + hw, cy - hl]   // 3: bottom-right
       ];
-      bulges = [-1, 0, -1, 0];
+      bulges = [1, 0, -1, 0];
     } else {
       pts = [
         [cx - hl, cy - hw],  // 0: left-bottom
@@ -166,7 +167,7 @@
         [cx + hl, cy + hw],  // 2: right-top
         [cx - hl, cy + hw]   // 3: left-top
       ];
-      bulges = [0, -1, 0, -1];
+      bulges = [0, -1, 0, 1];
     }
     this.polyline(pts, { closed: true, bulges: bulges });
   };
