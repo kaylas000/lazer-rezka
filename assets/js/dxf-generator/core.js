@@ -209,7 +209,11 @@
       var ent = this.entities[i];
       lines.push('0', ent.type);
       for (var j = 0; j < ent.data.length; j++) {
-        lines.push(ent.data[j][0].toString(), ent.data[j][1].toString());
+        var code = ent.data[j][0];
+        var val = ent.data[j][1];
+        // Flip Y-axis: group codes 20, 21 are Y coords. DXF Y-up, SVG Y-down.
+        if (code === 20 || code === 21) val = -val;
+        lines.push(code.toString(), val.toString());
       }
     }
     lines.push('0', 'ENDSEC');
