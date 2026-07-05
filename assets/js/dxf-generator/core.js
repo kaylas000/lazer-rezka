@@ -149,27 +149,20 @@
       return;
     }
 
-    // Single polyline with bulges for semicircular ends.
-    // Each end: one bulge +1 (CCW) and one -1 (CW), both curving outward.
-    var pts, bulges;
+    // Two straight lines + two semicircular arcs. No polyline bulges.
     if (orientation === 'v') {
-      pts = [
-        [cx - hw, cy - hl],  // 0: bottom-left
-        [cx - hw, cy + hl],  // 1: top-left
-        [cx + hw, cy + hl],  // 2: top-right
-        [cx + hw, cy - hl]   // 3: bottom-right
-      ];
-      bulges = [1, 0, -1, 0];
+      // Vertical: straight lines on left and right, arcs on top and bottom
+      this.line(cx - hw, cy - hl, cx - hw, cy + hl);  // left edge
+      this.line(cx + hw, cy + hl, cx + hw, cy - hl);  // right edge
+      this.arc(cx, cy + hl, hw, 0, 180);               // top semicircle
+      this.arc(cx, cy - hl, hw, 180, 360);             // bottom semicircle
     } else {
-      pts = [
-        [cx - hl, cy - hw],  // 0: left-bottom
-        [cx + hl, cy - hw],  // 1: right-bottom
-        [cx + hl, cy + hw],  // 2: right-top
-        [cx - hl, cy + hw]   // 3: left-top
-      ];
-      bulges = [0, -1, 0, 1];
+      // Horizontal: straight lines on top and bottom, arcs on left and right
+      this.line(cx - hl, cy - hw, cx + hl, cy - hw);  // bottom edge
+      this.line(cx + hl, cy + hw, cx - hl, cy + hw);  // top edge
+      this.arc(cx + hl, cy, hw, 270, 90);              // right semicircle
+      this.arc(cx - hl, cy, hw, 90, 270);              // left semicircle
     }
-    this.polyline(pts, { closed: true, bulges: bulges });
   };
 
   /**
