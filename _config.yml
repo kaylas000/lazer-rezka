@@ -147,5 +147,3 @@ collections:
 web3forms:
   access_key: "YOUR_ACCESS_KEY_HERE"
 
-# AI Chat Worker URL (Cloudflare Worker)
-ai_worker_url: "https://my-worker.prof9ai.workers.dev"

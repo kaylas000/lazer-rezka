@@ -1,8 +1,8 @@
 // AI Chat - прямая интеграция с Groq API
 // Ключ загружается из отдельного файла api-key.js
 
-const USE_DIRECT_API = false; // true = прямой вызов, false = через Cloudflare Worker
-const WORKER_URL = window.SITE_AI_WORKER_URL || '';
+const USE_DIRECT_API = false;
+const WORKER_URL = '';
 
 // ВНИМАНИЕ: Системный промпт работает только при USE_DIRECT_API = true
 // Если используете Worker (false), обновите промпт в коде Worker на Cloudflare

@@ -167,9 +167,6 @@
     @media(max-width:600px){.floating-cta-btn span{display:none}.floating-cta-btn{padding:14px;border-radius:50%}}
   </style>
 
-  <script>
-    window.SITE_AI_WORKER_URL = {{ site.ai_worker_url | default: "" | jsonify }};
-  </script>
   <script src="{{ '/assets/js/main.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
   {% comment %}<script src="{{ '/assets/js/ai-chat.js' | relative_url }}" defer></script>{% endcomment %}
 </body>

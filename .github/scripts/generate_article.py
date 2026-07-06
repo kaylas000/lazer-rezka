@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 Бот-писатель: генерирует статьи для блога через Groq API
 Версия 2.0 — новые темы, экспертный шаблон, без AI-меток
@@ -11,8 +11,8 @@ import yaml
 import requests
 from datetime import datetime
 
-# Worker URL
-WORKER_URL = 'https://my-worker.prof9ai.workers.dev'
+# Worker URL (отключено — генерация статей выключена)
+WORKER_URL = ''
 
 # Темы для статей (только металл, 20 тем)
 TOPICS = [
