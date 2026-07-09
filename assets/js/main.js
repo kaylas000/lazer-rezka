@@ -123,7 +123,7 @@ document.querySelectorAll('form.form').forEach(function(form) {
         submitBtn.title = 'Форма временно недоступна';
         var notice = document.createElement('p');
         notice.style.cssText = 'color:#EF4444;font-size:14px;margin-top:8px;';
-        notice.textContent = 'Отправка временно недоступна. Позвоните: +7 (985) 456-37-64';
+        notice.textContent = 'Отправка временно недоступна. Позвоните: +7 (985) 356-99-89';
         submitBtn.parentNode.insertBefore(notice, submitBtn.nextSibling);
       }
       return;
@@ -158,7 +158,7 @@ document.querySelectorAll('form.form').forEach(function(form) {
         throw new Error('Ошибка отправки');
       }
     } catch (error) {
-      alert('Ошибка. Позвоните: +7 (985) 456-37-64');
+      alert('Ошибка. Позвоните: +7 (985) 356-99-89');
     } finally {
       submitBtn.innerHTML = originalHTML;
       submitBtn.classList.remove('btn-loading');

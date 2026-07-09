@@ -4,7 +4,7 @@
 **Business Type**: Hybrid (physical workshop + service area)  
 **Industry**: Home Services — Metal Fabrication / Laser Cutting  
 **Address**: Заводской проспект, 34, Голицыно, Московская область, 143041  
-**Phone**: +7 (985) 456-37-64  
+**Phone**: +7 (985) 356-99-89  
 
 ---
 
@@ -83,9 +83,9 @@ The site is optimized for Yandex but invisible to Google's local ranking ecosyst
 
 | Source | Name | Address | Phone |
 |---|---|---|---|
-| Footer HTML | Цех лазерной резки | Голицыно, Заводской пр-т, 34 | +7 (985) 456-37-64 |
-| Contacts page | Цех лазерной резки | Голицыно, Заводской проспект, 34, Московская область | +7 (985) 456-37-64 |
-| LocalBusiness schema | Цех лазерной резки | Заводской проспект, 34, Голицыно, Московская область, 143041 | +7 (985) 456-37-64 |
+| Footer HTML | Цех лазерной резки | Голицыно, Заводской пр-т, 34 | +7 (985) 356-99-89 |
+| Contacts page | Цех лазерной резки | Голицыно, Заводской проспект, 34, Московская область | +7 (985) 356-99-89 |
+| LocalBusiness schema | Цех лазерной резки | Заводской проспект, 34, Голицыно, Московская область, 143041 | +7 (985) 356-99-89 |
 
 **Inconsistencies found:**
 1. **Street abbreviation**: "пр-т" (footer) vs "проспект" (schema, contacts) — minor but should be standardized

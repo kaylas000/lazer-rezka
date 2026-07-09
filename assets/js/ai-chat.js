@@ -150,12 +150,12 @@ class AIChat {
         console.error('API Error:', response.status, errorData);
         
         if (response.status === 429) {
-          throw new Error('Слишком много запросов. Пожалуйста, позвоните нам: +7 (985) 456-37-64');
+          throw new Error('Слишком много запросов. Пожалуйста, позвоните нам: +7 (985) 356-99-89');
         }
         if (response.status === 401) {
-          throw new Error('Неверный API ключ. Позвоните нам: +7 (985) 456-37-64');
+          throw new Error('Неверный API ключ. Позвоните нам: +7 (985) 356-99-89');
         }
-        throw new Error('Ошибка связи с сервером. Позвоните: +7 (985) 456-37-64');
+        throw new Error('Ошибка связи с сервером. Позвоните: +7 (985) 356-99-89');
       }
       
       const data = await response.json();
@@ -185,11 +185,11 @@ class AIChat {
       
       // CORS ошибка
       if (error.message.includes('Failed to fetch') || error.message.includes('CORS')) {
-        errorMessage = 'Извините, сейчас я временно недоступен. Позвоните нам: +7 (985) 456-37-64 или напишите на ceh-lazer-rezka@yandex.ru';
+        errorMessage = 'Извините, сейчас я временно недоступен. Позвоните нам: +7 (985) 356-99-89 или напишите на ceh-lazer-rezka@yandex.ru';
       }
       
       if (!errorMessage) {
-        errorMessage = 'Сейчас я временно недоступен. Позвоните нам: +7 (985) 456-37-64';
+        errorMessage = 'Сейчас я временно недоступен. Позвоните нам: +7 (985) 356-99-89';
       }
       
       this.addMessage(errorMessage, 'assistant', true);
@@ -372,7 +372,7 @@ class AIChat {
 Важно: векторные замкнутые контуры, толщина линий 0.01 мм (hairline)
 
 КОНТАКТЫ:
-📞 +7 (985) 456-37-64
+📞 +7 (985) 356-99-89
 📧 ceh-lazer-rezka@yandex.ru
 ⏰ Пн-Пт 9:00-18:00
 📍 Голицыно, Заводской проспект, 34, 143041

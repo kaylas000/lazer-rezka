@@ -54,7 +54,7 @@ export default {
         console.error('Groq API Error:', apiResponse.status);
         return new Response(JSON.stringify({
           error: true,
-          message: 'Извините, сейчас я временно недоступен. Позвоните: +7 (985) 456-37-64 или напишите на ceh-lazer-rezka@yandex.ru'
+          message: 'Извините, сейчас я временно недоступен. Позвоните: +7 (985) 356-99-89 или напишите на ceh-lazer-rezka@yandex.ru'
         }), {
           status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -72,7 +72,7 @@ export default {
       console.error('Worker error:', error);
       return new Response(JSON.stringify({
         error: true,
-        message: 'Произошла ошибка. Позвоните нам: +7 (985) 456-37-64'
+        message: 'Произошла ошибка. Позвоните нам: +7 (985) 356-99-89'
       }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -168,7 +168,7 @@ function getSystemPrompt() {
 - Только векторные замкнутые контуры
 
 КОНТАКТЫ:
-- Телефон: +7 (985) 456-37-64
+- Телефон: +7 (985) 356-99-89
 - Email: ceh-lazer-rezka@yandex.ru
 - Адрес: Голицыно, Заводской проспект, 34
 - Режим: Пн-Пт 9:00-18:00
