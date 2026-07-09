@@ -51,7 +51,7 @@ pip install -r requirements/price-list.txt
 python3 scripts/build_price_list.py --output /tmp/price-list.pdf && strings /tmp/price-list.pdf | grep -E 'tel:|mailto:'
 ```
 
-Должны появиться, например, **`tel:+79854563764`** и **`mailto:iisn99@mail.ru`**.
+Должны появиться, например, **`tel:+79854563764`** и **`mailto:ceh-lazer-rezka@yandex.ru`**.
 
 Опционально откройте `/tmp/price-list.pdf` глазами.
 

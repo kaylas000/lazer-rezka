@@ -54,7 +54,7 @@ export default {
         console.error('Groq API Error:', apiResponse.status);
         return new Response(JSON.stringify({
           error: true,
-          message: 'Извините, сейчас я временно недоступен. Позвоните: +7 (985) 456-37-64 или напишите на iisn99@mail.ru'
+          message: 'Извините, сейчас я временно недоступен. Позвоните: +7 (985) 456-37-64 или напишите на ceh-lazer-rezka@yandex.ru'
         }), {
           status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -169,7 +169,7 @@ function getSystemPrompt() {
 
 КОНТАКТЫ:
 - Телефон: +7 (985) 456-37-64
-- Email: iisn99@mail.ru
+- Email: ceh-lazer-rezka@yandex.ru
 - Адрес: Голицыно, Заводской проспект, 34
 - Режим: Пн-Пт 9:00-18:00
 - Онлайн-калькулятор: https://ceh-lazer-rezka.ru/calculator/

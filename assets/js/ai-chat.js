@@ -185,7 +185,7 @@ class AIChat {
       
       // CORS ошибка
       if (error.message.includes('Failed to fetch') || error.message.includes('CORS')) {
-        errorMessage = 'Извините, сейчас я временно недоступен. Позвоните нам: +7 (985) 456-37-64 или напишите на iisn99@mail.ru';
+        errorMessage = 'Извините, сейчас я временно недоступен. Позвоните нам: +7 (985) 456-37-64 или напишите на ceh-lazer-rezka@yandex.ru';
       }
       
       if (!errorMessage) {
@@ -373,7 +373,7 @@ class AIChat {
 
 КОНТАКТЫ:
 📞 +7 (985) 456-37-64
-📧 iisn99@mail.ru
+📧 ceh-lazer-rezka@yandex.ru
 ⏰ Пн-Пт 9:00-18:00
 📍 Голицыно, Заводской проспект, 34, 143041
 

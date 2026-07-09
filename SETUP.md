@@ -314,7 +314,7 @@ Telegram уведомление
 ## 🤝 Поддержка
 
 Для вопросов и предложений:
-- Email: iisn99@mail.ru
+- Email: ceh-lazer-rezka@yandex.ru
 - Telegram: @lasercut_support
 - GitHub Issues: [создать issue](https://github.com/your-repo/issues)
 
